@@ -47,3 +47,40 @@ test("el plan clásico con estufa sigue cubriendo la semana", () => {
   assert.strictEqual(r.diasCubiertos, 5);
   assert.ok(r.pisoComidaCumplido);
 });
+
+const conPiso = { ...base, aparatos: ["estufa", "olla_presion", "horno", "airfryer"] };
+
+test("almuerzo siempre con carne, en menú variado", () => {
+  const r = M.planear({ ...conPiso, almuerzoConCarne: true });
+  assert.ok(r.ok);
+  for (const e of r.elegidas.filter(e => e.franja === "almuerzo"))
+    assert.ok(M.llevaCarne(e.receta), `${e.receta.id} sin carne`);
+});
+
+test("almuerzo siempre con carne, en meal prep", () => {
+  for (const comidasDia of [1, 2, 3]) {
+    const r = M.planearMealPrep({ ...conPiso, comidasDia, platos: 3, almuerzoConCarne: true });
+    assert.ok(r.ok, `comidasDia ${comidasDia}`);
+    const alm = r.elegidas.filter(e => e.franja === "almuerzo");
+    assert.strictEqual(alm.length, r.diasCubiertos);
+    for (const e of alm) assert.ok(M.llevaCarne(e.receta), `${e.receta.id} sin carne`);
+  }
+});
+
+test("sin res ni pescado no aparece ni carne de res ni atún", () => {
+  const proteinas = ["pollo", "embutidos", "huevo", "granos"];
+  for (const plan of [M.planear, M.planearMealPrep]) {
+    const r = plan({ ...conPiso, proteinas, almuerzoConCarne: true });
+    assert.ok(r.ok);
+    for (const e of r.elegidas) {
+      assert.ok(!("carne_res" in e.receta.ing), e.receta.id);
+      assert.ok(!("atun" in e.receta.ing), e.receta.id);
+    }
+  }
+});
+
+test("si no comen ninguna carne, el almuerzo con carne no se puede armar", () => {
+  const r = M.planear({ ...conPiso, proteinas: ["huevo", "granos"], almuerzoConCarne: true });
+  assert.ok(!r.ok);
+  assert.deepStrictEqual(r.vacias, ["almuerzo"]);
+});

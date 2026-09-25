@@ -22,6 +22,8 @@ npm test
 - **Tu cocina ilustrada.** Tocas la estufa, el horno, el microondas, la airfryer, la olla a presión, la arrocera, la licuadora o la nevera. Cada electrodoméstico muestra cuántas recetas abre (`+4`) o cuántas perderías sin él.
 - **Recetas con alternativas.** Una receta puede pedir «estufa o arrocera». Basta con tener una.
 - **8 recetas nuevas** para airfryer, microondas y arrocera (30 en total). Se puede armar la semana solo con airfryer y microondas.
+- **Qué proteínas comen.** Pollo, carne de res, salchicha, pescado y atún, huevo y granos. Lo que no comen no entra al menú ni a la lista.
+- **Almuerzo siempre con carne** (activo por defecto). La regla es solo para el almuerzo; la cena puede ser de huevo o granos. En meal prep el almuerzo tiene sus propias tandas.
 - **La nevera cuenta.** Sin nevera, el meal prep se apaga y el plan te avisa que compres la proteína para pocos días.
 - **Se recuerda tu cocina** en el navegador (localStorage).
 - Diseño nuevo siguiendo la dirección «A · Mercado» del rediseño, con modo oscuro.

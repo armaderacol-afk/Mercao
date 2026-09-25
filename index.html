@@ -137,7 +137,7 @@
   .toggle[aria-pressed="true"] .switch::after { transform: translateX(18px); }
 
   /* ---------- la cocina ---------- */
-  .kitchen { background: var(--panel); border: 1px solid var(--rule); border-radius: 20px; overflow: hidden; }
+  .kitchen, .card { background: var(--panel); border: 1px solid var(--rule); border-radius: 20px; overflow: hidden; }
   .kitchen-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
                   padding: 1.25rem 1.4rem 0.9rem; }
   .kitchen-head h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
@@ -200,6 +200,8 @@
   .apchip[aria-pressed="true"] .dot::after { content: ""; width: 0.28rem; height: 0.5rem; border: solid var(--surface);
             border-width: 0 2px 2px 0; transform: translateY(-1px) rotate(45deg); }
   .apchip[aria-pressed="true"] em { color: var(--ink-faint); font-weight: 500; }
+  .card .kitchen-foot { border-top: 0; padding-top: 0.2rem; }
+  .card .toggle { background: var(--surface); max-width: 30rem; }
   .mini { display: flex; gap: 0.5rem; flex-wrap: wrap; }
   .mini button { border: 0; background: none; padding: 0; font-size: 0.8rem; font-weight: 600; color: var(--achiote-ink);
                  cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
@@ -333,10 +335,8 @@
     <div class="field">
       <span class="lbl">Restricciones</span>
       <div class="chips" id="restricciones">
-        <button type="button" class="chip" data-v="vegetariano" aria-pressed="false">Vegetariano</button>
         <button type="button" class="chip" data-v="sin_lacteos" aria-pressed="false">Sin lácteos</button>
         <button type="button" class="chip" data-v="sin_gluten" aria-pressed="false">Sin gluten</button>
-        <button type="button" class="chip" data-v="sin_huevo" aria-pressed="false">Sin huevo</button>
       </div>
     </div>
 
@@ -524,6 +524,22 @@
           <button type="button" id="k-todo">Tengo de todo</button>
           <button type="button" id="k-basico">Solo estufa y nevera</button>
         </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="p-title">
+      <div class="kitchen-head">
+        <div>
+          <h2 id="p-title">¿Qué proteínas comen en tu casa?</h2>
+          <p>Quita lo que no comen. Ninguna receta con eso entra al menú ni a la lista de mercado.</p>
+        </div>
+      </div>
+      <div class="kitchen-foot">
+        <div class="apchips" id="proteinas" aria-label="Proteínas que comen"></div>
+        <button type="button" class="toggle" id="alm-carne" aria-pressed="true">
+          <span class="t"><b>Almuerzo siempre con carne</b><span id="alm-hint">Todos los almuerzos llevan pollo, res, salchicha o pescado.</span></span>
+          <span class="switch" aria-hidden="true"></span>
+        </button>
       </div>
     </section>
 

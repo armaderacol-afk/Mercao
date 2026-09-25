@@ -11,6 +11,8 @@ const APARATOS_INICIALES = ["estufa", "olla_presion", "nevera"];
 /* ---------- estado de la cocina ---------- */
 let aparatos = new Set(APARATOS_INICIALES);
 let enfocado = null;
+let proteinas = new Set(Object.keys(PROTEINAS));
+const hayCarne = () => [...proteinas].some(g => PROTEINAS[g].carne);
 
 function guardar() {
   try {
@@ -32,6 +34,8 @@ function restaurar() {
   if (Array.isArray(c.restricciones))
     $$("#restricciones .chip").forEach(b => b.setAttribute("aria-pressed", String(c.restricciones.includes(b.dataset.v))));
   if (c.mealPrep) $("#mealprep").setAttribute("aria-pressed", "true");
+  if (Array.isArray(c.proteinas)) proteinas = new Set(c.proteinas.filter(g => PROTEINAS[g]));
+  if (c.almuerzoCarnePedido != null) $("#alm-carne").setAttribute("aria-pressed", String(!!c.almuerzoCarnePedido));
 }
 
 /* ---------- lectura de controles ---------- */
@@ -43,6 +47,9 @@ function leerCrudo() {
     comidasDia: Math.min(3, Math.max(1, +$("#comidas").value || 1)),
     aparatos: [...aparatos],
     restricciones: $$('#restricciones .chip[aria-pressed="true"]').map(b => b.dataset.v),
+    proteinas: [...proteinas],
+    almuerzoCarnePedido: $("#alm-carne").getAttribute("aria-pressed") === "true",
+    almuerzoConCarne: $("#alm-carne").getAttribute("aria-pressed") === "true" && hayCarne(),
     modo: $('#modo button[aria-pressed="true"]').dataset.v,
     maxMinutos: +$("#maxmin").value,
     maxRepeticiones: +$("#reps").value,
@@ -70,6 +77,25 @@ function leerOpciones() {
 function construirChips() {
   $("#aparatos").innerHTML = Object.entries(APARATOS).map(([k, a]) =>
     `<button type="button" class="apchip" data-v="${k}" aria-pressed="false"><span class="dot"></span>${a.n}<em></em></button>`).join("");
+}
+
+function construirProteinas() {
+  $("#proteinas").innerHTML = Object.entries(PROTEINAS).map(([k, p]) =>
+    `<button type="button" class="apchip" data-p="${k}" aria-pressed="true"><span class="dot"></span>${p.n}<em></em></button>`).join("");
+}
+function pintarProteinas(o) {
+  const imp = impactoProteinas(o);
+  for (const [k, p] of Object.entries(imp)) {
+    const c = $(`.apchip[data-p="${k}"]`);
+    c.setAttribute("aria-pressed", String(p.come));
+    c.querySelector("em").textContent = p.come ? `${p.usan} rec.` : (p.delta > 0 ? `+${p.delta}` : "");
+  }
+  const carnes = Object.entries(PROTEINAS).filter(([k, p]) => p.carne && proteinas.has(k)).map(([, p]) => p.n.toLowerCase());
+  const t = $("#alm-carne");
+  t.disabled = !carnes.length;
+  $("#alm-hint").textContent = !carnes.length ? "Marca al menos una carne para usar esta opción."
+    : o.almuerzoConCarne ? `Todos los almuerzos llevan ${carnes.length > 1 ? carnes.slice(0, -1).join(", ") + " o " + carnes.at(-1) : carnes[0]}.`
+    : "El almuerzo puede ser de huevo o granos. La cena no cambia.";
 }
 
 function textoImpacto(k, imp) {
@@ -161,6 +187,7 @@ function sugerencias(r, o) {
 function render() {
   const o = leerOpciones();
   pintarCocina(o);
+  pintarProteinas(o);
   guardar();
 
   const sinNevera = !aparatos.has("nevera");
@@ -196,8 +223,12 @@ function renderError(r, o) {
   $("#kpis").innerHTML = "";
   ["plan", "tandas", "lista", "recetas"].forEach(t => $("#pane-" + t).innerHTML = "");
   const sinCocina = r.diag && Object.values(r.diag).every(d => d.sinPiso === 0);
+  const sinAlmCarne = o.almuerzoConCarne && r.vacias.includes("almuerzo") && r.diag && r.diag.almuerzo && r.diag.almuerzo.sinPiso === 0;
   let items;
-  if (sinCocina) {
+  if (sinAlmCarne && !sinCocina) {
+    items = [`Pediste <b>almuerzo siempre con carne</b>, pero con tu cocina y las proteínas que marcaste no hay ningún almuerzo con carne posible.`,
+      `Qué hacer: marca otra carne, marca más cosas en la cocina (la airfryer y el horno suman almuerzos con pollo) o apaga «Almuerzo siempre con carne».`];
+  } else if (sinCocina) {
     items = [`Con lo que marcaste en la cocina no hay ${r.vacias.map(v => v === "comida" ? "cenas" : v === "almuerzo" ? "almuerzos" : v).join(" ni ")} posibles.`,
       `Marca al menos uno de estos: estufa, airfryer, microondas, arrocera u horno. También puedes subir el tiempo máximo por receta o quitar alguna restricción.`];
   } else {
@@ -284,7 +315,7 @@ function renderTandas(r, o) {
     <div class="scroll"><table>
       <thead><tr><th>Cocinas una vez</th><th class="n">Proteína/porción</th><th class="n">Porciones</th><th class="n">Cubre</th><th class="n">Tiempo</th><th class="n">Costo</th></tr></thead>
       <tbody>${r.tandas.map(t => `<tr>
-        <td><b>${t.receta.n}</b><div class="sub">${t.grupo === "desayuno" ? "desayuno" : "almuerzo y cena"}</div></td>
+        <td><b>${t.receta.n}</b><div class="sub">${{ desayuno: "desayuno", almuerzo: "almuerzo", comida: "cena" }[t.grupo] || "almuerzo y cena"}</div></td>
         <td class="n">${Math.round(proteinaReceta(t.receta))} g</td><td class="n">${t.porciones}</td>
         <td class="n">${t.comidas} ${t.comidas === 1 ? "comida" : "comidas"}</td><td class="n">${t.receta.min} min</td>
         <td class="n">${money(t.costoMarginal)}</td></tr>`).join("")}
@@ -337,6 +368,7 @@ function seleccionarTab(t) {
    EVENTOS
    ========================================================== */
 construirChips();
+construirProteinas();
 restaurar();
 
 $$(".ap").forEach(g => {
@@ -347,7 +379,7 @@ $$(".ap").forEach(g => {
   g.addEventListener("focus", () => { enfocado = k; pintarCocina(leerOpciones()); });
 });
 $("#scene").addEventListener("mouseleave", () => { enfocado = null; pintarCocina(leerOpciones()); });
-$$(".apchip").forEach(c => {
+$$("#aparatos .apchip").forEach(c => {
   c.addEventListener("click", () => alternar(c.dataset.v));
   c.addEventListener("mouseenter", () => { enfocado = c.dataset.v; pintarCocina(leerOpciones()); });
 });
@@ -362,6 +394,15 @@ $$("#actividad .chip").forEach(b => b.addEventListener("click", () => {
 $$("#restricciones .chip").forEach(b => b.addEventListener("click", () => {
   b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true"); render();
 }));
+$$("#proteinas .apchip").forEach(c => c.addEventListener("click", () => {
+  const g = c.dataset.p;
+  proteinas.has(g) ? proteinas.delete(g) : proteinas.add(g);
+  render();
+}));
+$("#alm-carne").addEventListener("click", () => {
+  const b = $("#alm-carne");
+  b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true"); render();
+});
 $("#mealprep").addEventListener("click", () => {
   const b = $("#mealprep");
   b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true"); render();

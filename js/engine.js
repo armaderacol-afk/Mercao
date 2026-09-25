@@ -187,6 +187,34 @@ const RECETAS = [
 ];
 
 const CARNES=["pollo_surt","pollo_muslo","atun","salchicha","carne_res"];
+
+/* Proteínas que la casa come o no come. Una receta queda fuera si lleva
+   algún ingrediente de un grupo que no se come. Los grupos marcados como
+   `carne` son los que cuentan para «almuerzo siempre con carne». */
+const PROTEINAS={
+  pollo:    {n:"Pollo",               ing:["pollo_surt","pollo_muslo"], carne:true},
+  res:      {n:"Carne de res",        ing:["carne_res"],               carne:true},
+  embutidos:{n:"Salchicha",           ing:["salchicha"],               carne:true},
+  pescado:  {n:"Pescado y atún",      ing:["atun"],                    carne:true},
+  huevo:    {n:"Huevo",               ing:["huevo"]},
+  granos:   {n:"Granos",              ing:["lenteja","frijol","garbanzo","arveja_seca"]},
+};
+const TODAS_PROTEINAS=Object.keys(PROTEINAS);
+function comeTodo(r,proteinas){
+  const no=TODAS_PROTEINAS.filter(g=>!proteinas.includes(g)).flatMap(g=>PROTEINAS[g].ing);
+  return !Object.keys(r.ing).some(i=>no.includes(i));
+}
+function llevaCarne(r,proteinas=TODAS_PROTEINAS){
+  const si=TODAS_PROTEINAS.filter(g=>PROTEINAS[g].carne&&proteinas.includes(g)).flatMap(g=>PROTEINAS[g].ing);
+  return Object.keys(r.ing).some(i=>si.includes(i));
+}
+/* ¿Esta receta puede ir en esta franja? El almuerzo con carne es una regla
+   de franja: la misma receta sin carne sigue sirviendo para la cena. */
+function sirveEnFranja(r,f,o){
+  if(!r.tipo.includes(f))return false;
+  if(f==="almuerzo"&&o.almuerzoConCarne&&!llevaCarne(r,o.proteinas||TODAS_PROTEINAS))return false;
+  return true;
+}
 const LACTEOS=["leche","queso","avena_beb"];
 const GLUTEN=["espagueti"];
 
@@ -246,8 +274,9 @@ function aparatosUsados(r,aparatos){
   return usa;
 }
 function recetaPosible(r,o){
-  const{aparatos=["estufa"],restricciones=[],maxMinutos=90}=o;
-  return !!aparatosUsados(r,aparatos)&&cumpleRestricciones(r,restricciones)&&r.min<=maxMinutos;
+  const{aparatos=["estufa"],restricciones=[],maxMinutos=90,proteinas=TODAS_PROTEINAS}=o;
+  return !!aparatosUsados(r,aparatos)&&cumpleRestricciones(r,restricciones)&&
+    comeTodo(r,proteinas)&&r.min<=maxMinutos;
 }
 
 function cumpleRestricciones(r,restr){
@@ -305,14 +334,13 @@ function sumar(c,r,por){const n={...c};for(const[i,q]of Object.entries(r.ing))n[
    almuerzo y cena: una receta que no lo alcanza simplemente no es candidata
    para esa franja (aunque siga sirviendo de desayuno). */
 function catalogoPorFranja(o){
-  const{aparatos=["estufa"],restricciones=[],maxMinutos=90,
-        pisoComida=20,objetivoDesayuno=0}=o;
-  const base=RECETAS.filter(r=>recetaPosible(r,{aparatos,restricciones,maxMinutos}))
+  const{aparatos=["estufa"],pisoComida=20,objetivoDesayuno=0}=o;
+  const base=RECETAS.filter(r=>recetaPosible(r,o))
     .map(r=>({...r,usa:aparatosUsados(r,aparatos)}));
   const porFranja={};
   for(const f of ["desayuno","almuerzo","comida"]){
     const meta=PRINCIPALES.includes(f)?pisoComida:objetivoDesayuno;
-    porFranja[f]=base.filter(r=>r.tipo.includes(f))
+    porFranja[f]=base.filter(r=>sirveEnFranja(r,f,o))
       .map(r=>variante(r,meta))
       .filter(v=>!PRINCIPALES.includes(f)||v.alcanza);
   }
@@ -325,11 +353,11 @@ function catalogoPorFranja(o){
 /* Diagnóstico cuando una franja se queda sin recetas: distingue "el piso es
    muy alto" de "los filtros dejaron el catálogo vacío". */
 function diagnostico(o,franjasUsadas){
-  const{aparatos=["estufa"],restricciones=[],maxMinutos=90,pisoComida=20}=o;
-  const base=RECETAS.filter(r=>recetaPosible(r,{aparatos,restricciones,maxMinutos}));
+  const{pisoComida=20}=o;
+  const base=RECETAS.filter(r=>recetaPosible(r,o));
   const out={};
   for(const f of franjasUsadas){
-    const sinPiso=base.filter(r=>r.tipo.includes(f));
+    const sinPiso=base.filter(r=>sirveEnFranja(r,f,o));
     const vars=sinPiso.map(r=>variante(r,pisoComida));
     const conPiso=vars.filter(v=>!PRINCIPALES.includes(f)||v.alcanza);
     const techo=vars.length?Math.max(...vars.map(v=>v.prot)):0;
@@ -434,10 +462,15 @@ function planearMealPrep(o){
   const{porFranja,principales}=catalogoPorFranja(o);
 
   const hayDesayuno=franjas.includes("desayuno");
-  const nPrin=franjas.filter(f=>PRINCIPALES.includes(f)).length;
+  const prinFranjas=franjas.filter(f=>PRINCIPALES.includes(f));
+  const nPrin=prinFranjas.length;
+  // Con «almuerzo con carne» el almuerzo tiene su propia tanda: si se
+  // mezclara con la cena, una tanda sin carne podría caer al mediodía.
+  const separar=!!o.almuerzoConCarne&&prinFranjas.includes("almuerzo");
   const vacias=[];
   if(hayDesayuno&&!porFranja.desayuno.length)vacias.push("desayuno");
-  if(nPrin&&!principales.length)vacias.push("almuerzo/cena");
+  if(separar){ for(const f of prinFranjas) if(!porFranja[f].length)vacias.push(f); }
+  else if(nPrin&&!principales.length)vacias.push("almuerzo/cena");
   if(vacias.length)
     return{ok:false,motivo:"franja_vacia",vacias,diag:diagnostico(o,franjas),
            pisoComida,candidatas:0};
@@ -449,7 +482,12 @@ function planearMealPrep(o){
     let carrito={},elegidos=[];
     const grupos=[];
     if(kDes)grupos.push({tipo:"desayuno",pool:porFranja.desayuno,comidas:d,k:kDes});
-    if(nPrin)grupos.push({tipo:"principal",pool:principales,comidas:d*nPrin,k:kPrin});
+    if(separar){
+      const kAlm=nPrin>1?Math.max(1,Math.ceil(kPrin/2)):kPrin;
+      grupos.push({tipo:"almuerzo",pool:porFranja.almuerzo,comidas:d,k:kAlm});
+      if(nPrin>1)grupos.push({tipo:"comida",pool:porFranja.comida,comidas:d,k:Math.max(1,kPrin-kAlm)});
+    }
+    else if(nPrin)grupos.push({tipo:"principal",pool:principales,comidas:d*nPrin,k:kPrin});
     for(const g of grupos){
       const K=Math.min(g.k,g.pool.length);
       const base=Math.floor(g.comidas/K),extra=g.comidas%K;
@@ -457,12 +495,17 @@ function planearMealPrep(o){
         const comidas=base+(i<extra?1:0); if(comidas<=0)continue;
         const porc=comidas*personas;
         let mejor=null;
-        for(const r of g.pool){
-          if(elegidos.some(e=>e.receta.id===r.id))continue;
-          const nuevo=sumar(carrito,r,porc);
-          const delta=costoCanasta(nuevo)-costoCanasta(carrito);
-          const score=delta/porc;
-          if(!mejor||score<mejor.score)mejor={r,score,delta,nuevo,comidas,porc};
+        // Primero sin repetir ningún plato; si no queda, se permite repetir
+        // uno que ya salió en OTRA franja (nunca dos tandas iguales en la misma).
+        for(const evitarTodo of [true,false]){
+          for(const r of g.pool){
+            if(elegidos.some(e=>e.receta.id===r.id&&(evitarTodo||e.grupo===g.tipo)))continue;
+            const nuevo=sumar(carrito,r,porc);
+            const delta=costoCanasta(nuevo)-costoCanasta(carrito);
+            const score=delta/porc;
+            if(!mejor||score<mejor.score)mejor={r,score,delta,nuevo,comidas,porc};
+          }
+          if(mejor)break;
         }
         if(!mejor)break;
         carrito=mejor.nuevo;
@@ -483,13 +526,14 @@ function planearMealPrep(o){
 
   // Rotación: cada día toma su desayuno de la tanda de desayuno y sus
   // principales de las tandas principales, intercaladas.
-  const qDes=st.elegidos.filter(e=>e.grupo==="desayuno").map(e=>({r:e.receta,quedan:e.comidas}));
-  const qPrin=st.elegidos.filter(e=>e.grupo==="principal").map(e=>({r:e.receta,quedan:e.comidas}));
+  const cola=g=>st.elegidos.filter(e=>e.grupo===g).map(e=>({r:e.receta,quedan:e.comidas}));
+  const colas={desayuno:cola("desayuno"),principal:cola("principal"),
+               almuerzo:cola("almuerzo"),comida:cola("comida")};
   const tomar=(q)=>{ for(let i=0;i<q.length;i++){ const c=q.shift(); if(c.quedan>0){c.quedan--; q.push(c); return c.r;} }
                      return null; };
   const secuencia=[];
   for(let d=0;d<st.dias;d++)for(const f of franjas){
-    const r=f==="desayuno"?tomar(qDes):tomar(qPrin);
+    const r=tomar(f==="desayuno"?colas.desayuno:separar?colas[f]:colas.principal);
     if(r)secuencia.push({receta:r,franja:f});
   }
 
@@ -525,8 +569,24 @@ function impactoAparatos(o){
   return{hoy,total:RECETAS.length,porAparato:out};
 }
 
+/* Para cada proteína: cuántas recetas posibles la usan hoy, o cuántas se
+   sumarían si la casa empezara a comerla. */
+function impactoProteinas(o){
+  const actuales=o.proteinas||TODAS_PROTEINAS;
+  const hoy=recetasPosibles(o).length;
+  const out={};
+  for(const g of TODAS_PROTEINAS){
+    const come=actuales.includes(g);
+    const usan=recetasPosibles(o).filter(r=>Object.keys(r.ing).some(i=>PROTEINAS[g].ing.includes(i))).length;
+    const con=recetasPosibles({...o,proteinas:[...new Set([...actuales,g])]}).length;
+    out[g]={come,usan,delta:come?0:con-hoy};
+  }
+  return out;
+}
+
 if(typeof module!=="undefined"&&module.exports){
-  module.exports={APARATOS,ING,SKUS,RECETAS,ACTIVIDAD,FRANJAS,PRINCIPALES,
+  module.exports={APARATOS,PROTEINAS,ING,SKUS,RECETAS,ACTIVIDAD,FRANJAS,PRINCIPALES,
+    llevaCarne,comeTodo,impactoProteinas,
     variante,cumpleRestricciones,aparatosUsados,recetaPosible,recetasPosibles,
     impactoAparatos,costoIngrediente,costoCanasta,proteinaReceta,
     catalogoPorFranja,planear,planearMealPrep};
