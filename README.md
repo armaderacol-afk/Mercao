@@ -26,7 +26,7 @@ npm test
 - **Almuerzo siempre con carne** (activo por defecto). La regla es solo para el almuerzo; la cena puede ser de huevo o granos. En meal prep el almuerzo tiene sus propias tandas.
 - **La nevera cuenta.** Sin nevera, el meal prep se apaga y el plan te avisa que compres la proteína para pocos días.
 - **Se recuerda tu cocina** en el navegador (localStorage).
-- Diseño nuevo siguiendo la dirección «A · Mercado» del rediseño, con modo oscuro.
+- **v0.4 · la cocina de noche.** Diseño oscuro. Prender un aparato lo enciende en la ilustración: llamas en la estufa, pollo en el horno, plato girando en el microondas, vapor en la olla y la arrocera, jugo batiéndose en la licuadora. Las cifras corren hasta su valor, la cuenta flota abajo y la lista de mercado sale como un tiquete que se puede copiar.
 
 ## Pendiente (fase 1)
 

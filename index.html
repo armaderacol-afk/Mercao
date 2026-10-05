@@ -3,571 +3,823 @@
 <title>Mercao</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@600;700;800;900&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Martian+Mono:wght@400;500&family=Onest:wght@400;500;600;700&display=swap">
 <style>
+  /* Un solo tema, a propósito: la cocina de noche. */
   :root {
-    --ground: oklch(0.975 0.008 85);
-    --panel: oklch(0.99 0.005 85);
-    --surface: oklch(1 0 0);
-    --muted: oklch(0.94 0.015 85);
-    --rule: oklch(0.9 0.012 85);
-    --rule-strong: oklch(0.86 0.015 85);
-    --ink: oklch(0.24 0.02 60);
-    --ink-soft: oklch(0.47 0.03 60);
-    --ink-faint: oklch(0.58 0.025 60);
-    --achiote: oklch(0.62 0.17 38);
-    --achiote-ink: oklch(0.52 0.16 38);
-    --achiote-soft: oklch(0.95 0.035 45);
-    --on-achiote: oklch(0.99 0.01 85);
-    --green: oklch(0.55 0.13 155);
-    --green-soft: oklch(0.94 0.045 155);
-    --gold: oklch(0.58 0.12 75);
-    --gold-soft: oklch(0.95 0.045 85);
-    /* escena de la cocina */
-    --wall: oklch(0.955 0.016 80);
-    --tile: oklch(0.925 0.022 75);
-    --tile-line: oklch(0.88 0.02 75);
-    --wood: oklch(0.8 0.055 65);
-    --wood-dark: oklch(0.72 0.06 60);
-    --counter: oklch(0.4 0.03 60);
-    --floor: oklch(0.88 0.022 70);
-    --metal: oklch(0.985 0.004 85);
-    --steel: oklch(0.8 0.012 80);
-    --appliance-dark: oklch(0.3 0.02 60);
-    --glass: oklch(0.42 0.035 230);
-    --ghost-line: oklch(0.6 0.03 60);
-    --f-display: "Gabarito", "Avenir Next", "Segoe UI", system-ui, sans-serif;
-    --f-body: "Schibsted Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      color-scheme: dark;
-      --ground: oklch(0.2 0.012 60); --panel: oklch(0.225 0.012 60); --surface: oklch(0.26 0.012 60);
-      --muted: oklch(0.29 0.014 60); --rule: oklch(0.33 0.014 60); --rule-strong: oklch(0.4 0.015 60);
-      --ink: oklch(0.94 0.01 85); --ink-soft: oklch(0.78 0.02 70); --ink-faint: oklch(0.66 0.02 70);
-      --achiote: oklch(0.68 0.16 42); --achiote-ink: oklch(0.78 0.13 45); --achiote-soft: oklch(0.31 0.06 40);
-      --on-achiote: oklch(0.18 0.02 50);
-      --green: oklch(0.76 0.14 155); --green-soft: oklch(0.3 0.05 155);
-      --gold: oklch(0.82 0.12 85); --gold-soft: oklch(0.3 0.045 85);
-      --wall: oklch(0.27 0.012 60); --tile: oklch(0.3 0.014 60); --tile-line: oklch(0.34 0.014 60);
-      --wood: oklch(0.46 0.05 60); --wood-dark: oklch(0.39 0.045 60); --counter: oklch(0.58 0.02 60);
-      --floor: oklch(0.24 0.012 60); --metal: oklch(0.9 0.008 85); --steel: oklch(0.7 0.01 80);
-      --appliance-dark: oklch(0.2 0.01 60); --glass: oklch(0.36 0.04 230); --ghost-line: oklch(0.62 0.02 70);
-    }
-  }
-  :root[data-theme="dark"] {
     color-scheme: dark;
-    --ground: oklch(0.2 0.012 60); --panel: oklch(0.225 0.012 60); --surface: oklch(0.26 0.012 60);
-    --muted: oklch(0.29 0.014 60); --rule: oklch(0.33 0.014 60); --rule-strong: oklch(0.4 0.015 60);
-    --ink: oklch(0.94 0.01 85); --ink-soft: oklch(0.78 0.02 70); --ink-faint: oklch(0.66 0.02 70);
-    --achiote: oklch(0.68 0.16 42); --achiote-ink: oklch(0.78 0.13 45); --achiote-soft: oklch(0.31 0.06 40);
-    --on-achiote: oklch(0.18 0.02 50);
-    --green: oklch(0.76 0.14 155); --green-soft: oklch(0.3 0.05 155);
-    --gold: oklch(0.82 0.12 85); --gold-soft: oklch(0.3 0.045 85);
-    --wall: oklch(0.27 0.012 60); --tile: oklch(0.3 0.014 60); --tile-line: oklch(0.34 0.014 60);
-    --wood: oklch(0.46 0.05 60); --wood-dark: oklch(0.39 0.045 60); --counter: oklch(0.58 0.02 60);
-    --floor: oklch(0.24 0.012 60); --metal: oklch(0.9 0.008 85); --steel: oklch(0.7 0.01 80);
-    --appliance-dark: oklch(0.2 0.01 60); --glass: oklch(0.36 0.04 230); --ghost-line: oklch(0.62 0.02 70);
+    --night: #0f0e0c;
+    --deep: #141210;
+    --panel: #191714;
+    --raised: #221f1b;
+    --line: #2d2924;
+    --line-2: #3d3832;
+    --ink: #f3ede3;
+    --ink-2: #bdb3a5;
+    --ink-3: #8f8577;
+    --amber: #ffb443;
+    --amber-2: #ffd08a;
+    --amber-dim: rgba(255, 180, 67, 0.13);
+    --flame: #5aa9ff;
+    --ok: #8fdc9e;
+    --ok-dim: rgba(143, 220, 158, 0.12);
+    --bad: #ff7a57;
+    --bad-dim: rgba(255, 122, 87, 0.12);
+    --paper: #f2ecdf;
+    --paper-ink: #1e1b17;
+    --paper-3: #6f665a;
+    --f-display: "Big Shoulders Display", "Oswald", "Arial Narrow", Impact, sans-serif;
+    --f-body: "Onest", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --f-mono: "Martian Mono", "SF Mono", Menlo, Consolas, monospace;
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
-  body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--f-body);
-         font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-  .num { font-variant-numeric: tabular-nums; }
-  h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
-  button { font: inherit; color: inherit; }
-  :focus-visible { outline: 2px solid var(--achiote); outline-offset: 2px; }
-
-  /* ---------- barra superior ---------- */
-  .top { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-         padding: 0.9rem 1rem; border-bottom: 1px solid var(--rule); background: var(--panel); }
-  .brand { font-family: var(--f-display); font-weight: 900; font-size: 1.7rem; letter-spacing: -0.035em; }
-  .pill { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.8rem;
-          border-radius: 999px; background: var(--muted); font-size: 0.8rem; font-weight: 500; color: var(--ink-soft); }
-  .pill b { color: var(--ink); font-weight: 700; }
-  .top .grow { flex: 1; }
-
-  /* ---------- layout ---------- */
-  .layout { display: grid; grid-template-columns: 18.5rem minmax(0, 1fr); align-items: start; }
-  .rail { border-right: 1px solid var(--rule); background: var(--panel); padding: 1.5rem 1.4rem 2rem;
-          display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: env(safe-area-inset-top, 0px);
-          max-height: 100vh; overflow-y: auto; }
-  main { padding: 1.5rem 1.75rem 3rem; display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
-  @media (max-width: 62rem) {
-    .layout { grid-template-columns: minmax(0, 1fr); }
-    .rail { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--rule); order: 2; }
-    main { order: 1; padding: 1.25rem 1rem 2rem; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; color: var(--ink); font-family: var(--f-body); font-size: 15.5px; line-height: 1.55;
+    background: radial-gradient(70rem 36rem at 50% -8rem, #2a1f12 0%, rgba(42, 31, 18, 0) 70%), var(--night);
+    -webkit-font-smoothing: antialiased; padding-bottom: 7rem;
   }
+  .wrap { max-width: 76rem; margin: 0 auto; padding-inline: clamp(1rem, 3vw, 2rem); }
+  .num { font-variant-numeric: tabular-nums; }
+  h1, h2, h3 { margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+  b { font-weight: 600; color: var(--ink); }
 
-  /* ---------- controles ---------- */
-  .field { display: flex; flex-direction: column; gap: 0.5rem; }
-  .lbl { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-faint); }
-  .big { font-family: var(--f-display); font-weight: 800; font-size: 2.1rem; letter-spacing: -0.03em; line-height: 1; }
-  .mid { font-family: var(--f-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1; }
-  .mid small { font-family: var(--f-body); font-size: 0.8rem; font-weight: 600; color: var(--ink-faint); letter-spacing: 0; margin-left: 0.25rem; }
-  .hint { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.45; }
-  .hint b { color: var(--ink); }
-  input[type=range] { width: 100%; accent-color: var(--achiote); }
-  .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; }
-  .trio input { width: 100%; font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; text-align: center;
-                padding: 0.4rem 0; border-radius: 10px; border: 1px solid var(--rule-strong);
-                background: var(--surface); color: var(--ink); }
-  .seg { display: flex; padding: 3px; gap: 3px; border-radius: 12px; background: var(--muted); }
-  .seg button { flex: 1; border: 0; background: none; padding: 0.55rem 0.3rem; border-radius: 9px;
-                font-size: 0.8rem; font-weight: 500; color: var(--ink-soft); cursor: pointer; }
-  .seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); font-weight: 700;
-                                     box-shadow: 0 1px 2px oklch(0.4 0.02 60 / 0.14); }
-  .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .chip { padding: 0.4rem 0.75rem; border-radius: 999px; border: 1px solid var(--rule-strong); background: var(--surface);
-          font-size: 0.78rem; font-weight: 500; color: var(--ink-soft); cursor: pointer; }
-  .chip:hover { border-color: var(--ink-faint); }
-  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--ground); font-weight: 700; }
-  .toggle { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem; border-radius: 14px;
-            background: var(--muted); border: 1px solid var(--rule); text-align: left; cursor: pointer; width: 100%; }
-  .toggle:disabled { cursor: not-allowed; opacity: 0.6; }
-  .toggle .t { flex: 1; }
-  .toggle .t b { display: block; font-size: 0.9rem; }
-  .toggle .t span { font-size: 0.78rem; color: var(--ink-soft); line-height: 1.35; }
-  .switch { width: 42px; height: 24px; border-radius: 999px; background: var(--rule-strong); position: relative; flex: none;
-            transition: background 0.15s; }
-  .switch::after { content: ""; position: absolute; left: 3px; top: 3px; width: 18px; height: 18px; border-radius: 999px;
-                   background: var(--surface); transition: transform 0.15s; box-shadow: 0 1px 2px oklch(0.3 0.02 60 / 0.25); }
-  .toggle[aria-pressed="true"] .switch { background: var(--green); }
-  .toggle[aria-pressed="true"] .switch::after { transform: translateX(18px); }
+  /* ---------- encabezado ---------- */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-block: 1.2rem; }
+  .mark { display: flex; align-items: center; gap: 0.55rem; font-family: var(--f-display); font-weight: 900;
+          font-size: 1.9rem; letter-spacing: 0.01em; text-transform: lowercase; line-height: 1; }
+  .pilot { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--amber);
+           box-shadow: 0 0 0 4px var(--amber-dim), 0 0 18px var(--amber); animation: piloto 3.2s ease-in-out infinite; }
+  @keyframes piloto { 50% { box-shadow: 0 0 0 6px rgba(255, 180, 67, 0.06), 0 0 10px var(--amber); } }
+  .stamp { font-family: var(--f-mono); font-size: 0.68rem; color: var(--ink-3); }
+
+  /* ---------- pasos ---------- */
+  main { display: flex; flex-direction: column; gap: clamp(3rem, 7vw, 5rem); }
+  .kicker { font-family: var(--f-mono); font-size: 0.7rem; color: var(--ink-3); display: flex; gap: 0.6rem; align-items: center; margin-bottom: 0.8rem; }
+  .kicker i { font-style: normal; color: var(--amber); }
+  h1 { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(3rem, 8.5vw, 6rem);
+       line-height: 0.86; letter-spacing: 0.005em; }
+  h1 em, h2 em { font-style: normal; color: var(--amber); }
+  h2 { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.1rem, 5vw, 3.2rem);
+       line-height: 0.92; letter-spacing: 0.005em; }
+  .lede { color: var(--ink-2); max-width: 36rem; margin-top: 0.9rem; font-size: 1.02rem; }
+  .step-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
 
   /* ---------- la cocina ---------- */
-  .kitchen, .card { background: var(--panel); border: 1px solid var(--rule); border-radius: 20px; overflow: hidden; }
-  .kitchen-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
-                  padding: 1.25rem 1.4rem 0.9rem; }
-  .kitchen-head h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
-  .kitchen-head p { margin: 0.3rem 0 0; color: var(--ink-soft); font-size: 0.9rem; max-width: 34rem; }
-  .meter { text-align: right; }
-  .meter .mid { color: var(--achiote-ink); }
-  .meter .mid small { color: var(--ink-faint); }
-  .meter .bar { width: 11rem; max-width: 100%; height: 6px; border-radius: 999px; background: var(--muted); margin-top: 0.45rem; margin-left: auto; overflow: hidden; }
-  .meter .bar i { display: block; height: 100%; background: var(--achiote); border-radius: 999px; transition: width 0.3s; }
+  .counter { display: flex; align-items: flex-end; gap: 0.6rem; }
+  .counter .big { font-family: var(--f-display); font-weight: 900; font-size: clamp(4rem, 9vw, 6.5rem); line-height: 0.8;
+                  color: var(--amber); text-shadow: 0 0 28px rgba(255, 180, 67, 0.35); }
+  .counter .of { font-family: var(--f-mono); font-size: 0.72rem; color: var(--ink-2); line-height: 1.5; padding-bottom: 0.2rem; }
+  .counter .of b { font-family: var(--f-display); font-size: 1.6rem; font-weight: 800; color: var(--ink-2); display: block; line-height: 1; }
+  .stage { position: relative; border-radius: 26px; overflow: hidden; border: 1px solid var(--line);
+           background: #121110; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.8); }
   .scene { display: block; width: 100%; height: auto; max-width: 100%; }
-  .scene .wall { fill: var(--wall); }
-  .scene .tile { fill: var(--tile); }
-  .scene .tile-line { stroke: var(--tile-line); stroke-width: 1.5; fill: none; }
-  .scene .wood { fill: var(--wood); }
-  .scene .wood-dark { fill: var(--wood-dark); }
-  .scene .seam { stroke: var(--wood-dark); stroke-width: 2; fill: none; }
-  .scene .knob { fill: var(--wood-dark); }
-  .scene .counter { fill: var(--counter); }
-  .scene .floor { fill: var(--floor); }
-  .scene .hood { fill: var(--steel); }
+  .swipe { display: none; font-family: var(--f-mono); font-size: 0.66rem; color: var(--ink-3); margin-top: 0.6rem; }
+  @media (max-width: 40rem) {
+    .stage { overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+    .scene { width: 190%; max-width: none; }
+    .swipe { display: block; }
+  }
+  .stage-foot { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.1rem; }
+  .info { font-family: var(--f-mono); font-size: 0.78rem; color: var(--ink-2); min-height: 2.6em; line-height: 1.6; }
+  .info::before { content: "▸ "; color: var(--amber); }
 
-  .ap { cursor: pointer; outline: none; }
-  .ap .shift { transition: transform 0.18s ease; transform-box: fill-box; }
-  .ap:hover .shift, .ap:focus-visible .shift { transform: translateY(-4px); }
-  .ap .b { fill: var(--metal); stroke: var(--ink); stroke-width: 1.5; }
-  .ap .s { fill: var(--steel); stroke: var(--ink); stroke-width: 1.2; }
-  .ap .k { fill: var(--appliance-dark); }
-  .ap .g { fill: var(--glass); }
-  .ap .a { fill: var(--achiote); }
-  .ap .paper { fill: var(--surface); stroke: var(--rule-strong); }
-  .ap .paper-line { stroke: var(--ink-faint); stroke-width: 1.5; }
-  .ap .hit { fill: transparent; }
-  /* no lo tienes: silueta punteada */
-  .ap[aria-pressed="false"] .b, .ap[aria-pressed="false"] .s,
-  .ap[aria-pressed="false"] .k, .ap[aria-pressed="false"] .g,
-  .ap[aria-pressed="false"] .a, .ap[aria-pressed="false"] .paper {
-    fill: var(--wall); fill-opacity: 0.55; stroke: var(--ghost-line); stroke-width: 1.5; stroke-dasharray: 5 4; }
-  .ap[aria-pressed="false"] .paper-line { stroke: var(--ghost-line); stroke-opacity: 0.5; }
-  .ap:focus-visible .b, .ap:focus-visible .k { stroke: var(--achiote); stroke-width: 3; stroke-dasharray: none; }
-  .badge circle { stroke: var(--panel); stroke-width: 3; }
-  .ap[aria-pressed="true"] .badge circle { fill: var(--green); }
-  .ap[aria-pressed="false"] .badge circle { fill: var(--achiote); }
-  .badge path { fill: none; stroke: var(--surface); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
-  .badge text { fill: var(--on-achiote); font-family: var(--f-display); font-weight: 800; font-size: 13px; text-anchor: middle; }
+  /* aparatos dentro de la ilustración */
+  .ap { cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent; }
+  .ap .hit { fill: transparent; stroke: none; rx: 14px; }
+  .ap:focus-visible .hit { stroke: var(--amber); stroke-width: 2.5; }
+  .ap .on, .ap .ghost { transition: opacity 0.45s var(--ease), transform 0.45s var(--ease); transform-box: fill-box; transform-origin: 50% 100%; }
+  .ap[aria-pressed="false"] .on, .ap.dormido .on { opacity: 0; transform: scale(0.97); }
+  .ap[aria-pressed="true"]:not(.dormido) .ghost { opacity: 0; }
+  .ghost * { fill: none; stroke: #5d554b; stroke-width: 1.6; stroke-dasharray: 6 5; }
+  .ghost .gf { fill: rgba(255, 255, 255, 0.018); }
+  .ap:hover .ghost *, .ap:focus-visible .ghost * { stroke: var(--amber); }
+  .ap:hover .on { filter: brightness(1.08); }
+  .ap.pop .on { animation: encender 0.8s var(--ease); }
+  @keyframes encender {
+    0% { filter: brightness(2.4) drop-shadow(0 0 0 rgba(255, 180, 67, 0)); }
+    35% { filter: brightness(1.5) drop-shadow(0 0 22px rgba(255, 180, 67, 0.7)); }
+    100% { filter: none; }
+  }
+  .badge circle { fill: var(--amber); stroke: #121110; stroke-width: 3; }
+  .badge path { fill: none; stroke: #1a1206; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  .badge text { display: none; font-family: var(--f-display); font-weight: 800; font-size: 14px; text-anchor: middle; fill: var(--amber); }
+  .ap[aria-pressed="false"] .badge circle { fill: #1c1a17; stroke: var(--amber); stroke-width: 1.5; stroke-dasharray: 3 3; }
   .ap[aria-pressed="false"] .badge path { display: none; }
-  .ap[aria-pressed="true"] .badge text { display: none; }
+  .ap[aria-pressed="false"] .badge text { display: block; }
   .ap[aria-pressed="false"] .badge.none { display: none; }
 
-  .kitchen-foot { padding: 0.9rem 1.4rem 1.2rem; border-top: 1px solid var(--rule); display: flex; flex-direction: column; gap: 0.75rem; }
-  .info { font-size: 0.88rem; color: var(--ink-soft); min-height: 1.4em; }
-  .info b { color: var(--ink); }
-  .apchips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-  .apchip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.75rem 0.4rem 0.55rem; border-radius: 999px;
-            border: 1px dashed var(--ghost-line); background: transparent; font-size: 0.8rem; font-weight: 600;
-            color: var(--ink-soft); cursor: pointer; }
-  .apchip .dot { width: 0.9rem; height: 0.9rem; border-radius: 999px; border: 1.5px solid var(--ghost-line); display: grid; place-items: center; }
-  .apchip em { font-style: normal; font-weight: 700; color: var(--achiote-ink); font-size: 0.74rem; }
-  .apchip[aria-pressed="true"] { border: 1px solid var(--green); background: var(--green-soft); color: var(--ink); }
-  .apchip[aria-pressed="true"] .dot { background: var(--green); border-color: var(--green); }
-  .apchip[aria-pressed="true"] .dot::after { content: ""; width: 0.28rem; height: 0.5rem; border: solid var(--surface);
-            border-width: 0 2px 2px 0; transform: translateY(-1px) rotate(45deg); }
-  .apchip[aria-pressed="true"] em { color: var(--ink-faint); font-weight: 500; }
-  .card .kitchen-foot { border-top: 0; padding-top: 0.2rem; }
-  .card .toggle { background: var(--surface); max-width: 30rem; }
-  .mini { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .mini button { border: 0; background: none; padding: 0; font-size: 0.8rem; font-weight: 600; color: var(--achiote-ink);
-                 cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  /* animaciones de cada aparato (solo se ven prendidos) */
+  .fl { animation: llama 0.5s ease-in-out infinite alternate; }
+  @keyframes llama { from { transform: scaleY(0.72) scaleX(1.05); opacity: 0.75; } to { transform: scaleY(1.12); opacity: 1; } }
+  .vapor path { animation: vapor 2.6s linear infinite; opacity: 0; }
+  .vapor path:nth-child(2) { animation-delay: 0.85s; }
+  .vapor path:nth-child(3) { animation-delay: 1.7s; }
+  @keyframes vapor { 0% { transform: translateY(6px); opacity: 0; } 30% { opacity: 0.55; } 100% { transform: translateY(-22px); opacity: 0; } }
+  .wobble { animation: wobble 0.36s ease-in-out infinite alternate; }
+  @keyframes wobble { from { transform: rotate(-9deg); } to { transform: rotate(9deg); } }
+  .glow-pulse { animation: pulso 2.4s ease-in-out infinite; }
+  @keyframes pulso { 50% { opacity: 0.72; } }
+  .resist { animation: resist 1.6s ease-in-out infinite; }
+  @keyframes resist { 50% { opacity: 0.45; } }
+  .plato { animation: plato 2.8s ease-in-out infinite alternate; }
+  @keyframes plato { from { transform: translateX(-9px); } to { transform: translateX(9px); } }
+  .blink { animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .ola { animation: ola 1.1s linear infinite; }
+  @keyframes ola { to { transform: translateX(-24px); } }
+  .anillo { animation: girar 1.8s linear infinite; }
+  @keyframes girar { to { transform: rotate(360deg); } }
+  .calor path { animation: calor 2s ease-in-out infinite; opacity: 0; }
+  .calor path:nth-child(2) { animation-delay: 0.7s; }
+  .calor path:nth-child(3) { animation-delay: 1.4s; }
+  @keyframes calor { 0% { transform: translateY(4px); opacity: 0; } 40% { opacity: 0.45; } 100% { transform: translateY(-14px); opacity: 0; } }
+  .vaiven { animation: vaiven 4s ease-in-out infinite alternate; }
+  @keyframes vaiven { from { transform: rotate(-1.6deg); } to { transform: rotate(1.6deg); } }
+  .kr, .lever { transition: transform 0.6s var(--ease); }
+  .ap[aria-pressed="true"]:not(.dormido) .kr { transform: rotate(-130deg); }
+  .ap[aria-pressed="true"]:not(.dormido) .lever { transform: translateY(5px); }
 
-  /* ---------- números ---------- */
-  .kpis { display: grid; grid-template-columns: minmax(0, 1.35fr) repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
-  @media (max-width: 48rem) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi.hero, .kpi:last-child { grid-column: 1 / -1; } }
-  .kpi { padding: 1rem 1.1rem; border-radius: 16px; background: var(--surface); border: 1px solid var(--rule);
-         display: flex; flex-direction: column; gap: 0.25rem; }
-  .kpi .k { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-faint); }
-  .kpi .v { font-family: var(--f-display); font-weight: 800; font-size: 1.7rem; letter-spacing: -0.02em; line-height: 1.1; }
-  .kpi .s { font-size: 0.8rem; color: var(--ink-soft); }
-  .kpi.hero { background: var(--achiote); border-color: var(--achiote); color: var(--on-achiote); }
-  .kpi.hero .k, .kpi.hero .s { color: var(--on-achiote); opacity: 0.85; }
-  .kpi.hero .v { font-size: 2.4rem; }
-  .tag { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 999px; width: fit-content; }
-  .tag.ok { background: var(--green-soft); color: var(--green); }
-  .tag.bad { background: var(--achiote-soft); color: var(--achiote-ink); }
-  .tag.warn { background: var(--gold-soft); color: var(--gold); }
+  /* chips de aparatos y proteínas */
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .apchip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.9rem 0.5rem 0.65rem; border-radius: 999px;
+            border: 1px dashed var(--line-2); background: transparent; color: var(--ink-2); font-size: 0.86rem; font-weight: 500;
+            cursor: pointer; transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.15s; }
+  .apchip:hover { border-color: var(--ink-3); color: var(--ink); }
+  .apchip:active { transform: scale(0.96); }
+  .apchip .ico { width: 1.15rem; height: 1.15rem; color: var(--ink-3); transition: color 0.25s; }
+  .apchip em { font-style: normal; font-family: var(--f-mono); font-size: 0.66rem; color: var(--amber); }
+  .apchip[aria-pressed="true"] { border: 1px solid rgba(255, 180, 67, 0.55); background: var(--amber-dim); color: var(--ink); }
+  .apchip[aria-pressed="true"] .ico { color: var(--amber); }
+  .apchip[aria-pressed="true"] em { color: var(--ink-3); }
+  .ico { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .mini { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  .mini button { border: 0; background: none; padding: 0; color: var(--ink-3); font-family: var(--f-mono); font-size: 0.72rem; cursor: pointer; }
+  .mini button:hover { color: var(--amber); }
 
-  .alert { border-radius: 14px; padding: 0.9rem 1.1rem; background: var(--achiote-soft); }
-  .alert.okmode { background: var(--green-soft); }
-  .alert .head { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--achiote-ink); margin-bottom: 0.4rem; }
-  .alert.okmode .head { color: var(--green); }
-  .alert ul { margin: 0; padding-left: 1.1rem; font-size: 0.9rem; display: flex; flex-direction: column; gap: 0.3rem; }
+  .tokens { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.7rem; }
+  @media (max-width: 52rem) { .tokens { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .token { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0.7rem; padding: 1rem 1rem 0.9rem;
+           border-radius: 20px; border: 1px dashed var(--line-2); background: transparent; cursor: pointer; text-align: left;
+           transition: background 0.25s, border-color 0.25s, transform 0.15s; }
+  .token:active { transform: scale(0.97); }
+  .token .ico { width: 2.2rem; height: 2.2rem; stroke-width: 1.4; color: var(--ink-3); transition: color 0.25s, transform 0.35s var(--ease); }
+  .token .tn { font-weight: 600; font-size: 0.92rem; line-height: 1.2; color: var(--ink-2); }
+  .token .tc { font-family: var(--f-mono); font-size: 0.64rem; color: var(--ink-3); }
+  .token[aria-pressed="true"] { background: var(--panel); border: 1px solid var(--line-2); }
+  .token[aria-pressed="true"] .ico { color: var(--amber); transform: rotate(-6deg); }
+  .token[aria-pressed="true"] .tn { color: var(--ink); }
+  .token[aria-pressed="false"] .tn { text-decoration: line-through; text-decoration-color: var(--bad); }
+  .token .st { position: absolute; top: 0.9rem; right: 0.9rem; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--line-2); transition: background 0.25s, box-shadow 0.25s; }
+  .token[aria-pressed="true"] .st { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
 
-  /* ---------- pestañas ---------- */
-  .tabs { display: flex; gap: 0.25rem; border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
-  .tabs button { border: 0; background: none; padding: 0.6rem 0.9rem; font-size: 0.88rem; font-weight: 500; color: var(--ink-faint);
-                 cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
-  .tabs button[aria-selected="true"] { color: var(--ink); font-weight: 700; border-bottom-color: var(--achiote); }
+  .switch-row { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.1rem; margin-top: 1rem; border-radius: 20px;
+                border: 1px solid var(--line); background: var(--panel); width: 100%; max-width: 34rem; text-align: left; cursor: pointer; }
+  .switch-row:disabled { opacity: 0.55; cursor: not-allowed; }
+  .switch-row .t { flex: 1; display: flex; flex-direction: column; gap: 0.15rem; }
+  .switch-row .t b { font-size: 0.98rem; }
+  .switch-row .t span { font-size: 0.82rem; color: var(--ink-2); line-height: 1.4; }
+  .switch { width: 46px; height: 26px; border-radius: 999px; background: var(--line-2); position: relative; flex: none; transition: background 0.3s; }
+  .switch::after { content: ""; position: absolute; left: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink-2);
+                   transition: transform 0.35s var(--ease), background 0.3s; }
+  [aria-pressed="true"] > .switch { background: var(--amber); box-shadow: 0 0 16px rgba(255, 180, 67, 0.35); }
+  [aria-pressed="true"] > .switch::after { transform: translateX(20px); background: #1a1206; }
 
-  .dias { display: grid; grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); gap: 0.75rem; }
-  .dia { border-radius: 16px; background: var(--surface); border: 1px solid var(--rule); overflow: hidden; }
-  .dia h4 { margin: 0; display: flex; justify-content: space-between; align-items: baseline; padding: 0.7rem 0.9rem 0.5rem;
-            font-family: var(--f-display); font-size: 1.05rem; font-weight: 800; }
-  .dia h4 span { font-family: var(--f-body); font-size: 0.78rem; font-weight: 600; color: var(--ink-faint); }
-  .dia h4 span.ok { color: var(--green); }
-  .comida { padding: 0.55rem 0.9rem 0.7rem; border-top: 1px solid var(--rule); }
-  .comida .slot { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--achiote-ink); }
-  .comida .nom { font-weight: 600; line-height: 1.3; margin: 0.1rem 0 0.15rem; }
-  .comida .meta { font-size: 0.76rem; color: var(--ink-faint); }
-  .comida .meta b.ok { color: var(--green); }
-  .comida .meta b.bad { color: var(--achiote-ink); }
+  /* ---------- tablero de la semana ---------- */
+  .board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line);
+           border: 1px solid var(--line); border-radius: 24px; overflow: hidden; }
+  @media (max-width: 68rem) { .board { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 40rem) { .board { grid-template-columns: minmax(0, 1fr); } }
+  .cell { background: var(--panel); padding: 1.3rem 1.25rem 1.4rem; display: flex; flex-direction: column; gap: 1.1rem; min-width: 0; }
+  .cell h3 { font-size: 0.98rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+  .cell h3 .ico { color: var(--amber); width: 1.1rem; height: 1.1rem; }
+  .field { display: flex; flex-direction: column; gap: 0.45rem; }
+  .lbl { font-size: 0.8rem; color: var(--ink-3); font-weight: 500; }
+  .hint { font-size: 0.8rem; color: var(--ink-3); line-height: 1.45; }
+  .hint b { color: var(--ink-2); }
+  .bigval { font-family: var(--f-display); font-weight: 800; font-size: 2.9rem; line-height: 0.9; color: var(--amber); }
+  .midval { font-family: var(--f-display); font-weight: 800; font-size: 1.9rem; line-height: 0.95; }
+  .midval small { font-family: var(--f-mono); font-size: 0.66rem; font-weight: 400; color: var(--ink-3); margin-left: 0.35rem; }
 
-  .scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 14px; background: var(--surface); }
-  table { width: 100%; border-collapse: collapse; font-size: 0.87rem; min-width: 34rem; }
-  thead th { font-size: 0.66rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700;
-             text-align: left; padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--rule); white-space: nowrap; }
-  tbody td { padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 26px; background: transparent; margin: 0; --p: 50%; cursor: pointer; }
+  input[type=range]::-webkit-slider-runnable-track { height: 6px; border-radius: 99px; background: linear-gradient(90deg, var(--amber) var(--p), var(--line-2) var(--p)); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; margin-top: -8px;
+    background: var(--ink); border: 5px solid var(--amber); box-shadow: 0 0 0 6px rgba(255, 180, 67, 0.12); transition: box-shadow 0.2s; }
+  input[type=range]:active::-webkit-slider-thumb { box-shadow: 0 0 0 10px rgba(255, 180, 67, 0.18); }
+  input[type=range]::-moz-range-track { height: 6px; border-radius: 99px; background: var(--line-2); }
+  input[type=range]::-moz-range-progress { height: 6px; border-radius: 99px; background: var(--amber); }
+  input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--ink); border: 5px solid var(--amber); }
+  .range-wrap { position: relative; padding-bottom: 1.6rem; }
+  .marker { position: absolute; top: 26px; left: var(--m, 50%); transform: translateX(-50%); font-family: var(--f-mono); font-size: 0.62rem;
+            color: var(--ok); white-space: nowrap; transition: left 0.5s var(--ease), color 0.3s; }
+  .marker::before { content: ""; display: block; width: 2px; height: 7px; margin: 0 auto 2px; background: currentColor; border-radius: 2px; }
+  .marker.bad { color: var(--bad); }
+
+  .seg { display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: var(--deep); border: 1px solid var(--line); }
+  .seg button { flex: 1; border: 0; background: none; padding: 0.55rem 0.35rem; border-radius: 10px; font-size: 0.8rem; font-weight: 500;
+                color: var(--ink-3); cursor: pointer; transition: background 0.25s, color 0.25s; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--night); font-weight: 700; }
+
+  .steppers { display: flex; flex-direction: column; gap: 0.85rem; }
+  .stepper-row { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; }
+  .stepper { display: grid; grid-template-columns: 2.4rem 3.2rem 2.4rem; align-items: center; border: 1px solid var(--line-2);
+             border-radius: 14px; overflow: hidden; background: var(--deep); }
+  .stepper button { height: 2.5rem; border: 0; background: var(--raised); color: var(--ink-2); font-size: 1.2rem; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .stepper button:hover { background: var(--line-2); color: var(--amber); }
+  .stepper input { width: 100%; border: 0; background: transparent; color: var(--ink); text-align: center; font-family: var(--f-display);
+                   font-weight: 800; font-size: 1.55rem; padding: 0; -moz-appearance: textfield; appearance: textfield; }
+  .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .pill { padding: 0.42rem 0.8rem; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; color: var(--ink-2);
+          font-size: 0.8rem; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+  .pill[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--night); font-weight: 600; }
+  .cell .switch-row { margin-top: 0; padding: 0.85rem 0.9rem; background: var(--deep); }
+
+  /* ---------- resultado ---------- */
+  .stats { display: grid; grid-template-columns: 1.7fr repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line);
+           border-block: 1px solid var(--line); margin-bottom: 1.6rem; }
+  @media (max-width: 52rem) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stat.total { grid-column: 1 / -1; } }
+  .stat { background: var(--night); padding: 1.1rem 1.1rem 1.2rem 0; display: flex; flex-direction: column; gap: 0.3rem; }
+  .stat + .stat { padding-left: 1.2rem; }
+  @media (max-width: 52rem) { .stat { padding-left: 0 !important; } .stat:nth-child(3), .stat:nth-child(4) { padding-left: 1.1rem !important; } }
+  .stat .k { font-size: 0.82rem; color: var(--ink-2); display: flex; align-items: center; gap: 0.45rem; }
+  .dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--ink-3); flex: none; }
+  .dot.ok { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+  .dot.bad { background: var(--bad); box-shadow: 0 0 8px var(--bad); }
+  .stat .v { font-family: var(--f-display); font-weight: 800; font-size: clamp(2.2rem, 4.2vw, 3rem); line-height: 0.95; }
+  .stat.total .v { font-size: clamp(3.2rem, 7vw, 5rem); color: var(--amber); text-shadow: 0 0 30px rgba(255, 180, 67, 0.25); }
+  .stat .s { font-family: var(--f-mono); font-size: 0.66rem; color: var(--ink-3); }
+
+  .notes { border: 1px solid var(--line); border-radius: 20px; padding: 1.1rem 1.3rem 1.2rem; background: var(--panel); margin-bottom: 2rem; }
+  .notes.bad { border-color: rgba(255, 122, 87, 0.4); background: linear-gradient(var(--bad-dim), var(--bad-dim)), var(--panel); }
+  .notes .head { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; margin-bottom: 0.6rem; }
+  .notes ul { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.9rem; color: var(--ink-2); max-width: 62rem; }
+  .notes li::marker { content: "→  "; color: var(--amber); }
+
+  .tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
+  .tabs button { border: 1px solid transparent; background: none; padding: 0.5rem 1rem; border-radius: 999px; font-size: 0.9rem; font-weight: 500;
+                 color: var(--ink-3); cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .tabs button:hover { color: var(--ink); }
+  .tabs button[aria-selected="true"] { background: var(--raised); border-color: var(--line-2); color: var(--ink); }
+
+  .dias { display: grid; grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr)); gap: 0.9rem; }
+  .dia { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 1rem 1.1rem 0.4rem; }
+  .dia.enter { animation: subir 0.5s var(--ease) both; animation-delay: calc(var(--i, 0) * 55ms); }
+  @keyframes subir { from { opacity: 0.2; transform: translateY(12px); } }
+  .dia header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; }
+  .dia h4 { margin: 0; font-family: var(--f-display); font-weight: 800; font-size: 1.7rem; text-transform: uppercase; line-height: 1; }
+  .dia header span { font-family: var(--f-mono); font-size: 0.68rem; color: var(--ink-3); }
+  .dia header span.ok { color: var(--ok); }
+  .comida { padding: 0.7rem 0 0.75rem; border-top: 1px dashed var(--line-2); }
+  .comida .slot { font-family: var(--f-mono); font-size: 0.62rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; }
+  .comida .nom { font-weight: 600; line-height: 1.3; margin: 0.15rem 0 0.35rem; }
+  .comida .meta { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; font-family: var(--f-mono); font-size: 0.66rem; color: var(--ink-3); }
+  .comida .meta .ico { width: 0.95rem; height: 0.95rem; color: var(--ink-2); }
+  .comida .meta .p.ok { color: var(--ok); }
+  .comida .meta .p.bad { color: var(--bad); }
+  .note { font-size: 0.86rem; color: var(--ink-3); margin-top: 1rem; max-width: 46rem; }
+
+  /* el tiquete */
+  .lista-wrap { display: grid; grid-template-columns: minmax(0, 32rem) minmax(0, 1fr); gap: 2rem; align-items: start; }
+  @media (max-width: 56rem) { .lista-wrap { grid-template-columns: minmax(0, 1fr); } }
+  .receipt { background: var(--paper); color: var(--paper-ink); font-family: var(--f-mono); font-size: 0.74rem; line-height: 1.55;
+             padding: 2rem 1.5rem 2.2rem; position: relative; transform: rotate(-0.6deg);
+             -webkit-mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / 18px 51% repeat-x,
+                           conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 18px 51% repeat-x;
+                     mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / 18px 51% repeat-x,
+                           conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 18px 51% repeat-x; }
+  .receipt-shadow { filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.55)); }
+  .r-head { text-align: center; display: flex; flex-direction: column; gap: 0.1rem; }
+  .r-head strong { font-family: var(--f-display); font-weight: 900; font-size: 2rem; letter-spacing: 0.04em; line-height: 1; }
+  .r-head span { color: var(--paper-3); }
+  .r-sep { border-top: 1.5px dashed #b9b0a1; margin: 0.9rem 0; }
+  .r-cat { font-weight: 500; letter-spacing: 0.1em; margin: 0.9rem 0 0.3rem; }
+  .r-item { margin-bottom: 0.45rem; }
+  .r-line { display: flex; align-items: baseline; gap: 0.4rem; }
+  .r-line .r-dots { flex: 1; border-bottom: 1.5px dotted #a89f90; transform: translateY(-3px); min-width: 1rem; }
+  .r-line .r-name { font-weight: 500; }
+  .r-line .r-price { font-variant-numeric: tabular-nums; }
+  .r-sub { color: var(--paper-3); font-size: 0.66rem; padding-left: 0.8rem; }
+  .r-sub .left { color: #8a5a00; }
+  .r-total { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--f-display); font-weight: 900; font-size: 2.1rem; line-height: 1; }
+  .r-total span:first-child { font-size: 1.3rem; }
+  .r-bar { height: 2.6rem; margin: 1.2rem auto 0.5rem; width: 70%;
+           background: repeating-linear-gradient(90deg, var(--paper-ink) 0 2px, transparent 2px 4px, var(--paper-ink) 4px 5px, transparent 5px 8px, var(--paper-ink) 8px 11px, transparent 11px 12px); }
+  .r-foot { text-align: center; color: var(--paper-3); font-size: 0.62rem; }
+  .side { display: flex; flex-direction: column; gap: 1rem; }
+  .side p { color: var(--ink-2); font-size: 0.9rem; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; border: 0; border-radius: 999px; padding: 0.7rem 1.2rem; font-weight: 700; font-size: 0.9rem;
+         background: var(--amber); color: #1a1206; cursor: pointer; width: fit-content; transition: transform 0.15s, box-shadow 0.25s; }
+  .btn:hover { box-shadow: 0 0 22px rgba(255, 180, 67, 0.4); }
+  .btn:active { transform: scale(0.96); }
+  .btn.ghostbtn { background: transparent; color: var(--ink); border: 1px solid var(--line-2); }
+  .toast { font-family: var(--f-mono); font-size: 0.72rem; color: var(--ok); min-height: 1.2em; }
+  .copybox { width: 100%; min-height: 9rem; background: var(--deep); color: var(--ink-2); border: 1px solid var(--line); border-radius: 12px; font-family: var(--f-mono); font-size: 0.7rem; padding: 0.8rem; }
+
+  .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 34rem; }
+  thead th { font-family: var(--f-mono); font-size: 0.62rem; font-weight: 400; color: var(--ink-3); text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  tbody td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; }
   tbody tr:last-child td { border-bottom: 0; }
   td.n, th.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  td.sku { color: var(--ink-soft); font-size: 0.8rem; }
-  .sub { font-size: 0.75rem; color: var(--ink-faint); }
-  tr.cat td { background: var(--muted); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
-              color: var(--ink-soft); padding: 0.45rem 0.9rem; }
-  tr.total td { font-family: var(--f-display); font-weight: 800; font-size: 1rem; }
-  tr.mine td { background: var(--green-soft); }
-  .leftover { color: var(--gold); }
-  .note { font-size: 0.86rem; color: var(--ink-soft); margin: 0.9rem 0 0; max-width: 46rem; }
-  .note b { color: var(--ink); }
-  h3.sec { font-size: 1.15rem; font-weight: 800; margin: 1.6rem 0 0.3rem; }
+  .sub { font-family: var(--f-mono); font-size: 0.64rem; color: var(--ink-3); }
+  tr.total td { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; }
+  tr.mine td { background: var(--amber-dim); }
+  .tag { display: inline-block; font-family: var(--f-mono); font-size: 0.6rem; padding: 0.1rem 0.45rem; border-radius: 999px; background: var(--ok-dim); color: var(--ok); }
+  h3.sec { font-family: var(--f-display); font-weight: 800; font-size: 1.6rem; text-transform: uppercase; margin: 2rem 0 0.3rem; }
   .barcell { display: flex; align-items: center; gap: 0.5rem; }
-  .barcell i { display: block; height: 0.5rem; border-radius: 999px; background: var(--rule-strong); min-width: 4px; }
-  .barcell i.best { background: var(--achiote); }
+  .barcell i { display: block; height: 0.45rem; border-radius: 99px; background: var(--line-2); min-width: 4px; }
+  .barcell i.best { background: var(--amber); box-shadow: 0 0 10px rgba(255, 180, 67, 0.5); }
 
-  details.rec { border: 1px solid var(--rule); border-radius: 14px; background: var(--surface); margin-bottom: 0.5rem; overflow: hidden; }
-  details.rec summary { cursor: pointer; padding: 0.75rem 0.95rem; display: flex; gap: 0.6rem; align-items: baseline; flex-wrap: wrap; list-style: none; }
+  details.rec { border: 1px solid var(--line); border-radius: 18px; background: var(--panel); margin-bottom: 0.6rem; overflow: hidden; transition: border-color 0.2s; }
+  details.rec[open] { border-color: var(--line-2); }
+  details.rec summary { cursor: pointer; padding: 0.9rem 1.1rem; display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; list-style: none; }
   details.rec summary::-webkit-details-marker { display: none; }
-  details.rec summary::before { content: "›"; color: var(--achiote-ink); font-weight: 700; transition: transform 0.15s; display: inline-block; }
-  details.rec[open] summary::before { transform: rotate(90deg); }
-  .rn { font-weight: 700; }
-  .rm { margin-left: auto; font-size: 0.76rem; color: var(--ink-faint); }
-  .usa { display: inline-flex; gap: 0.3rem; flex-wrap: wrap; }
-  .usa span { font-size: 0.7rem; font-weight: 700; padding: 0.05rem 0.45rem; border-radius: 999px; background: var(--muted); color: var(--ink-soft); }
-  .recbody { padding: 0 0.95rem 1rem 1.9rem; }
-  .ing { display: flex; flex-wrap: wrap; gap: 0.3rem; font-size: 0.78rem; margin-bottom: 0.6rem; }
-  .ing span { border: 1px solid var(--rule-strong); border-radius: 6px; padding: 0.05rem 0.45rem; }
-  .recbody ol { margin: 0; padding-left: 1.1rem; font-size: 0.9rem; }
+  details.rec summary::before { content: "+"; font-family: var(--f-mono); color: var(--amber); width: 1rem; transition: transform 0.25s var(--ease); }
+  details.rec[open] summary::before { transform: rotate(45deg); }
+  .rn { font-weight: 600; }
+  .usa { display: inline-flex; gap: 0.35rem; color: var(--ink-2); }
+  .usa .ico { width: 1.05rem; height: 1.05rem; }
+  .rm { margin-left: auto; font-family: var(--f-mono); font-size: 0.66rem; color: var(--ink-3); }
+  .recbody { padding: 0 1.1rem 1.1rem 2.9rem; }
+  .ing { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.7rem; }
+  .ing span { font-family: var(--f-mono); font-size: 0.66rem; border: 1px solid var(--line-2); border-radius: 8px; padding: 0.15rem 0.5rem; color: var(--ink-2); }
+  .recbody ol { margin: 0; padding-left: 1.1rem; font-size: 0.9rem; color: var(--ink-2); display: flex; flex-direction: column; gap: 0.3rem; }
 
-  footer { padding: 1.5rem 1rem 2.5rem; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-faint);
-           display: flex; flex-direction: column; gap: 0.5rem; }
-  footer p { margin: 0; max-width: 60rem; }
-  footer b { color: var(--ink-soft); }
+  /* ---------- la cuenta flotante ---------- */
+  .cuenta { position: fixed; left: 50%; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+            width: min(44rem, calc(100% - 24px)); display: flex; align-items: center; gap: 1.1rem; padding: 0.55rem 0.6rem 0.55rem 1.2rem;
+            border-radius: 999px; background: rgba(27, 24, 21, 0.84); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+            border: 1px solid var(--line-2); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); z-index: 50; }
+  .cuenta .lab { font-family: var(--f-mono); font-size: 0.6rem; color: var(--ink-3); line-height: 1.2; }
+  .cuenta .tot { font-family: var(--f-display); font-weight: 900; font-size: 1.9rem; color: var(--amber); line-height: 1; }
+  .cuenta .mini-stat { display: flex; align-items: center; gap: 0.4rem; font-family: var(--f-mono); font-size: 0.7rem; color: var(--ink-2); white-space: nowrap; }
+  .cuenta .grow { flex: 1; }
+  .cuenta .btn { padding: 0.7rem 1.1rem; }
+  .cuenta.flash .tot { animation: flash 0.6s var(--ease); }
+  @keyframes flash { 30% { text-shadow: 0 0 24px var(--amber); transform: translateY(-1px); } }
+  @media (max-width: 34rem) { .cuenta .hide-sm { display: none; } .cuenta { gap: 0.7rem; } }
 
-  @media (prefers-reduced-motion: reduce) { *, *::after { transition: none !important; } }
+  footer { margin-top: 5rem; padding-block: 2rem; border-top: 1px solid var(--line); font-size: 0.8rem; color: var(--ink-3);
+           display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+  @media (max-width: 52rem) { footer { grid-template-columns: minmax(0, 1fr); } }
+  footer b { color: var(--ink-2); display: block; margin-bottom: 0.3rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
 </style>
 
-<header class="top">
-  <div class="brand">Mercao</div>
-  <span class="pill">Precios <b>D1</b> · 8 sep 2026</span>
-  <span class="grow"></span>
-  <span class="pill num" id="stat-cat"></span>
-</header>
+<!-- iconos: los mismos aparatos de la ilustración, en trazo -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-estufa" viewBox="0 0 24 24"><path d="M12 2.8c.9 2.9 4.4 4.6 4.4 8.6a4.4 4.4 0 0 1-8.8 0c0-2.1 1-3.3 2.1-4.3 0 1.5.8 2.7 2.1 2.7 0-2.6-1-4.6.2-7Z"/><path d="M4.5 21h15"/><path d="M7 21v-2.5M17 21v-2.5"/></symbol>
+  <symbol id="i-horno" viewBox="0 0 24 24"><rect x="3" y="3.5" width="18" height="17" rx="2.2"/><rect x="6" y="9" width="12" height="8.5" rx="1.4"/><path d="M6 6.3h4"/><circle cx="15.5" cy="6.3" r=".9"/><circle cx="18" cy="6.3" r=".9"/></symbol>
+  <symbol id="i-microondas" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2.2"/><rect x="4.8" y="7.8" width="10.4" height="8.4" rx="1.2"/><path d="M18.4 8.2v2.4"/><circle cx="18.4" cy="14" r=".9"/></symbol>
+  <symbol id="i-airfryer" viewBox="0 0 24 24"><path d="M6 7a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v14H6Z"/><circle cx="12" cy="8.4" r="2"/><rect x="8.3" y="13" width="7.4" height="5.2" rx="1.6"/></symbol>
+  <symbol id="i-olla_presion" viewBox="0 0 24 24"><path d="M4.5 11h13v6a3 3 0 0 1-3 3h-7a3 3 0 0 1-3-3Z"/><path d="M3.5 11c0-2.6 3.4-4 7.5-4s7.5 1.4 7.5 4"/><path d="M11 7V4.5"/><path d="M17.5 9.2h4"/></symbol>
+  <symbol id="i-arrocera" viewBox="0 0 24 24"><path d="M5 11.5h14v5.5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4Z"/><path d="M4 11.5c1-3.6 4.5-5.2 8-5.2s7 1.6 8 5.2"/><path d="M10 4.6h4"/><circle cx="15.3" cy="15.4" r=".9"/></symbol>
+  <symbol id="i-licuadora" viewBox="0 0 24 24"><path d="M7 3h10l-1.6 11H8.6Z"/><path d="M8 14h8l1.2 7H6.8Z"/><circle cx="12" cy="17.6" r="1"/><path d="M17 6h2.2v5.2H16"/></symbol>
+  <symbol id="i-nevera" viewBox="0 0 24 24"><rect x="5.5" y="2" width="13" height="20" rx="2.2"/><path d="M5.5 9h13"/><path d="M8.5 4.8v2M8.5 11.8v4"/></symbol>
+  <symbol id="p-pollo" viewBox="0 0 32 32"><path d="M13.5 17.5c-4-4.6-.6-12.5 6-12.5 6 0 9.6 6.2 6.8 11-2.4 4-8.6 5.6-12.8 1.5Z"/><path d="m13.5 17.5-5 5"/><circle cx="6.6" cy="23" r="2"/><circle cx="9" cy="25.4" r="2"/><path d="M20 9.5c1.6.3 2.8 1.4 3.2 3"/></symbol>
+  <symbol id="p-res" viewBox="0 0 32 32"><path d="M5 13.5C5 8.5 10 5.5 16.5 5.5c7 0 11 3.5 11 9 0 7-7 12-13.5 12-4.6 0-5.4-2.8-5.4-5.2 0-3-3.6-4-3.6-7.8Z"/><circle cx="19" cy="13" r="3"/><path d="M11 12.5c1.6 2.6 1.4 5.8 0 8"/></symbol>
+  <symbol id="p-embutidos" viewBox="0 0 32 32"><path d="M7.5 22.5c6.4 4 15.5 1 18-6.8 1.4-4.4.3-8.8-2.4-9.4-2.2-.5-3.2 1.4-2.8 3.6.8 4-1.2 7.4-4.4 9-2.2 1.1-4.8 1-6.4.2-2.2-1-4.1.4-3.9 1.9.1.6.7 1.1 1.9 1.5Z"/><path d="m4.2 24.5 2-1M24.6 4.4l-.5 2"/><path d="M14 20.5c.8-.4 1.6-.9 2.2-1.6"/></symbol>
+  <symbol id="p-pescado" viewBox="0 0 32 32"><path d="M6.5 16c3.6-5 8.6-7.6 13.2-7.6 4.8 0 8 3.4 9 7.6-1 4.2-4.2 7.6-9 7.6-4.6 0-9.6-2.6-13.2-7.6Z"/><path d="M6.5 16 2.5 11v10Z"/><circle cx="22.5" cy="14.3" r="1.1"/><path d="M15 11.5c1.3 2.8 1.3 6.2 0 9"/></symbol>
+  <symbol id="p-huevo" viewBox="0 0 32 32"><path d="M16 4c4.8 0 9 7.4 9 13.4a9 9 0 0 1-18 0C7 11.4 11.2 4 16 4Z"/><path d="M11.5 18.5c.2 2.4 1.7 4 3.6 4.4"/></symbol>
+  <symbol id="p-granos" viewBox="0 0 32 32"><path d="M10.5 6c4.6-2.4 11.4.2 13.2 5.6 1.9 5.8-1.3 12.8-7.4 14.2-5.3 1.2-9.8-2.4-8.8-6.8.8-3 4-3.4 4.4-6.3.4-2.7-4.4-4.6-1.4-6.7Z"/><path d="M15.5 12c1 1.9.7 4.3-1.1 5.8"/></symbol>
+  <symbol id="i-plata" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v5M18 9.5v5"/></symbol>
+  <symbol id="i-casa" viewBox="0 0 24 24"><path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-cuerpo" viewBox="0 0 24 24"><circle cx="12" cy="4.8" r="2"/><path d="M5 9.5h14M12 9.5v5l-3 6.5M12 14.5l3 6.5"/></symbol>
+  <symbol id="i-reloj" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.6 1.8M9.5 2.8h5"/></symbol>
+</svg>
 
-<div class="layout">
-  <aside class="rail" aria-label="Tu semana">
-    <div class="field">
-      <span class="lbl">Presupuesto</span>
-      <div class="big num" id="presu-lbl">$150.000</div>
-      <input type="range" id="presu" min="30000" max="500000" step="5000" value="150000" aria-label="Presupuesto">
-    </div>
-
-    <div class="field">
-      <span class="lbl">Modo</span>
-      <div class="seg" id="modo">
-        <button type="button" data-v="dias" aria-pressed="true">Cubrir los días</button>
-        <button type="button" data-v="presupuesto" aria-pressed="false">Estirar la plata</button>
-      </div>
-      <div class="hint" id="modo-hint">Calcula cuánto cuesta cubrir los días que pides.</div>
-    </div>
-
-    <div class="trio">
-      <label class="field"><span class="lbl">Personas</span><input type="number" id="personas" min="1" max="8" value="2"></label>
-      <label class="field"><span class="lbl">Días</span><input type="number" id="dias" min="1" max="30" value="5"></label>
-      <label class="field"><span class="lbl">Comidas</span><input type="number" id="comidas" min="1" max="3" value="2"></label>
-    </div>
-
-    <div class="field">
-      <span class="lbl">Peso y actividad</span>
-      <div class="mid num"><span id="peso-lbl">70</span><small>kg por persona</small></div>
-      <input type="range" id="peso" min="40" max="120" step="1" value="70" aria-label="Peso promedio por persona">
-      <div class="chips" id="actividad">
-        <button type="button" class="chip" data-v="sedentario" aria-pressed="false">Poco activo</button>
-        <button type="button" class="chip" data-v="activo" aria-pressed="true">Activo</button>
-        <button type="button" class="chip" data-v="fuerte" aria-pressed="false">Entrena duro</button>
-      </div>
-      <div class="hint" id="prot-hint"></div>
-    </div>
-
-    <div class="field">
-      <span class="lbl">Restricciones</span>
-      <div class="chips" id="restricciones">
-        <button type="button" class="chip" data-v="sin_lacteos" aria-pressed="false">Sin lácteos</button>
-        <button type="button" class="chip" data-v="sin_gluten" aria-pressed="false">Sin gluten</button>
-      </div>
-    </div>
-
-    <div class="field">
-      <button type="button" class="toggle" id="mealprep" aria-pressed="false">
-        <span class="t"><b>Meal prep</b><span id="prep-hint">Menú variado: cada día algo distinto.</span></span>
-        <span class="switch" aria-hidden="true"></span>
-      </button>
-    </div>
-
-    <div class="field" id="f-platos" hidden>
-      <span class="lbl">Platos distintos que cocinas</span>
-      <div class="mid num"><span id="platos-lbl">3</span><small>platos</small></div>
-      <input type="range" id="platos" min="1" max="6" step="1" value="3" aria-label="Platos distintos">
-    </div>
-
-    <div class="field" id="f-reps">
-      <span class="lbl">Veces que se repite una receta</span>
-      <div class="mid num"><span id="reps-lbl">2</span><small>× cada una</small></div>
-      <input type="range" id="reps" min="1" max="5" step="1" value="2" aria-label="Repeticiones por receta">
-      <div class="hint" id="reps-hint"></div>
-    </div>
-
-    <div class="field">
-      <span class="lbl">Máximo por receta</span>
-      <div class="mid num"><span id="maxmin-lbl">90</span><small>min</small></div>
-      <input type="range" id="maxmin" min="10" max="90" step="5" value="90" aria-label="Minutos máximos por receta">
-    </div>
-  </aside>
+<div class="wrap">
+  <header class="top">
+    <div class="mark"><span class="pilot" aria-hidden="true"></span>mercao</div>
+    <div class="stamp num" id="stat-cat">precios D1 · 8 sep 2026</div>
+  </header>
 
   <main>
-    <section class="kitchen" aria-labelledby="k-title">
-      <div class="kitchen-head">
+    <!-- ===================== 1. LA COCINA ===================== -->
+    <section aria-labelledby="t-cocina">
+      <div class="step-head">
         <div>
-          <h2 id="k-title">¿Qué hay en tu cocina?</h2>
-          <p>Toca cada cosa que tengas. El menú solo usa recetas que puedes hacer con eso.</p>
+          <div class="kicker"><i>1/4</i>tu cocina</div>
+          <h1 id="t-cocina">Prende lo<br>que <em>tienes.</em></h1>
+          <p class="lede">Toca cada aparato que hay en tu cocina. El menú de la semana solo usa recetas que puedes hacer con lo que esté prendido.</p>
         </div>
-        <div class="meter">
-          <div class="mid num" id="k-count">18<small>de 30 recetas</small></div>
-          <div class="bar"><i id="k-bar" style="width:60%"></i></div>
+        <div class="counter" aria-live="polite">
+          <span class="big num" id="k-count">0</span>
+          <span class="of"><b id="k-total">/30</b>recetas que<br>puedes cocinar</span>
         </div>
       </div>
 
-      <svg class="scene" id="scene" viewBox="0 0 960 520" role="group" aria-label="Ilustración de una cocina con electrodomésticos seleccionables">
-        <defs>
-          <pattern id="tiles" width="34" height="34" patternUnits="userSpaceOnUse">
-            <rect class="tile" width="34" height="34"></rect>
-            <path class="tile-line" d="M34 0V34M0 34H34"></path>
-          </pattern>
-        </defs>
-        <!-- pared, baldosas y piso -->
-        <rect class="wall" x="0" y="0" width="960" height="520"></rect>
-        <rect x="22" y="140" width="686" height="160" fill="url(#tiles)"></rect>
-        <rect class="floor" x="0" y="496" width="960" height="24"></rect>
-        <!-- gabinetes altos -->
-        <rect class="wood" x="22" y="26" width="240" height="104" rx="6"></rect>
-        <path class="seam" d="M142 32V124"></path>
-        <rect class="knob" x="128" y="96" width="6" height="22" rx="3"></rect>
-        <rect class="knob" x="150" y="96" width="6" height="22" rx="3"></rect>
-        <rect class="wood" x="448" y="26" width="260" height="104" rx="6"></rect>
-        <path class="seam" d="M578 32V124"></path>
-        <rect class="knob" x="564" y="96" width="6" height="22" rx="3"></rect>
-        <rect class="knob" x="586" y="96" width="6" height="22" rx="3"></rect>
-        <!-- campana -->
-        <path class="hood" d="M300 20H400V88L432 126H268L300 88Z"></path>
-        <!-- gabinetes bajos -->
-        <rect class="wood" x="22" y="314" width="686" height="182"></rect>
-        <path class="seam" d="M142 322V488M250 314V496M450 314V496M578 322V488M26 372H246M454 372H704"></path>
-        <rect class="knob" x="116" y="400" width="6" height="26" rx="3"></rect>
-        <rect class="knob" x="160" y="400" width="6" height="26" rx="3"></rect>
-        <rect class="knob" x="552" y="400" width="6" height="26" rx="3"></rect>
-        <rect class="knob" x="596" y="400" width="6" height="26" rx="3"></rect>
-        <rect class="knob" x="116" y="338" width="26" height="6" rx="3"></rect>
-        <rect class="knob" x="530" y="338" width="26" height="6" rx="3"></rect>
-        <rect class="counter" x="14" y="296" width="702" height="18" rx="3"></rect>
+      <div class="stage">
+        <svg class="scene" id="scene" viewBox="0 0 1200 600" role="group" aria-label="Cocina ilustrada. Cada electrodoméstico es un botón para marcar si lo tienes.">
+          <defs>
+            <linearGradient id="g-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1915"/><stop offset="1" stop-color="#121110"/></linearGradient>
+            <radialGradient id="g-lamp" cx="330" cy="330" r="420" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffc06a" stop-opacity="0.2"/><stop offset="1" stop-color="#ffc06a" stop-opacity="0"/></radialGradient>
+            <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1322"/><stop offset="1" stop-color="#1f2c45"/></linearGradient>
+            <pattern id="g-tiles" width="44" height="44" patternUnits="userSpaceOnUse"><rect width="44" height="44" fill="#191613"/><path d="M44 0V44M0 44H44" stroke="#221e1a" stroke-width="2"/></pattern>
+            <pattern id="g-baldosa" width="40" height="40" patternUnits="userSpaceOnUse">
+              <rect width="40" height="40" fill="#1e1915"/>
+              <path d="M20 5 35 20 20 35 5 20Z" fill="none" stroke="#2e4a45" stroke-width="2"/>
+              <circle cx="20" cy="20" r="5" fill="#6a3825"/>
+              <path d="M0 8A8 8 0 0 0 8 0H0ZM40 8A8 8 0 0 1 32 0H40ZM0 32A8 8 0 0 1 8 40H0ZM40 32A8 8 0 0 0 32 40H40Z" fill="#4a2a1d"/>
+            </pattern>
+            <linearGradient id="g-steel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7f868c"/><stop offset=".3" stop-color="#d9dee1"/><stop offset=".55" stop-color="#a3aab0"/><stop offset=".8" stop-color="#e6eaec"/><stop offset="1" stop-color="#8a9197"/></linearGradient>
+            <linearGradient id="g-steelV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3e7e9"/><stop offset="1" stop-color="#8d949a"/></linearGradient>
+            <linearGradient id="g-dark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#36383c"/><stop offset="1" stop-color="#151618"/></linearGradient>
+            <linearGradient id="g-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2531"/><stop offset="1" stop-color="#0a0d12"/></linearGradient>
+            <radialGradient id="g-oven" cx=".5" cy=".55" r=".65"><stop offset="0" stop-color="#ffd690"/><stop offset=".45" stop-color="#ff8a2a"/><stop offset="1" stop-color="#5a1c06"/></radialGradient>
+            <radialGradient id="g-micro" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="#fff0c4"/><stop offset=".55" stop-color="#ffb04a"/><stop offset="1" stop-color="#6b330c"/></radialGradient>
+            <linearGradient id="g-cream" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f2ea"/><stop offset="1" stop-color="#cfc5b5"/></linearGradient>
+            <linearGradient id="g-flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#2a55d0"/><stop offset=".55" stop-color="#5aa9ff"/><stop offset="1" stop-color="#d8ecff"/></linearGradient>
+            <linearGradient id="g-juice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc35a"/><stop offset="1" stop-color="#ff6f2e"/></linearGradient>
+            <radialGradient id="g-knob" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#4a4c50"/><stop offset="1" stop-color="#111214"/></radialGradient>
+            <radialGradient id="g-shadow"><stop offset="0" stop-color="#000" stop-opacity=".6"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+            <clipPath id="c-jar"><path d="M291 322 329 322 336 214 284 214Z"/></clipPath>
+            <mask id="m-moon"><rect width="1200" height="600" fill="#fff"/><circle cx="231" cy="82" r="15" fill="#000"/></mask>
+          </defs>
 
-        <!-- HORNO -->
-        <g class="ap" data-v="horno" tabindex="0" role="button" aria-pressed="false">
-          <g class="shift">
-            <rect class="b" x="252" y="334" width="196" height="158" rx="6"></rect>
-            <rect class="s" x="272" y="346" width="156" height="9" rx="4.5"></rect>
-            <rect class="g" x="274" y="368" width="152" height="96" rx="8"></rect>
-            <rect class="a" x="340" y="474" width="20" height="6" rx="3"></rect>
+          <!-- escena fija -->
+          <rect width="1200" height="600" fill="url(#g-wall)"/>
+          <rect x="40" y="170" width="845" height="200" fill="url(#g-tiles)"/>
+          <rect x="40" y="298" width="845" height="40" fill="url(#g-baldosa)" opacity=".85"/>
+          <!-- ventana de noche -->
+          <rect x="62" y="42" width="216" height="154" rx="6" fill="#2a2520"/>
+          <rect x="72" y="52" width="196" height="134" rx="2" fill="url(#g-sky)"/>
+          <circle cx="222" cy="88" r="16" fill="#f4e7c8" mask="url(#m-moon)"/>
+          <path d="M72 186V150h18v-14h16v20h14v-30h22v40h12v-22h20v32h16v-18h14v26h12v-12h52v24Z" fill="#090e17"/>
+          <g fill="#ffb443" opacity=".75"><rect x="125" y="134" width="4" height="4"/><rect x="133" y="144" width="4" height="4"/><rect x="164" y="150" width="4" height="4"/><rect x="96" y="158" width="4" height="4"/><rect x="214" y="160" width="4" height="4"/></g>
+          <path d="M170 52v134M72 119h196" stroke="#2a2520" stroke-width="6"/>
+          <rect x="54" y="194" width="232" height="8" rx="3" fill="#2f2924"/>
+          <!-- lámpara colgante -->
+          <path d="M330 0V112" stroke="#2c2722" stroke-width="2"/>
+          <path d="M306 112h48l18 34h-84Z" fill="#2c2722"/>
+          <ellipse cx="330" cy="147" rx="34" ry="4" fill="#ffd590"/>
+          <rect width="1200" height="600" fill="url(#g-lamp)" pointer-events="none"/>
+          <!-- campana -->
+          <rect x="432" y="0" width="56" height="74" fill="url(#g-steel)" opacity=".75"/>
+          <path d="M410 74h100l30 64H380Z" fill="url(#g-steelV)" opacity=".8"/>
+          <rect x="376" y="138" width="168" height="8" rx="2" fill="#6b7277"/>
+          <!-- gabinetes altos -->
+          <rect x="636" y="40" width="248" height="122" rx="6" fill="#221e1a"/>
+          <rect x="646" y="50" width="108" height="102" rx="3" fill="#1c1916" stroke="#2c2722"/>
+          <rect x="766" y="50" width="108" height="102" rx="3" fill="#1c1916" stroke="#2c2722"/>
+          <circle cx="744" cy="138" r="3.5" fill="#9b7a4a"/><circle cx="776" cy="138" r="3.5" fill="#9b7a4a"/>
+          <!-- mesón y gabinetes bajos -->
+          <rect x="40" y="384" width="845" height="200" fill="#1c1916"/>
+          <g fill="#191613" stroke="#29241f" stroke-width="2">
+            <rect x="52" y="422" width="130" height="150" rx="3"/><rect x="190" y="422" width="140" height="150" rx="3"/>
+            <rect x="52" y="394" width="278" height="22" rx="3"/>
+            <rect x="606" y="422" width="130" height="150" rx="3"/><rect x="744" y="422" width="130" height="150" rx="3"/>
+            <rect x="606" y="394" width="268" height="22" rx="3"/>
           </g>
-          <g class="badge" transform="translate(444 340)"><circle r="14"></circle><path d="M-6 0l4 4 8-8"></path><text y="4.5">+0</text></g>
-        </g>
+          <g fill="#9b7a4a"><rect x="166" y="440" width="5" height="26" rx="2.5"/><rect x="201" y="440" width="5" height="26" rx="2.5"/><rect x="176" y="403" width="26" height="4" rx="2"/><rect x="720" y="440" width="5" height="26" rx="2.5"/><rect x="755" y="440" width="5" height="26" rx="2.5"/><rect x="726" y="403" width="26" height="4" rx="2"/></g>
+          <rect x="30" y="368" width="865" height="17" rx="2" fill="#2a2622"/>
+          <rect x="30" y="368" width="865" height="2" fill="#4a443d"/>
+          <rect x="0" y="584" width="1200" height="16" fill="#0d0c0b"/>
+          <g fill="url(#g-shadow)"><ellipse cx="165" cy="368" rx="118" ry="7"/><ellipse cx="310" cy="368" rx="34" ry="5"/><ellipse cx="694" cy="368" rx="64" ry="6"/><ellipse cx="817" cy="368" rx="62" ry="6"/><ellipse cx="1028" cy="588" rx="140" ry="8"/></g>
 
-        <!-- ESTUFA -->
-        <g class="ap" data-v="estufa" tabindex="0" role="button" aria-pressed="false">
-          <g class="shift">
-            <path class="s" d="M258 282H442L452 296H248Z"></path>
-            <ellipse class="k" cx="292" cy="289" rx="22" ry="4"></ellipse>
-            <ellipse class="k" cx="408" cy="289" rx="22" ry="4"></ellipse>
-            <rect class="b" x="248" y="296" width="204" height="34" rx="4"></rect>
-            <circle class="k" cx="278" cy="313" r="7"></circle>
-            <circle class="k" cx="316" cy="313" r="7"></circle>
-            <circle class="k" cx="384" cy="313" r="7"></circle>
-            <circle class="k" cx="422" cy="313" r="7"></circle>
-            <rect class="a" x="342" y="309" width="16" height="8" rx="2"></rect>
+          <!-- ============ MICROONDAS ============ -->
+          <g class="ap" data-v="microondas" tabindex="0" role="button" aria-pressed="false">
+            <rect class="hit" x="54" y="252" width="222" height="120"/>
+            <g class="ghost"><rect class="gf" x="60" y="258" width="210" height="108" rx="12"/><rect x="82" y="280" width="104" height="64" rx="5"/><rect x="218" y="270" width="42" height="84" rx="5"/></g>
+            <g class="on">
+              <rect x="60" y="258" width="210" height="108" rx="12" fill="url(#g-dark)" stroke="#45484d"/>
+              <rect x="68" y="261" width="194" height="3" rx="1.5" fill="#fff" opacity=".1"/>
+              <rect x="72" y="270" width="140" height="86" rx="7" fill="#0e1114" stroke="#2c3035"/>
+              <rect x="82" y="280" width="104" height="64" rx="5" fill="url(#g-micro)" class="glow-pulse"/>
+              <ellipse cx="134" cy="336" rx="42" ry="5" fill="#fff3d6" opacity=".55"/>
+              <g class="plato"><path d="M118 329q16 16 32 0Z" fill="#efe8dc"/><ellipse cx="134" cy="329" rx="16" ry="3" fill="#fff"/><ellipse cx="134" cy="329" rx="12" ry="2" fill="#d98b3a"/></g>
+              <g class="vapor" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"><path d="M128 318q-4-6 0-12"/><path d="M136 318q4-6 0-12"/><path d="M144 318q-4-6 0-12"/></g>
+              <path d="M88 282h20l-14 60h-8Z" fill="#fff" opacity=".1"/>
+              <rect x="198" y="282" width="6" height="62" rx="3" fill="#3a3d42"/>
+              <rect x="218" y="270" width="42" height="84" rx="5" fill="#16181b"/>
+              <rect x="224" y="277" width="30" height="14" rx="2" fill="#050605"/>
+              <text x="239" y="288" text-anchor="middle" font-family="Martian Mono, monospace" font-size="9" fill="#ffb443">0<tspan class="blink">:</tspan>30</text>
+              <g fill="#2e3136"><rect x="226" y="298" width="7" height="5" rx="1.5"/><rect x="236" y="298" width="7" height="5" rx="1.5"/><rect x="246" y="298" width="7" height="5" rx="1.5"/><rect x="226" y="307" width="7" height="5" rx="1.5"/><rect x="236" y="307" width="7" height="5" rx="1.5"/><rect x="246" y="307" width="7" height="5" rx="1.5"/><rect x="226" y="316" width="7" height="5" rx="1.5"/><rect x="236" y="316" width="7" height="5" rx="1.5"/><rect x="246" y="316" width="7" height="5" rx="1.5"/></g>
+              <rect x="226" y="330" width="27" height="10" rx="5" fill="#2e3136"/><circle cx="231" cy="335" r="2" fill="#8fdc9e"/>
+              <rect x="70" y="364" width="14" height="4" rx="1" fill="#0b0b0c"/><rect x="246" y="364" width="14" height="4" rx="1" fill="#0b0b0c"/>
+            </g>
+            <g class="badge" transform="translate(268 260)"><circle r="13"/><path d="M-5.5 0l3.8 3.8 7.2-7.6"/><text y="5">+0</text></g>
           </g>
-          <g class="badge" transform="translate(452 276)"><circle r="14"></circle><path d="M-6 0l4 4 8-8"></path><text y="4.5">+0</text></g>
-        </g>
 
-        <!-- OLLA A PRESIÓN -->
-        <g class="ap" data-v="olla_presion" tabindex="0" role="button" aria-pressed="false">
-          <g class="shift">
-            <rect class="k" x="380" y="244" width="52" height="9" rx="4.5"></rect>
-            <rect class="s" x="316" y="244" width="68" height="42" rx="9"></rect>
-            <ellipse class="b" cx="350" cy="244" rx="38" ry="8"></ellipse>
-            <rect class="k" x="344" y="222" width="12" height="16" rx="3"></rect>
-            <circle class="a" cx="350" cy="220" r="4"></circle>
+          <!-- ============ LICUADORA ============ -->
+          <g class="ap" data-v="licuadora" tabindex="0" role="button" aria-pressed="false">
+            <rect class="hit" x="276" y="186" width="82" height="184"/>
+            <g class="ghost"><path class="gf" d="M291 322 329 322 336 214 284 214Z"/><path d="M287 330h46l5 36h-56Z"/><rect x="282" y="204" width="56" height="12" rx="3"/></g>
+            <g class="on">
+              <path d="M332 228q22 2 20 32-2 32-22 40" fill="none" stroke="#d6eaf8" stroke-opacity=".45" stroke-width="6" stroke-linecap="round"/>
+              <g clip-path="url(#c-jar)">
+                <rect x="276" y="262" width="70" height="64" fill="url(#g-juice)"/>
+                <path class="ola" d="M270 262q6-7 12 0t12 0 12 0 12 0 12 0 12 0 12 0 12 0v14H270Z" fill="#ffc35a"/>
+                <ellipse cx="310" cy="290" rx="9" ry="16" fill="#ffd27a" opacity=".35"/>
+              </g>
+              <path d="M291 322 329 322 336 214 284 214Z" fill="#c7e6ff" fill-opacity=".1" stroke="#d6eaf8" stroke-opacity=".55" stroke-width="1.6"/>
+              <path d="M292 220h6l-3 96h-4Z" fill="#fff" opacity=".22"/>
+              <g stroke="#d6eaf8" stroke-opacity=".4" stroke-width="1.4"><path d="M322 240h6M323 258h5M324 276h5M325 294h4"/></g>
+              <rect x="282" y="204" width="56" height="12" rx="3" fill="#1b1c1f"/>
+              <rect x="302" y="196" width="16" height="9" rx="2" fill="#2b2d31"/>
+              <rect x="289" y="321" width="42" height="10" rx="2" fill="#26282c"/>
+              <path d="M287 330h46l5 36h-56Z" fill="url(#g-dark)" stroke="#45484d"/>
+              <g transform="translate(310 349)"><circle r="7.5" fill="url(#g-knob)" stroke="#55585d"/><g class="kr"><path d="M0 0V-5.5" stroke="#ffb443" stroke-width="2" stroke-linecap="round"/></g></g>
+              <circle cx="326" cy="340" r="2.4" fill="#ffb443"/>
+            </g>
+            <g class="badge" transform="translate(342 196)"><circle r="13"/><path d="M-5.5 0l3.8 3.8 7.2-7.6"/><text y="5">+0</text></g>
           </g>
-          <g class="badge" transform="translate(396 226)"><circle r="14"></circle><path d="M-6 0l4 4 8-8"></path><text y="4.5">+0</text></g>
-        </g>
 
-        <!-- MICROONDAS -->
-        <g class="ap" data-v="microondas" tabindex="0" role="button" aria-pressed="false">
-          <g class="shift">
-            <rect class="b" x="36" y="198" width="160" height="98" rx="9"></rect>
-            <rect class="g" x="48" y="211" width="104" height="72" rx="6"></rect>
-            <rect class="s" x="160" y="211" width="26" height="72" rx="4"></rect>
-            <rect class="k" x="165" y="217" width="16" height="9" rx="2"></rect>
-            <circle class="k" cx="173" cy="241" r="4"></circle>
-            <circle class="k" cx="173" cy="256" r="4"></circle>
-            <circle class="a" cx="173" cy="271" r="4"></circle>
+          <!-- ============ HORNO ============ -->
+          <g class="ap" data-v="horno" tabindex="0" role="button" aria-pressed="false">
+            <rect class="hit" x="338" y="410" width="264" height="174"/>
+            <g class="ghost"><rect class="gf" x="344" y="412" width="252" height="166" rx="4"/><rect x="370" y="446" width="200" height="106" rx="10"/><path d="M372 428h196"/></g>
+            <g class="on">
+              <rect x="344" y="412" width="252" height="166" rx="4" fill="url(#g-steelV)" stroke="#6c7378"/>
+              <rect x="372" y="422" width="196" height="9" rx="4.5" fill="url(#g-steel)" stroke="#6c7378" stroke-width=".8"/>
+              <rect x="378" y="430" width="6" height="10" fill="#7d8489"/><rect x="556" y="430" width="6" height="10" fill="#7d8489"/>
+              <rect x="370" y="446" width="200" height="106" rx="10" fill="#0b0d10" stroke="#3a3f44" stroke-width="3"/>
+              <rect x="376" y="452" width="188" height="94" rx="7" fill="url(#g-oven)" class="glow-pulse"/>
+              <path class="resist" d="M384 462h172" stroke="#ff4a1c" stroke-width="3" stroke-linecap="round" stroke-dasharray="14 5"/>
+              <path d="M380 514h180" stroke="#4a2410" stroke-width="2"/>
+              <ellipse cx="470" cy="513" rx="48" ry="6" fill="#3a2414"/>
+              <ellipse cx="470" cy="502" rx="32" ry="13" fill="#b9652b"/>
+              <ellipse cx="461" cy="496" rx="13" ry="4" fill="#eba65c" opacity=".75"/>
+              <ellipse cx="438" cy="506" rx="9" ry="5" fill="#a5551f"/><ellipse cx="502" cy="506" rx="9" ry="5" fill="#a5551f"/>
+              <g class="vapor" stroke="#ffe2b0" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"><path d="M456 486q-4-6 0-12"/><path d="M470 484q4-6 0-12"/><path d="M484 486q-4-6 0-12"/></g>
+              <path d="M386 452h30l-36 94h-4Z" fill="#fff" opacity=".08"/>
+              <g fill="#5b6267"><rect x="410" y="560" width="22" height="3" rx="1.5"/><rect x="440" y="560" width="22" height="3" rx="1.5"/><rect x="470" y="560" width="22" height="3" rx="1.5"/><rect x="500" y="560" width="22" height="3" rx="1.5"/></g>
+            </g>
+            <g class="badge" transform="translate(592 420)"><circle r="13"/><path d="M-5.5 0l3.8 3.8 7.2-7.6"/><text y="5">+0</text></g>
           </g>
-          <g class="badge" transform="translate(192 200)"><circle r="14"></circle><path d="M-6 0l4 4 8-8"></path><text y="4.5">+0</text></g>
-        </g>
 
-        <!-- LICUADORA -->
-        <g class="ap" data-v="licuadora" tabindex="0" role="button" aria-pressed="false">
-          <g class="shift">
-            <path class="g" d="M206 264H242L248 190H200Z" fill-opacity="0.75"></path>
-            <rect class="k" x="198" y="180" width="52" height="11" rx="3"></rect>
-            <path class="s" d="M248 200H256V250H244" fill="none"></path>
-            <rect class="k" x="202" y="262" width="44" height="34" rx="6"></rect>
-            <circle class="a" cx="224" cy="279" r="5"></circle>
+          <!-- ============ ESTUFA ============ -->
+          <g class="ap" data-v="estufa" tabindex="0" role="button" aria-pressed="false">
+            <rect class="hit" x="336" y="336" width="268" height="76"/>
+            <g class="ghost"><path class="gf" d="M362 346h216l20 24H342Z"/><rect x="340" y="370" width="260" height="40" rx="3"/></g>
+            <g class="on">
+              <path d="M362 346h216l20 24H342Z" fill="#1b1c1e" stroke="#3a3c40"/>
+              <g fill="#0c0c0d" stroke="#45474b"><ellipse cx="412" cy="352" rx="26" ry="4"/><ellipse cx="528" cy="352" rx="26" ry="4"/><ellipse cx="400" cy="362" rx="32" ry="5"/><ellipse cx="540" cy="362" rx="32" ry="5"/></g>
+              <g fill="#2c2d30"><ellipse cx="412" cy="351" rx="9" ry="1.6"/><ellipse cx="528" cy="351" rx="9" ry="1.6"/><ellipse cx="400" cy="361" rx="11" ry="2"/><ellipse cx="540" cy="361" rx="11" ry="2"/></g>
+              <g id="llamas"></g>
+              <rect x="340" y="370" width="260" height="40" rx="3" fill="url(#g-steelV)" stroke="#6c7378"/>
+              <rect x="452" y="381" width="36" height="17" rx="3" fill="#060706"/>
+              <text x="470" y="393" text-anchor="middle" font-family="Martian Mono, monospace" font-size="8.5" fill="#ffb443">19<tspan class="blink">:</tspan>40</text>
+              <g transform="translate(372 390)"><circle r="10" fill="url(#g-knob)" stroke="#0b0b0c"/><g class="kr"><path d="M0 0V-7" stroke="#e8e2d8" stroke-width="2" stroke-linecap="round"/></g></g>
+              <g transform="translate(414 390)"><circle r="10" fill="url(#g-knob)" stroke="#0b0b0c"/><g class="kr"><path d="M0 0V-7" stroke="#e8e2d8" stroke-width="2" stroke-linecap="round"/></g></g>
+              <g transform="translate(526 390)"><circle r="10" fill="url(#g-knob)" stroke="#0b0b0c"/><g class="kr"><path d="M0 0V-7" stroke="#e8e2d8" stroke-width="2" stroke-linecap="round"/></g></g>
+              <g transform="translate(568 390)"><circle r="10" fill="url(#g-knob)" stroke="#0b0b0c"/><g class="kr"><path d="M0 0V-7" stroke="#e8e2d8" stroke-width="2" stroke-linecap="round"/></g></g>
+            </g>
+            <g class="badge" transform="translate(604 350)"><circle r="13"/><path d="M-5.5 0l3.8 3.8 7.2-7.6"/><text y="5">+0</text></g>
           </g>
-          <g class="badge" transform="translate(252 180)"><circle r="14"></circle><path d="M-6 0l4 4 8-8"></path><text y="4.5">+0</text></g>
-        </g>
 
-        <!-- AIRFRYER -->
-        <g class="ap" data-v="airfryer" tabindex="0" role="button" aria-pressed="false">
-          <g class="shift">
-            <rect class="k" x="468" y="190" width="92" height="106" rx="24"></rect>
-            <circle class="s" cx="514" cy="216" r="10"></circle>
-            <rect class="s" x="478" y="238" width="72" height="50" rx="12"></rect>
-            <rect class="k" x="500" y="256" width="28" height="11" rx="5.5"></rect>
-            <rect class="a" x="494" y="200" width="6" height="6" rx="3"></rect>
+          <!-- ============ OLLA A PRESIÓN ============ -->
+          <g class="ap" data-v="olla_presion" tabindex="0" role="button" aria-pressed="false">
+            <rect class="hit" x="350" y="252" width="170" height="98"/>
+            <g class="ghost"><rect class="gf" x="372" y="296" width="80" height="54" rx="10"/><path d="M366 300q46-22 92 0Z"/><rect x="452" y="292" width="62" height="10" rx="5"/></g>
+            <g class="on">
+              <rect x="356" y="306" width="20" height="8" rx="4" fill="#1c1c1e"/>
+              <rect x="372" y="296" width="80" height="54" rx="10" fill="url(#g-steel)" stroke="#5f666c"/>
+              <path d="M374 336h76" stroke="#6f767c" stroke-width="1.2"/>
+              <rect x="381" y="304" width="5" height="38" rx="2.5" fill="#fff" opacity=".45"/>
+              <path d="M366 300q46-22 92 0Z" fill="url(#g-steelV)" stroke="#5f666c"/>
+              <ellipse cx="412" cy="300" rx="47" ry="5" fill="#cfd4d8" stroke="#5f666c"/>
+              <rect x="452" y="293" width="62" height="10" rx="5" fill="#1c1c1e"/>
+              <rect x="450" y="285" width="56" height="8" rx="4" fill="#262628"/>
+              <circle cx="432" cy="291" r="2.6" fill="#ff7a57"/>
+              <rect x="407" y="278" width="10" height="9" rx="2" fill="#2b2b2d"/>
+              <g transform="translate(412 280)"><g class="wobble"><rect x="-4" y="-9" width="8" height="9" rx="2" fill="#3c3d40"/><circle cy="-11" r="4" fill="#55575b"/></g></g>
+              <g class="vapor" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"><path d="M412 262q-7-9 0-18q7-9 0-18"/><path d="M405 262q-6-8 0-16"/><path d="M420 262q6-8 0-16"/></g>
+            </g>
+            <g class="badge" transform="translate(362 286)"><circle r="13"/><path d="M-5.5 0l3.8 3.8 7.2-7.6"/><text y="5">+0</text></g>
           </g>
-          <g class="badge" transform="translate(556 194)"><circle r="14"></circle><path d="M-6 0l4 4 8-8"></path><text y="4.5">+0</text></g>
-        </g>
 
-        <!-- ARROCERA -->
-        <g class="ap" data-v="arrocera" tabindex="0" role="button" aria-pressed="false">
-          <g class="shift">
-            <rect class="b" x="586" y="236" width="84" height="60" rx="20"></rect>
-            <ellipse class="s" cx="628" cy="238" rx="42" ry="12"></ellipse>
-            <rect class="k" x="619" y="220" width="18" height="10" rx="5"></rect>
-            <rect class="k" x="610" y="262" width="36" height="16" rx="4"></rect>
-            <circle class="a" cx="620" cy="270" r="3.5"></circle>
+          <!-- ============ AIRFRYER ============ -->
+          <g class="ap" data-v="airfryer" tabindex="0" role="button" aria-pressed="false">
+            <rect class="hit" x="632" y="214" width="124" height="156"/>
+            <g class="ghost"><rect class="gf" x="640" y="240" width="108" height="126" rx="26"/><rect x="650" y="298" width="88" height="60" rx="14"/><circle cx="694" cy="276" r="13"/></g>
+            <g class="on">
+              <g class="calor" stroke="#ffb443" stroke-width="2" fill="none" stroke-linecap="round"><path d="M672 234q-4-5 0-10t0-10"/><path d="M694 232q-4-5 0-10t0-10"/><path d="M716 234q-4-5 0-10t0-10"/></g>
+              <rect x="640" y="240" width="108" height="126" rx="26" fill="url(#g-dark)" stroke="#45484d"/>
+              <path d="M652 252q42-14 84 0v8h-84Z" fill="#0f1011"/>
+              <g stroke="#2c2e32" stroke-width="2"><path d="M666 254v-3M680 251v-3M694 250v-3M708 251v-3M722 254v-3"/></g>
+              <path d="M648 268q2-12 10-18l2 100q-10-4-12-14Z" fill="#fff" opacity=".06"/>
+              <circle cx="694" cy="277" r="14" fill="#050605" stroke="#2c2e32"/>
+              <g transform="translate(694 277)"><circle class="anillo" r="11.5" fill="none" stroke="#ffb443" stroke-width="2" stroke-dasharray="18 54" stroke-linecap="round"/></g>
+              <text x="694" y="280.5" text-anchor="middle" font-family="Martian Mono, monospace" font-size="8" fill="#ffd08a">200°</text>
+              <rect x="662" y="274" width="9" height="6" rx="2" fill="#2a2c30"/><rect x="717" y="274" width="9" height="6" rx="2" fill="#2a2c30"/>
+              <rect x="650" y="298" width="88" height="60" rx="14" fill="#18191b" stroke="#2f3135"/>
+              <rect x="668" y="305" width="52" height="19" rx="7" fill="#1a0e06"/>
+              <rect x="668" y="305" width="52" height="19" rx="7" fill="url(#g-oven)" opacity=".6" class="glow-pulse"/>
+              <g fill="#ffd36b"><rect x="676" y="314" width="16" height="3" rx="1.5" transform="rotate(-12 684 315)"/><rect x="690" y="312" width="18" height="3" rx="1.5" transform="rotate(10 699 313)"/><rect x="700" y="317" width="12" height="3" rx="1.5"/></g>
+              <rect x="674" y="331" width="40" height="15" rx="7.5" fill="#2a2c30" stroke="#3e4146"/>
+            </g>
+            <g class="badge" transform="translate(744 244)"><circle r="13"/><path d="M-5.5 0l3.8 3.8 7.2-7.6"/><text y="5">+0</text></g>
           </g>
-          <g class="badge" transform="translate(668 226)"><circle r="14"></circle><path d="M-6 0l4 4 8-8"></path><text y="4.5">+0</text></g>
-        </g>
 
-        <!-- NEVERA -->
-        <g class="ap" data-v="nevera" tabindex="0" role="button" aria-pressed="false">
-          <g class="shift">
-            <rect class="b" x="736" y="44" width="186" height="450" rx="14"></rect>
-            <rect class="s" x="736" y="176" width="186" height="5"></rect>
-            <rect class="s" x="752" y="108" width="9" height="50" rx="4.5"></rect>
-            <rect class="s" x="752" y="198" width="9" height="96" rx="4.5"></rect>
-            <rect class="paper" x="830" y="226" width="62" height="78" rx="3" transform="rotate(3 861 265)"></rect>
-            <circle class="a" cx="861" cy="226" r="6"></circle>
-            <path class="paper-line" d="M842 248H880M842 262H874M842 276H882M842 290H866" transform="rotate(3 861 265)"></path>
+          <!-- ============ ARROCERA ============ -->
+          <g class="ap" data-v="arrocera" tabindex="0" role="button" aria-pressed="false">
+            <rect class="hit" x="754" y="250" width="126" height="120"/>
+            <g class="ghost"><rect class="gf" x="766" y="306" width="102" height="60" rx="22"/><path d="M760 308q57-38 114 0Z"/></g>
+            <g class="on">
+              <g class="vapor" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".7"><path d="M846 284q-6-8 0-16q6-8 0-16"/><path d="M840 282q-5-7 0-14"/><path d="M852 282q5-7 0-14"/></g>
+              <rect x="766" y="306" width="102" height="60" rx="22" fill="url(#g-cream)" stroke="#a89d8c"/>
+              <g transform="translate(790 336)"><g fill="#c8553d" opacity=".75"><circle cx="0" cy="-5" r="3.2"/><circle cx="4.8" cy="-1.5" r="3.2"/><circle cx="3" cy="4" r="3.2"/><circle cx="-3" cy="4" r="3.2"/><circle cx="-4.8" cy="-1.5" r="3.2"/></g><circle r="2.2" fill="#e8b84a"/><path d="M6 6q8 4 12 0" stroke="#5f8a5a" stroke-width="2" fill="none"/></g>
+              <g transform="translate(806 352) scale(.6)" fill="#c8553d" opacity=".6"><circle cx="0" cy="-5" r="3.2"/><circle cx="4.8" cy="-1.5" r="3.2"/><circle cx="3" cy="4" r="3.2"/><circle cx="-3" cy="4" r="3.2"/><circle cx="-4.8" cy="-1.5" r="3.2"/></g>
+              <path d="M760 308q57-38 114 0Z" fill="url(#g-cream)" stroke="#a89d8c"/>
+              <rect x="760" y="304" width="114" height="8" rx="4" fill="#e8e1d4" stroke="#a89d8c"/>
+              <rect x="803" y="280" width="28" height="9" rx="4.5" fill="#2a2622"/>
+              <circle cx="846" cy="292" r="3.2" fill="#8a7f70"/>
+              <rect x="824" y="322" width="32" height="32" rx="6" fill="#2a2622"/>
+              <circle cx="831" cy="329" r="2.6" fill="#ff7a57"/><circle cx="849" cy="329" r="2.6" fill="#ffb443"/>
+              <g class="lever"><rect x="835" y="335" width="10" height="11" rx="2" fill="#e8e1d4"/></g>
+            </g>
+            <g class="badge" transform="translate(872 296)"><circle r="13"/><path d="M-5.5 0l3.8 3.8 7.2-7.6"/><text y="5">+0</text></g>
           </g>
-          <g class="badge" transform="translate(916 50)"><circle r="14"></circle><path d="M-6 0l4 4 8-8"></path><text y="4.5">+0</text></g>
-        </g>
-      </svg>
 
-      <div class="kitchen-foot">
-        <div class="info" id="k-info" aria-live="polite"></div>
-        <div class="apchips" id="aparatos" aria-label="Electrodomésticos"></div>
+          <!-- ============ NEVERA ============ -->
+          <g class="ap" data-v="nevera" tabindex="0" role="button" aria-pressed="false">
+            <rect class="hit" x="900" y="64" width="256" height="526"/>
+            <g class="ghost"><rect class="gf" x="905" y="70" width="245" height="514" rx="16"/><path d="M905 240h245"/><rect x="926" y="140" width="10" height="80" rx="5"/><rect x="926" y="262" width="10" height="140" rx="5"/></g>
+            <g class="on">
+              <rect x="905" y="70" width="245" height="514" rx="16" fill="url(#g-steel)" stroke="#5f666c"/>
+              <rect x="905" y="238" width="245" height="5" fill="#3b4045"/>
+              <rect x="1086" y="80" width="16" height="496" fill="#fff" opacity=".1"/>
+              <rect x="926" y="140" width="10" height="80" rx="5" fill="url(#g-steelV)" stroke="#5f666c"/>
+              <rect x="926" y="262" width="10" height="140" rx="5" fill="url(#g-steelV)" stroke="#5f666c"/>
+              <rect x="1062" y="96" width="62" height="24" rx="5" fill="#0a0b0c"/>
+              <text x="1093" y="112" text-anchor="middle" font-family="Martian Mono, monospace" font-size="10" fill="#9fd3ff">4°C</text>
+              <path d="M1149 250V578" stroke="#cfe8ff" stroke-width="2" opacity=".5" class="glow-pulse"/>
+              <g transform="translate(1030 296)"><g class="vaiven">
+                <rect x="-46" y="0" width="92" height="124" rx="2" fill="#f2ecdf"/>
+                <text x="0" y="22" text-anchor="middle" font-family="Big Shoulders Display, Arial Narrow, sans-serif" font-weight="900" font-size="15" fill="#1e1b17">MERCAO</text>
+                <g stroke="#8f8577" stroke-width="1.6" stroke-linecap="round"><path d="M-34 38h50M-34 52h38M-34 66h56M-34 80h30M-34 94h46M-34 108h34"/></g>
+                <path d="M-38 36l4 4 6-7" stroke="#c8553d" stroke-width="1.8" fill="none"/>
+                <circle cx="0" cy="0" r="7" fill="#ffb443"/><circle cx="-2" cy="-2" r="2" fill="#fff" opacity=".6"/>
+              </g></g>
+              <circle cx="1112" cy="470" r="12" fill="#ffd34d"/><path d="M1112 458q4-6 9-5" stroke="#5f8a5a" stroke-width="2.5" fill="none"/>
+              <circle cx="1080" cy="500" r="10" fill="#e0472b"/><path d="M1076 491l4 3 4-3" stroke="#3f7a3a" stroke-width="2" fill="none"/>
+              <rect x="920" y="582" width="20" height="5" rx="2" fill="#0b0b0c"/><rect x="1115" y="582" width="20" height="5" rx="2" fill="#0b0b0c"/>
+            </g>
+            <g class="badge" transform="translate(1146 74)"><circle r="13"/><path d="M-5.5 0l3.8 3.8 7.2-7.6"/><text y="5">+0</text></g>
+          </g>
+        </svg>
+      </div>
+      <p class="swipe">desliza la cocina hacia el lado para ver la nevera →</p>
+      <div class="stage-foot">
+        <p class="info" id="k-info" aria-live="polite"></p>
+        <div class="chips" id="aparatos" aria-label="Electrodomésticos"></div>
         <div class="mini">
-          <button type="button" id="k-todo">Tengo de todo</button>
-          <button type="button" id="k-basico">Solo estufa y nevera</button>
+          <button type="button" id="k-todo">prender todo</button>
+          <button type="button" id="k-basico">solo estufa y nevera</button>
         </div>
       </div>
     </section>
 
-    <section class="card" aria-labelledby="p-title">
-      <div class="kitchen-head">
+    <!-- ===================== 2. PROTEÍNAS ===================== -->
+    <section aria-labelledby="t-prot">
+      <div class="step-head">
         <div>
-          <h2 id="p-title">¿Qué proteínas comen en tu casa?</h2>
-          <p>Quita lo que no comen. Ninguna receta con eso entra al menú ni a la lista de mercado.</p>
+          <div class="kicker"><i>2/4</i>qué comen</div>
+          <h2 id="t-prot">¿Qué proteínas<br>entran a <em>tu casa?</em></h2>
+          <p class="lede">Tacha lo que no comen. Ninguna receta con eso llega al menú ni a la lista.</p>
         </div>
       </div>
-      <div class="kitchen-foot">
-        <div class="apchips" id="proteinas" aria-label="Proteínas que comen"></div>
-        <button type="button" class="toggle" id="alm-carne" aria-pressed="true">
-          <span class="t"><b>Almuerzo siempre con carne</b><span id="alm-hint">Todos los almuerzos llevan pollo, res, salchicha o pescado.</span></span>
-          <span class="switch" aria-hidden="true"></span>
-        </button>
+      <div class="tokens" id="proteinas" aria-label="Proteínas que comen"></div>
+      <button type="button" class="switch-row" id="alm-carne" aria-pressed="true">
+        <span class="t"><b>Almuerzo siempre con carne</b><span id="alm-hint">Todos los almuerzos llevan pollo, res, salchicha o pescado.</span></span>
+        <span class="switch" aria-hidden="true"></span>
+      </button>
+    </section>
+
+    <!-- ===================== 3. LA SEMANA ===================== -->
+    <section aria-labelledby="t-semana">
+      <div class="step-head">
+        <div>
+          <div class="kicker"><i>3/4</i>tu semana</div>
+          <h2 id="t-semana">Plata, gente<br>y <em>días.</em></h2>
+        </div>
+      </div>
+      <div class="board">
+        <div class="cell">
+          <h3><svg class="ico"><use href="#i-plata"/></svg>Presupuesto</h3>
+          <div class="bigval num" id="presu-lbl">$150.000</div>
+          <div class="range-wrap">
+            <input type="range" id="presu" min="30000" max="500000" step="5000" value="150000" aria-label="Presupuesto">
+            <span class="marker num" id="presu-marker">plan</span>
+          </div>
+          <div class="field">
+            <div class="seg" id="modo">
+              <button type="button" data-v="dias" aria-pressed="true">Cubrir los días</button>
+              <button type="button" data-v="presupuesto" aria-pressed="false">Estirar la plata</button>
+            </div>
+            <p class="hint" id="modo-hint">Calcula cuánto cuesta cubrir los días que pides.</p>
+          </div>
+        </div>
+
+        <div class="cell">
+          <h3><svg class="ico"><use href="#i-casa"/></svg>Hogar</h3>
+          <div class="steppers">
+            <div class="stepper-row"><label class="lbl" for="personas">Personas</label>
+              <div class="stepper"><button type="button" data-step="-1" data-for="personas" aria-label="Una persona menos">−</button><input type="number" id="personas" min="1" max="8" value="2"><button type="button" data-step="1" data-for="personas" aria-label="Una persona más">+</button></div></div>
+            <div class="stepper-row"><label class="lbl" for="dias">Días</label>
+              <div class="stepper"><button type="button" data-step="-1" data-for="dias" aria-label="Un día menos">−</button><input type="number" id="dias" min="1" max="30" value="5"><button type="button" data-step="1" data-for="dias" aria-label="Un día más">+</button></div></div>
+            <div class="stepper-row"><label class="lbl" for="comidas">Comidas al día</label>
+              <div class="stepper"><button type="button" data-step="-1" data-for="comidas" aria-label="Una comida menos">−</button><input type="number" id="comidas" min="1" max="3" value="2"><button type="button" data-step="1" data-for="comidas" aria-label="Una comida más">+</button></div></div>
+          </div>
+          <p class="hint" id="comidas-hint"></p>
+        </div>
+
+        <div class="cell">
+          <h3><svg class="ico"><use href="#i-cuerpo"/></svg>Cuerpo</h3>
+          <div class="field">
+            <span class="lbl">Peso promedio por persona</span>
+            <div class="midval num"><span id="peso-lbl">70</span><small>kg</small></div>
+            <input type="range" id="peso" min="40" max="120" step="1" value="70" aria-label="Peso promedio por persona">
+          </div>
+          <div class="seg" id="actividad">
+            <button type="button" data-v="sedentario" aria-pressed="false">Poco activo</button>
+            <button type="button" data-v="activo" aria-pressed="true">Activo</button>
+            <button type="button" data-v="fuerte" aria-pressed="false">Entrena duro</button>
+          </div>
+          <p class="hint" id="prot-hint"></p>
+        </div>
+
+        <div class="cell">
+          <h3><svg class="ico"><use href="#i-reloj"/></svg>Cómo cocinas</h3>
+          <button type="button" class="switch-row" id="mealprep" aria-pressed="false">
+            <span class="t"><b>Meal prep</b><span id="prep-hint">Menú variado: cada día algo distinto.</span></span>
+            <span class="switch" aria-hidden="true"></span>
+          </button>
+          <div class="field" id="f-platos" hidden>
+            <span class="lbl">Platos distintos</span>
+            <div class="midval num"><span id="platos-lbl">3</span><small>platos</small></div>
+            <input type="range" id="platos" min="1" max="6" step="1" value="3" aria-label="Platos distintos">
+          </div>
+          <div class="field" id="f-reps">
+            <span class="lbl">Veces que se repite una receta</span>
+            <div class="midval num"><span id="reps-lbl">2</span><small>× cada una</small></div>
+            <input type="range" id="reps" min="1" max="5" step="1" value="2" aria-label="Repeticiones por receta">
+            <p class="hint" id="reps-hint"></p>
+          </div>
+          <div class="field">
+            <span class="lbl">Máximo por receta</span>
+            <div class="midval num"><span id="maxmin-lbl">90</span><small>min</small></div>
+            <input type="range" id="maxmin" min="10" max="90" step="5" value="90" aria-label="Minutos máximos por receta">
+          </div>
+          <div class="field">
+            <span class="lbl">Restricciones</span>
+            <div class="pills" id="restricciones">
+              <button type="button" class="pill" data-v="sin_lacteos" aria-pressed="false">Sin lácteos</button>
+              <button type="button" class="pill" data-v="sin_gluten" aria-pressed="false">Sin gluten</button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <div class="kpis" id="kpis"></div>
-    <div id="alerta"></div>
-
-    <div>
+    <!-- ===================== 4. RESULTADO ===================== -->
+    <section aria-labelledby="t-res" id="resultado">
+      <div class="step-head">
+        <div>
+          <div class="kicker"><i>4/4</i>tu mercado</div>
+          <h2 id="t-res">La <em>cuenta.</em></h2>
+        </div>
+      </div>
+      <div class="stats" id="kpis"></div>
+      <div id="alerta"></div>
       <div class="tabs" role="tablist">
         <button type="button" role="tab" data-t="plan" aria-selected="true">Plan de la semana</button>
-        <button type="button" role="tab" data-t="tandas" aria-selected="false" hidden>Tandas de cocina</button>
         <button type="button" role="tab" data-t="lista" aria-selected="false">Lista de mercado</button>
+        <button type="button" role="tab" data-t="tandas" aria-selected="false" hidden>Tandas de cocina</button>
         <button type="button" role="tab" data-t="recetas" aria-selected="false">Recetas</button>
       </div>
-      <div style="padding-top:1.1rem">
-        <section id="pane-plan"></section>
-        <section id="pane-tandas" hidden></section>
-        <section id="pane-lista" hidden></section>
-        <section id="pane-recetas" hidden></section>
-      </div>
-    </div>
+      <section id="pane-plan"></section>
+      <section id="pane-lista" hidden></section>
+      <section id="pane-tandas" hidden></section>
+      <section id="pane-recetas" hidden></section>
+    </section>
   </main>
+
+  <footer>
+    <p><b>Precios de referencia</b>Catálogo público de d1.com.co consultado el 8 de septiembre de 2026. Cambian por región, tienda y día; el ecommerce no siempre coincide con la tienda física.</p>
+    <p><b>Proteína</b>Objetivo diario = peso × factor de actividad (0,9 / 1,4 / 1,8 g por kg). El desayuno se lleva el 25 % y almuerzo y cena se reparten el resto. Es una guía para planear el mercado, no una prescripción nutricional.</p>
+    <p><b>Tu cocina</b>Lo que prendes y marcas se guarda en este navegador. Algunas recetas tienen alternativas: la arepa se calienta en estufa, microondas o airfryer.</p>
+  </footer>
 </div>
 
-<footer>
-  <p><b>Precios de referencia.</b> Vienen del catálogo público de d1.com.co consultado el 8 de septiembre de 2026. Varían por región, tienda y día, y el ecommerce no siempre coincide con la tienda física.</p>
-  <p><b>Proteína.</b> El objetivo diario es peso × factor de actividad (0,9 / 1,4 / 1,8 g por kg). Si hay desayuno se lleva el 25 %, y el resto se reparte entre almuerzo y cena; cada uno tiene que alcanzar su parte. El motor sube la porción de proteína de una receta hasta 2,5 veces la base; si ni así llega, esa receta no entra en esa comida. Es una guía para planear el mercado, no una prescripción nutricional.</p>
-  <p><b>Tu cocina.</b> Lo que marques se guarda en este navegador. Hay recetas con alternativas: la arepa se calienta en estufa, microondas o airfryer, y el atún con arroz sirve con olla o arrocera.</p>
-</footer>
+<div class="cuenta" id="cuenta" role="status" aria-live="off">
+  <div><div class="lab">tu mercado</div><div class="tot num" id="c-total">$0</div></div>
+  <div class="mini-stat"><span class="dot" id="c-dias-dot"></span><span id="c-dias">0/0 días</span></div>
+  <div class="mini-stat hide-sm"><span class="dot" id="c-prot-dot"></span><span id="c-prot">0 g/día</span></div>
+  <span class="grow"></span>
+  <button type="button" class="btn" id="c-ver">Ver la lista</button>
+</div>
 
 <script src="js/engine.js"></script>
 <script src="js/app.js"></script>
