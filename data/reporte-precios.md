@@ -4,7 +4,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 
 ## Éxito
 
-149 presentaciones para 49 de 49 ingredientes.
+148 presentaciones para 49 de 49 ingredientes.
 
 | Ingrediente | Presentaciones |
 | --- | --- |
@@ -15,7 +15,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | arveja_seca | Arveja FRESCAMPO verde (1000 gr) · $3.380 (3.380)<br>Arveja FRESCAMPO amarilla (500 gr) · $1.800 (3.600)<br>Arveja MARITZA verde (454 gr) · $2.190 (4.824)<br>Arveja LA CORUNA natural (360 gr) · $8.020 (22.278) |
 | espagueti | Pastas PAN spaghetti tamaño familiar (1000 gr) · $4.147 (4.147)<br>Pastas RIOKA spaghetti (250 gr) · $1.105 (4.420)<br>Pastas LA NIEVE spaghetti (500 gr) · $2.210 (4.420)<br>Pasta COMARRICO spaghetti tamaño familiar (900 gr) · $4.270 (4.744) |
 | harina_maiz | Harina LA NIEVE precocida de maíz blanco (500 gr) · $1.513 (3.026)<br>Harina DONAREPA precocida de maíz blanco (1000 gr) · $3.231 (3.231) |
-| arepa | Arepas blancas FRESCAMPO tela x10und (900 gr) · $3.570 (317)<br>Arepas blancas EKONO tela x5und (400 gr) · $1.590 (318)<br>Arepas blancas PRODUCTOS ALIMENTICIOS DE CASA x 5 und (1350 gr) · $6.540 (388)<br>Arepas blancas PRODUCTOS ALIMENTICIOS DE CASA maíz x 5 und (650 gr) · $3.250 (400) |
+| arepa | Arepas blancas EKONO tela x5und (400 gr) · $1.590 (318)<br>Arepas blancas FRESCAMPO tela x10und (900 gr) · $3.570 (357)<br>Arepas blancas RICAMPO de maíz (900 gr) · $4.770 (424)<br>Arepas blancas LA TIPICA paisa 7 und (490 gr) · $4.060 (580) |
 | avena_hojuelas | Avena en Hojuelas EKONO 500 gr · $2.300 (4.600)<br>Avena en Hojuelas EKONO 250 gr · $1.700 (6.800)<br>Avena En Hojuela Extracontenido QUAKER 1100 gr · $9.120 (8.291)<br>Avena Hojuela Extra Conte DON PANCHO 1200 gr · $10.000 (8.333) |
 | pan | Pan tajado FRESCAMPO blanco (450 gr) · $2.980 (6.622)<br>Pan Tajado FRESCAMPO (500 gr) · $4.990 (9.980)<br>Pan Tajado GUADALUPE Integral Extralargo (570 gr) · $6.400 (11.228)<br>Pan Tajado LALO Blanco Molde Leche (550 gr) · $6.420 (11.673) |
 | huevo | Huevo SMN HUEVO (45 und) · $13.900 (309)<br>Huevos A SMN rojo (30 und) · $12.490 (416)<br>Huevos AA TAEQ rojo (15 und) · $11.450 (763)<br>Huevos AA AVINAL rojo (24 und) · $18.500 (771) |
@@ -37,7 +37,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | tomate | Tomate Chonto Insuperable FRESCAMPO 1000 gr · $7.800 (7.800) |
 | zanahoria | ZANAHORIA FRESCAMPO 1000 gr · $2.740 (2.740) |
 | arveja_cong | Vegetal arvejas MC CAIN 1000 gr · $25.600 (25.600) |
-| ajo | Ajo TRICONDOR condimento (55 gr) · $1.470 (1.069)<br>Ajo Malla Importado x3 1 und · $1.300 (1.300)<br>AJO PELADO AL VACIO DIANA 80 gr · $4.320 (2.160)<br>Ajo Nacional Pelado 50 gr · $3.320 (2.656) |
+| ajo | Ajo Malla Importado x3 1 und · $1.300 (1.300)<br>Ajo FRESCAMPO especias (55 gr) · $3.880 (2.822)<br>Ajo EL REY puro natural (25 gr) · $2.070 (3.312) |
 | banano | Banano 1 und · $640 (640) |
 | yuca | Yuca 1 und · $4.420 (7.367)<br>YUCA EN TROZOS 500 gr · $6.500 (13.000) |
 | ahuyama | Ahuyama Porcionada · $2.900 (2.900)<br>AHUYAMA EN TROZOS TAEQ 500 gr · $9.860 (19.720) |
@@ -60,7 +60,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 
 ## Carulla
 
-145 presentaciones para 48 de 49 ingredientes. Sin precio: habichuela.
+144 presentaciones para 48 de 49 ingredientes. Sin precio: habichuela.
 
 | Ingrediente | Presentaciones |
 | --- | --- |
@@ -71,14 +71,14 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | arveja_seca | Arveja FRESCAMPO amarilla (500 gr) · $1.800 (3.600)<br>Arveja FRESCAMPO verde (1000 gr) · $3.700 (3.700)<br>Arveja LA CORUNA natural (360 gr) · $8.800 (24.444) |
 | espagueti | Pastas LA NIEVE spaghetti (500 gr) · $2.099 (4.198)<br>Pastas PAN spaghetti tamaño familiar (1000 gr) · $4.650 (4.650)<br>Pastas PAN spaghetti (250 gr) · $1.275 (5.100)<br>Pastas COMARRICO spaghetti (700 gr) · $4.300 (6.143) |
 | harina_maiz | Harina LA NIEVE precocida de maíz blanco (500 gr) · $1.513 (3.026)<br>Harina FRESCAMPO de maíz amarillo (1000 gr) · $3.100 (3.100)<br>Harina De Maíz Precocida Blanca MEGAREPA Blanca (400 gr) · $1.700 (4.250) |
-| arepa | Arepas blancas FRESCAMPO tela x10und (900 gr) · $3.570 (317)<br>Arepas blancas FRESCAMPO tela x5und (400 gr) · $1.590 (318)<br>Arepas blancas PRODUCTOS ALIMENTICIOS DE CASA x 5 und (1350 gr) · $7.100 (421)<br>Arepas blancas DE LA TROJA doble crema x 5und (700 gr) · $4.300 (491) |
+| arepa | Arepas blancas FRESCAMPO tela x5und (400 gr) · $1.590 (318)<br>Arepas blancas FRESCAMPO tela x10und (900 gr) · $3.570 (357)<br>Arepa LA SABROSITA Redonda, pequeña, gruesa y de maíz (450 gr) · $3.020 (537)<br>Arepas blancas DONA PAISA extra delgada 10 uds (900 gr) · $6.202 (551) |
 | avena_hojuelas | Avena en Hojuelas EKONO 500 gr · $2.370 (4.740)<br>Avena en Hojuelas EKONO 250 gr · $1.700 (6.800)<br>Avena En Hojuela Extracontenido QUAKER 1100 gr · $8.700 (7.909)<br>Avena Hojuela Extra Conte DON PANCHO 1200 gr · $10.300 (8.583) |
 | pan | Pan tajado FRESCAMPO blanco (450 gr) · $2.980 (6.622)<br>Pan Tajado FRESCAMPO (500 gr) · $4.990 (9.980)<br>Pan Tajado GUADALUPE Integral Extralargo (570 gr) · $5.720 (10.035)<br>Pan Tajado LALO Mantequilla (550 gr) · $6.600 (12.000) |
 | huevo | Huevo SMN HUEVO (45 und) · $13.900 (309)<br>Huevos AA SMN rojo (30 und) · $16.500 (550)<br>Huevos AA TAEQ rojo (15 und) · $11.450 (763)<br>Huevos AA PROMOCION rojo paisas (12 und) · $10.150 (846) |
 | pollo_surt | presas de pollo CAMPOLLO bandeja mix (1 und) · $8.510 (7.092)<br>Presas de Pollo BDJ x 500gr EL BUCANERO 500.001 gr · $7.800 (15.600) |
 | pollo_muslo | Muslos POLLOCOA marinados · $15.700 (15.700)<br>Muslo/Contram Pollo Mexicano EL BUCANERO 900 gr · $21.100 (23.444)<br>Muslo Pollo Sin Piel* FRIKO 750 gr · $18.200 (24.267) |
 | pollo_pechuga | Pechuga de pollo POLLOCOA light · $25.900 (14.389)<br>Pechuga de Pollo Marinada · $15.790 (15.790)<br>FILETE DE PECHUGA POLLOCOA filete de pechuga congelado (1050 gr) · $34.600 (32.952)<br>Filete de pechuga POLLOCOA marinado (950 gr) · $32.600 (34.316) |
-| atun | Atún VAN CAMPS en agua (320 gr) · $16.400 (51.250)<br>Atún OCEAN GOLD lomitos en agua (110.5 gr) · $6.700 (60.633)<br>Atún PAN trozos en agua (98 gr) · $6.080 (62.041)<br>Lomitos de atún ZENU en aceite de girasol (104 gr) · $6.480 (62.308) |
+| atun | Atún VAN CAMPS en agua (320 gr) · $16.400 (51.250)<br>Atún OCEAN GOLD lomitos en agua (110.5 gr) · $6.700 (60.633)<br>Atún PAN trozos en agua (98 gr) · $6.080 (62.041)<br>Atún ZENU en agua (104 gr) · $6.480 (62.308) |
 | sardina | Sardinas LA SOBERANA conserva en salsa de tomate (280 gr) · $10.300 (36.786)<br>Sardinas LA SOBERANA en salsa de tomate (200 gr) · $9.400 (47.000)<br>Sardinas ABURRA en salsa de tomate (90 gr) · $5.400 (60.000)<br>Sardinas SELECTO en salsa de tomate (80 gr) · $5.000 (62.500) |
 | salchicha | Salchicha COLANTA seleccionada (450 gr) · $9.675 (21.500)<br>Salchicha CUNIT súper x4und (500 gr) · $14.300 (28.600)<br>Salchicha COLANTA seleccionada hot dog (770 gr) · $22.050 (28.636)<br>Salchicha CASA BLANCA perro premium (480 gr) · $14.900 (31.042) |
 | carne_res | Carne punta de espaldilla de res · $29.900 (29.900) |
@@ -93,12 +93,12 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | tomate | Tomate Chonto Insuperable FRESCAMPO 1000 gr · $7.800 (7.800) |
 | zanahoria | ZANAHORIA FRESCAMPO 1000 gr · $2.960 (2.960) |
 | arveja_cong | Vegetal arvejas MC CAIN 1000 gr · $25.100 (25.100)<br>Arveja x500gr MC CAIN 500 gr · $16.300 (32.600) |
-| ajo | Ajo TRICONDOR condimento (55 gr) · $1.600 (1.164)<br>Ajo Malla Importado x3 1 und · $1.400 (1.400)<br>AJO PELADO AL VACIO DIANA 80 gr · $4.180 (2.090)<br>Ajo Nacional Pelado 50 gr · $3.380 (2.704) |
+| ajo | Ajo Malla Importado x3 1 und · $1.400 (1.400)<br>AJO HIDROPONICO 70 gr · $4.760 (2.720)<br>Ajo FRESCAMPO especias (55 gr) · $3.880 (2.822) |
 | banano | Banano 1 und · $700 (700) |
 | yuca | Yuca 1 und · $4.420 (7.367)<br>YUCA EN TROZOS 500 gr · $6.500 (13.000) |
 | ahuyama | Ahuyama · $3.920 (3.920) |
 | habichuela | — |
-| pimenton | Pimenton Colores · $12.720 (12.720)<br>PIMENTON ROJO SELECTO 450 gr · $7.260 (16.133)<br>Pimentón 1 und · $3.580 (22.375)<br>PIMENTON ROJO KOSHER 500 gr · $12.180 (24.360) |
+| pimenton | PIMENTON VERDE · $8.960 (8.960)<br>PIMENTON ROJO SELECTO 450 gr · $7.260 (16.133)<br>Pimentón 1 und · $3.580 (22.375)<br>PIMENTON ROJO KOSHER 500 gr · $12.180 (24.360) |
 | cilantro | CILANTRO 100 gr · $2.400 (24.000)<br>Cilantro 50 gr · $3.360 (67.200) |
 | limon | Limón Amarillo Importado · $7.740 (464)<br>Limon Comun 1 und · $600 (600) |
 | aguacate | Aguacate Hass 1 und · $2.460 (9.840)<br>Aguacate Orgánico.. TAEQ 500 gr · $9.080 (18.160) |
@@ -116,7 +116,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 
 ## D1
 
-76 presentaciones para 45 de 49 ingredientes. Sin precio: sardina, yuca, habichuela, chocolate.
+74 presentaciones para 44 de 49 ingredientes. Sin precio: sardina, yuca, habichuela, limon, chocolate.
 
 | Ingrediente | Presentaciones |
 | --- | --- |
@@ -127,7 +127,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | arveja_seca | Arveja el Estio 500 Grs · $1.850 (3.700) |
 | espagueti | Spaghetti Capríssima 250 G · $1.100 (4.400)<br>Spaghetti Deliziare 500 G · $3.990 (7.980) |
 | harina_maiz | Harina de Maiz Blanca Pan 800 G · $2.700 (3.375) |
-| arepa | Arepa Blanca 5 Und Masmaí 500 G · $1.990 (318)<br>Arepa Amarilla Masmai 5 Und · $1.990 (398)<br>Arepa Santandereana 450 G 6 Und · $4.900 (817) |
+| arepa | Arepa Blanca 5 Und Masmaí 500 G · $1.990 (398)<br>Arepa Santandereana 450 G 6 Und · $4.900 (817) |
 | avena_hojuelas | Avena en Hojuelas Fit Graan 400 G · $2.250 (5.625) |
 | pan | Pan Tajado Blanco Horneaditos 450 Grs · $2.990 (6.644)<br>Pan Tajado Mantequilla Servipan 550 G · $5.200 (9.455)<br>Pan Tajado Artesanal Horneaditos 500 G · $4.990 (9.980)<br>Pan Tajado Brioche Horneaditos 380 G · $6.990 (18.395) |
 | huevo | Huevo Tipo A Sol Naciente 30 Und · $11.990 (400)<br>Huevo Tipo Aa Sol Naciente 12 Und · $7.490 (624) |
@@ -156,7 +156,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | habichuela | — |
 | pimenton | Pimentón Unidad · $1.600 (10.000) |
 | cilantro | Cilantro Unidad 100 G · $2.200 (22.000) |
-| limon | Limon Tahiti X 1000 Gr · $4.700 (282) |
+| limon | — |
 | aguacate | Aguacate Hass Unidad · $1.750 (7.000) |
 | leche | Leche Entera Bolsa UHT Latti 900 Ml · $3.090 (3.433)<br>Leche Entera Tetra Pak Latti 200 Ml · $1.250 (6.250) |
 | queso | Queso Mozzarella Tajado Latti 400 Grs · $10.500 (26.250)<br>Queso Mozzarella Tajado X 250 G Latti · $8.990 (35.960) |
