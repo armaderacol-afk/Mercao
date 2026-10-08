@@ -77,6 +77,7 @@ const BUSQUEDAS = {
   chocolate:    { u: "g",   q: ["chocolate de mesa", "chocolate en pastilla"], inc: /^chocolate/, exc: /(bebida|leche|barra|confite|galleta|chocolatina|polvo|instant|cobertura|helado|relleno|blanco|mani|almendra|caja|bomb|wafer)/, rango: [10000, 80000], max: 1500 },
 };
 
+const NO_COMIDA = /(hogar|deporte|tecnolog|electro|bicicl|ciclismo|juguet|ropa|moda|belleza|cuidado personal|salud|drogueria|mascota|ferreter|libro|automo|vehicul|herramient|papeler|jardin|bebe\/|cocina y menaje|utensilio|decoraci)/;
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36";
 const pausa = ms => new Promise(r => setTimeout(r, ms));
 const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim();
@@ -169,6 +170,9 @@ async function descargarTienda(clave) {
     const candidatos = [];
     for (const p of vistos.values()) {
       const nombre = norm(p.productName || "");
+      // Solo comida: fuera repuestos, hogar, tecnología y demás secciones.
+      const cats = norm((p.categories || []).join(" "));
+      if (NO_COMIDA.test(cats)) { dbg(ing, "no es comida:", p.productName, cats); continue; }
       if (!b.inc.test(nombre) || (b.inc2 && !b.inc2.test(nombre))) { dbg(ing, "no coincide:", p.productName); continue; }
       if (b.exc && b.exc.test(nombre)) { dbg(ing, "excluido:", p.productName); continue; }
       const precio = precioDe(p); if (!precio) { dbg(ing, "sin precio/agotado:", p.productName); continue; }
