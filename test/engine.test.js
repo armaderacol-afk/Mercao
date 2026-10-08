@@ -138,3 +138,24 @@ test("el balance del día suma 100 % entre proteína, carbohidratos y grasa", ()
   assert.ok(Math.abs(p.prot + p.carb + p.gra - 100) <= 2);
   assert.ok(r.balance.kcal > 800 && r.balance.kcal < 4000);
 });
+
+test("una receta repetida no cae al día siguiente", () => {
+  for (const t of M.tiendasConDatos())
+    for (const semilla of [1, 2, 3]) {
+      const r = M.planear({ ...base, dias: 7, tienda: t, semilla, aparatos: Object.keys(M.APARATOS) });
+      if (!r.ok) continue;
+      const ultimo = {};
+      r.elegidas.forEach((e, k) => {
+        const d = Math.floor(k / r.comidasDia);
+        if (ultimo[e.receta.id] != null) assert.ok(d - ultimo[e.receta.id] >= 2, `${t}: ${e.receta.id} en días ${ultimo[e.receta.id]} y ${d}`);
+        ultimo[e.receta.id] = d;
+      });
+    }
+});
+
+test("la misma semilla da el mismo menú y otra semilla puede cambiarlo", () => {
+  const o = { ...base, tienda: "exito", aparatos: Object.keys(M.APARATOS) };
+  const ids = s => M.planear({ ...o, semilla: s }).elegidas.map(e => e.receta.id).join();
+  assert.strictEqual(ids(5), ids(5));
+  assert.ok([6, 7, 8, 9, 10].some(s => ids(s) !== ids(5)));
+});

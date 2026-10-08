@@ -14,6 +14,8 @@ let aparatos = new Set(APARATOS_INICIALES);
 let enfocado = null;
 let proteinas = new Set(Object.keys(PROTEINAS));
 let firmaPlan = "", ultimoTotal = null, ultimo = null;
+const nuevaSemilla = () => Math.floor(Math.random() * 1e9) + 1;
+let semilla = nuevaSemilla();
 let tienda = tieneDatos(TIENDA_DEF) ? TIENDA_DEF : (tiendasConDatos()[0] || TIENDA_DEF);
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 const fechaCorta = f => { if (!f) return ""; const [a, m, d] = f.split("-").map(Number); return `${d} ${MESES[m - 1]} ${a}`; };
@@ -45,6 +47,7 @@ function restaurar() {
   if (Array.isArray(c.proteinas)) proteinas = new Set(c.proteinas.filter(g => PROTEINAS[g]));
   if (c.almuerzoCarnePedido != null) $("#alm-carne").setAttribute("aria-pressed", String(!!c.almuerzoCarnePedido));
   if (c.tienda && tieneDatos(c.tienda)) tienda = c.tienda;
+  if (c.semilla) semilla = c.semilla;
 }
 
 /* ---------- lectura de controles ---------- */
@@ -57,6 +60,7 @@ function leerCrudo() {
     comidasDia: ent("#comidas", 1, 3),
     aparatos: [...aparatos],
     tienda,
+    semilla,
     restricciones: $$('#restricciones .pill[aria-pressed="true"]').map(b => b.dataset.v),
     proteinas: [...proteinas],
     almuerzoCarnePedido: pressed($("#alm-carne")),
@@ -667,6 +671,7 @@ const pistaModo = () => { $("#modo-hint").textContent = $('#modo button[aria-pre
   : "Llena hasta donde alcance la plata y te dice hasta qué día llegas."; };
 $$("#modo button").forEach(b => b.addEventListener("click", () => { elegirSeg("#modo", b.dataset.v); pistaModo(); render(); }));
 $$(".tabs button").forEach(b => b.addEventListener("click", () => seleccionarTab(b.dataset.t)));
+$("#barajar").addEventListener("click", () => { semilla = nuevaSemilla(); seleccionarTab("plan"); render(); });
 $("#c-ver").addEventListener("click", () => {
   if (ultimo && ultimo.ok) seleccionarTab("lista");
   $("#resultado").scrollIntoView({ behavior: QUIETO ? "auto" : "smooth", block: "start" });

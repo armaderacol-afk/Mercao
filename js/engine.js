@@ -298,6 +298,13 @@ function proteinaReceta(r){
     p+=(m.u==="und")?m.prot*q:m.prot*q/100;}
   return p;
 }
+/* Azar con semilla: el mismo menú mientras no pidas otro. */
+function azar(semilla){
+  let a=(semilla>>>0)||1;
+  return()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);
+    t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};
+}
+
 /* Nutrientes de una lista de ingredientes (una porción). */
 function nutrientes(ing){
   const n={kcal:0,prot:0,carb:0,gra:0,fib:0,verd:0};
@@ -408,21 +415,24 @@ function planear(o){
     .map(([f,k])=>Math.floor(porFranja[f].length*maxRepeticiones/k)));
 
   const pools={}; for(const f of franjas)pools[f]=acompanantesPosibles(o,f);
-  let carrito={},elegidas=[],usos={},ultima=null,recientes=[];
+  let carrito={},elegidas=[],usos={},ultimoDia={},recientes=[];
+  const rnd=azar(o.semilla||1), ruido={};
+  // Entre opciones de precio parecido decide el azar: hasta 20 % de margen.
+  const jitter=(id,d,f)=>{const k=id+"|"+d+"|"+f;return ruido[k]??(ruido[k]=1+rnd()*0.2);};
   for(let d=0;d<dias;d++){
     for(const franja of franjas){
       let mejor=null;
-      // Primera pasada con la regla de variedad; si nadie pasa, se relaja.
-      // El costo de cada opción incluye el acompañante que la completa.
-      for(const evitarRepetir of [true,false]){
+      // Una receta repetida necesita días de por medio: primero 3, luego 2,
+      // luego 1; nunca dos veces el mismo día. El costo incluye el acompañante.
+      for(const separacion of [3,2,1]){
         for(const r of porFranja[franja]){
           if((usos[r.id]||0)>=maxRepeticiones)continue;
-          if(evitarRepetir&&r.id===ultima)continue;
+          if(ultimoDia[r.id]!=null&&d-ultimoDia[r.id]<separacion)continue;
           const acomp=elegirAcomp(r,franja,carrito,o,pools[franja],recientes,franjas);
           let nuevo=sumar(carrito,r,personas);
           if(acomp)nuevo=sumar(nuevo,acomp,personas);
           const delta=costoCanasta(nuevo,o.tienda)-costoCanasta(carrito,o.tienda);
-          const score=delta/personas;
+          const score=delta/personas*jitter(r.id,d,franja);
           if(!mejor||score<mejor.score)mejor={r,acomp,score,delta,nuevo};
         }
         if(mejor)break;
@@ -431,7 +441,7 @@ function planear(o){
       if(modo==="presupuesto"&&costoCanasta(mejor.nuevo,o.tienda)>presupuesto){d=dias;break;}
       carrito=mejor.nuevo;
       elegidas.push({receta:mejor.r,acomp:mejor.acomp,franja,costoMarginal:mejor.delta});
-      usos[mejor.r.id]=(usos[mejor.r.id]||0)+1; ultima=mejor.r.id;
+      usos[mejor.r.id]=(usos[mejor.r.id]||0)+1; ultimoDia[mejor.r.id]=d;
       if(mejor.acomp)recientes=[mejor.acomp.id,...recientes].slice(0,2);
     }
   }
@@ -555,13 +565,22 @@ function planearMealPrep(o){
     // Rotación: cada día toma su desayuno de la tanda de desayuno y sus
     // principales de las tandas principales, intercaladas. Los acompañantes
     // se preparan frescos para cada comida.
-    const cola=g=>elegidos.filter(e=>e.grupo===g).map(e=>({r:e.receta,quedan:e.comidas}));
+    // Cada comida toma la tanda que lleve más tiempo sin servirse (y que
+    // no haya salido ese mismo día), así un plato no cae dos días seguidos.
+    const rnd=azar((o.semilla||1)+d);
+    const cola=g=>elegidos.filter(e=>e.grupo===g).map(e=>({r:e.receta,quedan:e.comidas,ultimo:-99,des:rnd()}));
     const colas={desayuno:cola("desayuno"),principal:cola("principal"),
                  almuerzo:cola("almuerzo"),comida:cola("comida")};
-    const tomar=(q)=>{ for(let i=0;i<q.length;i++){ const c=q.shift(); if(c.quedan>0){c.quedan--; q.push(c); return c.r;} }
-                       return null; };
+    let diaActual=0;
+    const tomar=(q)=>{
+      const vivas=q.filter(c=>c.quedan>0); if(!vivas.length)return null;
+      // Prioridad: más días desde la última vez, luego más porciones pendientes.
+      vivas.sort((a,b)=>(a.ultimo===diaActual)-(b.ultimo===diaActual)||a.ultimo-b.ultimo||b.quedan-a.quedan||a.des-b.des);
+      const c=vivas[0]; c.quedan--; c.ultimo=diaActual; return c.r;
+    };
     const secuencia=[]; let recientes=[];
     for(let dd=0;dd<d;dd++)for(const f of franjas){
+      diaActual=dd;
       const r=tomar(f==="desayuno"?colas.desayuno:separar?colas[f]:colas.principal);
       if(!r)continue;
       const acomp=elegirAcomp(r,f,carrito,o,pools[f],recientes,franjas);
