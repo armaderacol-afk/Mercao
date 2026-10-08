@@ -48,7 +48,7 @@ const BUSQUEDAS = {
   tomate:       { u: "g",   q: ["tomate chonto", "tomate"], inc: /^tomate( chonto| larga vida| milano| perita| redondo| x| \(|$)/, exc: /(salsa|pasta|cherry|deshidr|lata|pure|frito|seco|arbol|cocido|ketchup)/, rango: [1500, 12000], max: 3000 },
   zanahoria:    { u: "g",   q: ["zanahoria"], inc: /^zanahoria/, exc: /(rallad|baby|congel|lata|jugo|con |trozos)/, rango: [1000, 9000], max: 3000 },
   arveja_cong:  { u: "g",   q: ["arveja congelada", "arveja desgranada", "arveja mc cain"], inc: /arveja/, inc2: /(congel|desgranad|\bfresca\b|mc cain|cooltivo|vegetal arveja)/, exc: /(seca|lata|zanahoria|con |snack|zenu)/, rango: [5000, 35000], max: 2000 },
-  ajo:          { u: "und", q: ["ajo", "ajo malla", "ajo blanco"], inc: /^ajo\b/, exc: /(polvo|molido|pasta|deshidr|sal |en aceite|negro|picado|granulad|salsa|mezcla)/, rango: [150, 3500], pu: 40 },
+  ajo:          { u: "und", q: ["ajo", "ajo malla", "ajo blanco"], inc: /^ajo\b/, exc: /(polvo|molido|pasta|deshidr|sal |en aceite|negro|picado|granulad|salsa|mezcla|condimento|pelado)/, rango: [150, 3500], pu: 40 },
   banano:       { u: "und", q: ["banano"], inc: /^banano/, exc: /(chips|deshidr|bocadillo|bebida|harina|bocadito|congel|uraba? x? caja)/, rango: [100, 1200], pu: 150 },
   yuca:         { u: "g",   q: ["yuca"], inc: /^yuca/, exc: /(congel|frita|chips|harina|almidon|precoc|pan|snack|bites|mini|rellena|tarro|artesanal|180 cm|gourmet)/, rango: [1000, 16000], max: 3000, pu: 600 },
   ahuyama:      { u: "g",   q: ["ahuyama", "zapallo"], inc: /^(ahuyama|zapallo|auyama)/, exc: /(crema|sopa|congel|semilla|harina|arepa)/, rango: [1000, 21000], max: 3000, pu: 1500 },
@@ -94,13 +94,19 @@ const UNID = { kg: ["g", 1000], kilo: ["g", 1000], kilos: ["g", 1000], kilogramo
   und: ["und", 1], unds: ["und", 1], un: ["und", 1], u: ["und", 1], unidad: ["und", 1], unidades: ["und", 1] };
 
 // Contenido neto desde el nombre: "(1000 gr)", "2500 G", "x 30 und", "6 x 200 ml".
-function contenidoDelNombre(nombre) {
+function contenidoDelNombre(nombre, quiero) {
   const n = norm(nombre).replace(/(\d),(\d)/g, "$1.$2");
   const multi = n.match(/(\d+)\s*x\s*(\d+(?:\.\d+)?)\s*(kg|kilos?|g|gr|grs|gramos?|ml|cc|l|lt|lts|litros?)\b/);
   if (multi) { const [u, f] = UNID[multi[3]]; return { u, cant: +multi[1] * +multi[2] * f }; }
   const todos = [...n.matchAll(/(\d+(?:\.\d+)?)\s*(kg|kilogramos?|kilos?|g|gr|grs|gramos?|ml|cc|l|lt|lts|litros?|und|unds|unidades|unidad|un|u)\b/g)];
   const und = n.match(/x\s*(\d+)\s*(und|unds|unidades|un|u)?\b/);
-  if (todos.length) { const m = todos[todos.length - 1]; const [u, f] = UNID[m[2]]; return { u, cant: +m[1] * f }; }
+  // Si el ingrediente se cuenta por unidades, "x 5 und (1350 gr)" son 5, no 1350 g.
+  const enUnd = todos.filter(m => UNID[m[2]][0] === "und");
+  if (quiero === "und" && enUnd.length) return { u: "und", cant: +enUnd[enUnd.length - 1][1] };
+  if (quiero === "und" && und) return { u: "und", cant: +und[1] };
+  const sinUnd = todos.filter(m => UNID[m[2]][0] !== "und");
+  const m = (sinUnd.length ? sinUnd : todos).at(-1);
+  if (m) { const [u, f] = UNID[m[2]]; return { u, cant: +m[1] * f }; }
   if (und) return { u: "und", cant: +und[1] };
   if (/\bunidad\b/.test(n)) return { u: "und", cant: 1 };
   return null;
@@ -159,7 +165,7 @@ async function descargarTienda(clave) {
       if (!b.inc.test(nombre) || (b.inc2 && !b.inc2.test(nombre))) { dbg(ing, "no coincide:", p.productName); continue; }
       if (b.exc && b.exc.test(nombre)) { dbg(ing, "excluido:", p.productName); continue; }
       const precio = precioDe(p); if (!precio) { dbg(ing, "sin precio/agotado:", p.productName); continue; }
-      const desdeNombre = contenidoDelNombre(p.productName), desdeFicha = contenidoDeFicha(p);
+      const desdeNombre = contenidoDelNombre(p.productName, b.u), desdeFicha = contenidoDeFicha(p);
       if (b.soloUnidad && desdeNombre && desdeNombre.u !== b.soloUnidad) continue;
       const size = enUnidad(desdeNombre, b) ?? enUnidad(desdeFicha, b);
       if (!size || size <= 0) { dbg(ing, "sin contenido:", p.productName, JSON.stringify(desdeNombre), JSON.stringify(desdeFicha)); continue; }
