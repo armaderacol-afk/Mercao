@@ -27,7 +27,7 @@ const ING = {
   harina_maiz:{n:"Harina de maíz",u:"g",prot:7.0,desp:true,cat:"Granos"},
   arepa:{n:"Arepa lista",u:"und",prot:2.0,cat:"Granos"},
   huevo:{n:"Huevo",u:"und",prot:6.3,cat:"Proteína"},
-  pollo_surt:{n:"Pollo marinado",u:"g",prot:20.0,cat:"Proteína"},
+  pollo_surt:{n:"Pollo en presas",u:"g",prot:20.0,cat:"Proteína"},
   pollo_muslo:{n:"Muslos de pollo",u:"g",prot:18.0,cat:"Proteína"},
   atun:{n:"Atún",u:"g",prot:24.0,cat:"Proteína"},
   salchicha:{n:"Salchicha",u:"g",prot:12.0,cat:"Proteína"},
@@ -50,152 +50,71 @@ const ING = {
   panela:{n:"Panela",u:"g",prot:0.0,desp:true,cat:"Despensa"},
   azucar:{n:"Azúcar",u:"g",prot:0.0,desp:true,cat:"Despensa"},
   pasta_tomate:{n:"Pasta de tomate",u:"g",prot:4.0,desp:true,cat:"Despensa"},
+  chocolate:{n:"Chocolate de mesa",u:"g",prot:5.0,desp:true,cat:"Despensa"},
+  pollo_pechuga:{n:"Pechuga de pollo",u:"g",prot:23.0,cat:"Proteína"},
+  carne_molida:{n:"Carne molida",u:"g",prot:20.0,cat:"Proteína"},
+  cerdo:{n:"Carne de cerdo",u:"g",prot:21.0,cat:"Proteína"},
+  tilapia:{n:"Filete de pescado",u:"g",prot:20.0,cat:"Proteína"},
+  sardina:{n:"Sardinas",u:"g",prot:21.0,cat:"Proteína"},
+  queso_campesino:{n:"Queso campesino",u:"g",prot:18.0,cat:"Lácteos"},
+  yogur:{n:"Yogur",u:"ml",prot:3.5,cat:"Lácteos"},
+  avena_hojuelas:{n:"Avena en hojuelas",u:"g",prot:13.0,cat:"Granos"},
+  pan:{n:"Pan",u:"g",prot:9.0,cat:"Granos"},
+  yuca:{n:"Yuca",u:"g",prot:1.4,cat:"Verduras"},
+  ahuyama:{n:"Ahuyama",u:"g",prot:1.0,cat:"Verduras"},
+  habichuela:{n:"Habichuela",u:"g",prot:1.8,cat:"Verduras"},
+  pimenton:{n:"Pimentón",u:"g",prot:1.0,cat:"Verduras"},
+  cilantro:{n:"Cilantro",u:"g",prot:2.0,cat:"Verduras"},
+  limon:{n:"Limón",u:"und",prot:0.3,cat:"Verduras"},
+  aguacate:{n:"Aguacate",u:"g",prot:2.0,cat:"Verduras"},
 };
 
-const SKUS = [
-  {ing:"arroz",nom:"Arroz Diana 500 G",size:500,precio:1990},
-  {ing:"arroz",nom:"Arroz Premium Albar 2500 G",size:2500,precio:6990},
-  {ing:"lenteja",nom:"Lenteja El Estío 500 Grs",size:500,precio:1750},
-  {ing:"frijol",nom:"Fríjol Lima Granipack 500 G",size:500,precio:3990},
-  {ing:"garbanzo",nom:"Garbanzo El Estío 500 Grs",size:500,precio:2650},
-  {ing:"arveja_seca",nom:"Arveja El Estío 500 Grs",size:500,precio:1850},
-  {ing:"espagueti",nom:"Spaghetti Deliziare 500 G",size:500,precio:3990},
-  {ing:"harina_maiz",nom:"Harina de Maíz Amarilla PAN 800 G",size:800,precio:2700},
-  {ing:"arepa",nom:"Arepa Amarilla Masmaí 5 Und",size:5,precio:1990},
-  {ing:"huevo",nom:"Huevo Tipo B 30 Und",size:30,precio:10990},
-  {ing:"pollo_surt",nom:"Surtida de Pollo Marinada 500 G",size:500,precio:5200},
-  {ing:"pollo_muslo",nom:"Muslos de Pollo Brasset 700 G",size:700,precio:8750},
-  {ing:"atun",nom:"Filete de Atún 300 G",size:300,precio:17950},
-  {ing:"salchicha",nom:"Salchicha Tradicional Viandé 400 G",size:400,precio:6750},
-  {ing:"carne_res",nom:"Hamburguesa de Res Viandé 450 G",size:450,precio:10400},
-  {ing:"papa",nom:"Papa Pareja 2500 G",size:2500,precio:7500},
-  {ing:"papa",nom:"Papa Pastusa 2500 G",size:2500,precio:11250},
-  {ing:"papa_criolla",nom:"Papa Criolla 1000 G",size:1000,precio:8450},
-  {ing:"platano",nom:"Plátano X 1000 G",size:1000,precio:2900},
-  {ing:"cebolla",nom:"Cebolla Cabezona X 1000 G",size:1000,precio:4500},
-  {ing:"cebolla_larga",nom:"Cebolla Larga 500 Gr",size:500,precio:3600},
-  {ing:"tomate",nom:"Tomate Chonto X 1000 G",size:1000,precio:4990},
-  {ing:"zanahoria",nom:"Zanahoria X 1000 G",size:1000,precio:3100},
-  {ing:"arveja_cong",nom:"Arveja Verde Congelada Cooltivo 500 G",size:500,precio:5990},
-  {ing:"ajo",nom:"Ajo Malla 3 Unidades",size:3,precio:1100},
-  {ing:"banano",nom:"Banano Unidad",size:1,precio:550},
-  {ing:"leche",nom:"Leche Entera Bolsa UHT Latti 900 Ml",size:900,precio:3090},
-  {ing:"queso",nom:"Queso Mozzarella Búfala 100 Gr",size:100,precio:5990},
-  {ing:"avena_beb",nom:"Avena Tetra Pak Latti 900 Ml",size:900,precio:5650},
-  {ing:"aceite",nom:"Aceite Imatá 420 Ml",size:420,precio:3990},
-  {ing:"aceite",nom:"Aceite Vegetal Imatá 900 Ml",size:900,precio:6750},
-  {ing:"sal",nom:"Sal Refisal 1000 G",size:1000,precio:2900},
-  {ing:"panela",nom:"Panela Pastilla 1000 G",size:1000,precio:7350},
-  {ing:"azucar",nom:"Azúcar Blanca 1000 Grs",size:1000,precio:3390},
-  {ing:"pasta_tomate",nom:"Pasta de Tomate Zev 200 Grs",size:200,precio:2800},
-];
+/* Precios y recetas viven en data/. En el navegador los carga index.html;
+   en Node se cargan aquí. */
+if(typeof require==="function"&&typeof module!=="undefined"){
+  require("../data/recetas.js");
+  for(const t of ["exito","carulla","d1","ara"])
+    try{require(`../data/precios-${t}.js`);}catch(e){/* tienda sin archivo */}
+}
+const RECETAS=globalThis.RECETAS_DATA||[];
+const PRECIOS=globalThis.PRECIOS_DATA||{};
 
-const RECETAS = [
- {id:"arroz_pollo",n:"Arroz con pollo",min:45,ap:["estufa"],tipo:["almuerzo","comida"],
-  ing:{arroz:90,pollo_surt:120,cebolla:25,zanahoria:30,arveja_cong:25,aceite:10,sal:3,ajo:0.3},
-  pasos:["Sofríe cebolla, ajo y zanahoria en aceite.","Agrega el pollo y dora 5 min.","Suma el arroz y el doble de agua, tapa 18 min.","Incorpora la arveja los últimos 5 min."]},
- {id:"frijoles",n:"Fríjoles con arroz y maduro",min:60,ap:["estufa","olla_presion"],tipo:["almuerzo","comida"],
-  ing:{frijol:80,arroz:80,platano:120,cebolla:20,tomate:40,aceite:8,sal:3},
-  pasos:["Remoja el fríjol la noche anterior.","Cocina en olla a presión 25 min.","Haz hogao con cebolla y tomate y súmalo.","Fríe el plátano maduro aparte."]},
- {id:"lentejas",n:"Lentejas guisadas con arroz",min:40,ap:["estufa"],tipo:["almuerzo","comida"],
-  ing:{lenteja:80,arroz:80,cebolla:25,tomate:40,zanahoria:30,aceite:8,sal:3,ajo:0.3},
-  pasos:["Sofríe cebolla, ajo, tomate y zanahoria.","Suma la lenteja y agua, cocina 25 min.","Cocina el arroz aparte."]},
- {id:"garbanzos",n:"Garbanzos guisados con arroz",min:45,ap:["estufa","olla_presion"],tipo:["almuerzo","comida"],
-  ing:{garbanzo:80,arroz:80,tomate:50,cebolla:25,aceite:8,sal:3,ajo:0.3},
-  pasos:["Remoja el garbanzo la noche anterior.","Olla a presión 20 min.","Guisa con hogao de tomate, cebolla y ajo."]},
- {id:"pericos",n:"Huevos pericos con arepa",min:15,ap:["estufa"],tipo:["desayuno"],
-  ing:{huevo:2,cebolla_larga:20,tomate:35,arepa:1,aceite:5,sal:2},
-  pasos:["Sofríe cebolla larga y tomate.","Agrega los huevos batidos y revuelve.","Asa la arepa."]},
- {id:"pasta_atun",n:"Espagueti con atún",min:25,ap:["estufa"],tipo:["almuerzo","comida"],
-  ing:{espagueti:100,atun:55,pasta_tomate:30,cebolla:20,aceite:8,sal:3},
-  pasos:["Cocina el espagueti al dente.","Sofríe cebolla, suma pasta de tomate y atún.","Mezcla todo."]},
- {id:"sudado",n:"Sudado de pollo con papa",min:45,ap:["estufa"],tipo:["almuerzo","comida"],
-  ing:{pollo_muslo:150,papa:200,cebolla:25,tomate:50,zanahoria:30,aceite:8,sal:3},
-  pasos:["Dora los muslos.","Suma hogao, papa en trozos y zanahoria.","Tapa y cocina 25 min a fuego bajo."]},
- {id:"arroz_huevo",n:"Arroz salteado con huevo",min:25,ap:["estufa"],tipo:["almuerzo","comida"],
-  ing:{arroz:90,huevo:2,arveja_cong:40,zanahoria:35,cebolla_larga:20,aceite:10,sal:2},
-  pasos:["Cocina el arroz y déjalo enfriar.","Saltea verduras a fuego alto.","Suma huevo revuelto y el arroz."]},
- {id:"sopa_verduras",n:"Sopa de verduras con papa",min:35,ap:["estufa"],tipo:["comida"],
-  ing:{papa:180,zanahoria:60,arveja_seca:30,cebolla:20,cebolla_larga:15,sal:3},
-  pasos:["Hierve la arveja 20 min.","Suma papa, zanahoria y cebolla.","Cocina 15 min más."]},
- {id:"tortilla_papa",n:"Tortilla de papa",min:30,ap:["estufa"],tipo:["desayuno","comida"],
-  ing:{papa:200,huevo:2,cebolla:30,aceite:15,sal:3},
-  pasos:["Fríe papa en láminas con cebolla.","Bate los huevos y mézclalos.","Cuaja por ambos lados."]},
- {id:"pollo_horno",n:"Pollo al horno con papas",min:60,ap:["horno"],tipo:["almuerzo","comida"],
-  ing:{pollo_muslo:180,papa:200,aceite:10,sal:3,ajo:0.5},
-  pasos:["Adoba el pollo con ajo, sal y aceite.","Hornea 45 min a 200 °C con las papas."]},
- {id:"bolonesa",n:"Espagueti a la boloñesa",min:40,ap:["estufa"],tipo:["almuerzo","comida"],
-  ing:{espagueti:100,carne_res:90,pasta_tomate:40,cebolla:25,tomate:40,aceite:8,sal:3},
-  pasos:["Desmenuza y dora la carne.","Suma cebolla, tomate y pasta de tomate.","Cocina 20 min y sirve sobre el espagueti."]},
- {id:"sancocho",n:"Sancocho de pollo",min:70,ap:["estufa"],tipo:["almuerzo"],
-  ing:{pollo_muslo:150,papa:150,platano:100,cebolla_larga:20,zanahoria:40,sal:4},
-  pasos:["Hierve el pollo con cebolla larga 25 min.","Suma plátano verde en trozos.","Agrega papa y zanahoria, 20 min más."]},
- {id:"arepas_queso",n:"Arepas de maíz con queso",min:20,ap:["estufa"],tipo:["desayuno"],
-  ing:{harina_maiz:60,queso:35,sal:2,aceite:5},
-  pasos:["Amasa la harina con agua tibia y sal.","Forma discos y asa 6 min por lado.","Abre y rellena con queso."]},
- {id:"avena_banano",n:"Avena con banano",min:5,ap:[],tipo:["desayuno"],
-  ing:{avena_beb:250,banano:1},
-  pasos:["Sirve la avena bien fría.","Corta el banano encima."]},
- {id:"crema_zanahoria",n:"Crema de zanahoria",min:30,ap:["estufa","licuadora"],tipo:["comida"],
-  ing:{zanahoria:150,papa:80,leche:100,cebolla:20,sal:3,aceite:5},
-  pasos:["Cocina zanahoria, papa y cebolla hasta ablandar.","Licúa con la leche.","Regresa al fuego 5 min."]},
- {id:"patacones",n:"Patacones con hogao y huevo",min:30,ap:["estufa"],tipo:["comida"],
-  ing:{platano:200,huevo:1,tomate:40,cebolla_larga:20,aceite:20,sal:3},
-  pasos:["Fríe el plátano verde en rodajas, aplasta y vuelve a freír.","Prepara hogao.","Sirve con huevo frito encima."]},
- {id:"salchichas_pure",n:"Salchichas guisadas con puré",min:30,ap:["estufa"],tipo:["almuerzo","comida"],
-  ing:{salchicha:100,papa:200,leche:50,cebolla:20,tomate:30,aceite:8,sal:3},
-  pasos:["Cocina la papa y hazla puré con leche.","Guisa las salchichas en hogao."]},
- {id:"atun_arroz",n:"Atún con arroz y ensalada",min:20,ap:[["estufa","arrocera"]],tipo:["almuerzo","comida"],
-  ing:{atun:55,arroz:90,tomate:60,cebolla:20,aceite:8,sal:2},
-  pasos:["Cocina el arroz en olla o arrocera.","Mezcla el atún con cebolla picada.","Ensalada de tomate al lado."]},
- {id:"huevo_ensalada",n:"Huevos cocidos con papa y ensalada",min:25,ap:["estufa"],tipo:["almuerzo","comida"],
-  ing:{huevo:2,papa:150,tomate:60,cebolla:20,zanahoria:40,aceite:8,sal:2},
-  pasos:["Cocina huevos 10 min y papa aparte.","Ralla zanahoria y pica tomate y cebolla.","Aliña con aceite y sal."]},
- {id:"arepa_queso_leche",n:"Arepa con queso y leche",min:10,ap:[["estufa","microondas","airfryer"]],tipo:["desayuno"],
-  ing:{arepa:1,queso:30,leche:200},
-  pasos:["Asa la arepa en sartén, o 6 min en airfryer, o 1 min en microondas.","Derrite el queso encima.","Sirve con leche caliente."]},
- {id:"pasta_verduras",n:"Pasta con verduras salteadas",min:25,ap:["estufa"],tipo:["almuerzo","comida"],
-  ing:{espagueti:100,zanahoria:50,arveja_cong:40,cebolla:25,pasta_tomate:25,aceite:10,sal:3,queso:15},
-  pasos:["Cocina el espagueti.","Saltea zanahoria, arveja y cebolla.","Mezcla con pasta de tomate y queso rallado."]},
- /* --- Airfryer --- */
- {id:"muslos_air",n:"Muslos crocantes con papa en airfryer",min:35,ap:["airfryer"],tipo:["almuerzo","comida"],
-  ing:{pollo_muslo:180,papa:200,aceite:5,sal:3,ajo:0.5},
-  pasos:["Adoba los muslos con ajo y sal.","Papa en cascos con una cucharadita de aceite.","Airfryer a 190 °C por 25 min, volteando a la mitad."]},
- {id:"hamburguesa_air",n:"Hamburguesa de res con papa en airfryer",min:25,ap:["airfryer"],tipo:["almuerzo","comida"],
-  ing:{carne_res:150,papa:180,tomate:50,cebolla:20,aceite:5,sal:2},
-  pasos:["Papa en bastones con un poco de aceite, 15 min a 200 °C.","Suma la carne y 8 min más, volteando una vez.","Sirve con tomate y cebolla en rodajas."]},
- {id:"salchipapa_air",n:"Salchichas, papa y huevo en airfryer",min:25,ap:["airfryer"],tipo:["almuerzo","comida"],
-  ing:{salchicha:120,huevo:1,papa:180,tomate:40,aceite:5,sal:2},
-  pasos:["Papa en bastones, 12 min a 200 °C.","Suma las salchichas cortadas, 8 min más.","El huevo va en un molde pequeño los últimos 6 min."]},
- {id:"patacon_air",n:"Patacones de airfryer con huevo",min:30,ap:["airfryer"],tipo:["desayuno","comida"],
-  ing:{platano:180,huevo:2,aceite:5,sal:2},
-  pasos:["Plátano verde en trozos, 10 min a 180 °C.","Aplasta y vuelve 8 min a 200 °C.","Huevos en molde pequeño 7 min."]},
- /* --- Microondas --- */
- {id:"huevos_micro",n:"Huevos al microondas con arepa",min:8,ap:["microondas"],tipo:["desayuno"],
-  ing:{huevo:2,arepa:1,tomate:30,cebolla_larga:10,sal:1},
-  pasos:["Bate los huevos con tomate y cebolla picados en una taza.","Microondas 1 min, revuelve y 40 s más.","Calienta la arepa 30 s."]},
- {id:"papa_atun_micro",n:"Papa rellena de atún al microondas",min:15,ap:["microondas"],tipo:["almuerzo","comida"],
-  ing:{papa:250,atun:80,cebolla:20,tomate:40,aceite:5,sal:2},
-  pasos:["Pincha la papa y cocínala 8 min en microondas, volteando a la mitad.","Ábrela y mezcla la pulpa con atún, cebolla y tomate.","Rellena y dale 1 min más."]},
- /* --- Arrocera --- */
- {id:"arroz_pollo_arrocera",n:"Arroz con pollo de arrocera",min:40,ap:["arrocera"],tipo:["almuerzo","comida"],
-  ing:{arroz:90,pollo_surt:120,zanahoria:30,arveja_cong:25,cebolla:20,aceite:5,sal:3},
-  pasos:["Pon todo en la arrocera con 1,5 tazas de agua por taza de arroz.","Enciende y deja que salte sola.","Reposa 10 min tapada antes de servir."]},
- {id:"arroz_lenteja_arrocera",n:"Arroz con lentejas de arrocera",min:45,ap:["arrocera"],tipo:["almuerzo","comida"],
-  ing:{arroz:80,lenteja:80,cebolla:20,tomate:40,zanahoria:30,aceite:5,sal:3},
-  pasos:["Remoja la lenteja 1 h.","Todo a la arrocera con 2 tazas de agua por taza de arroz.","Reposa 10 min tapada."]},
-];
+/* Tiendas. Una tienda sin presentaciones descargadas aparece en la
+   interfaz pero no se puede elegir. */
+const TIENDAS={
+  exito:  {n:"Éxito"},
+  carulla:{n:"Carulla"},
+  d1:     {n:"D1"},
+  ara:    {n:"Ara"},
+};
+const TIENDA_DEF="d1";
+const indiceSkus={};
+function skusDe(tienda,ing){
+  if(!indiceSkus[tienda]){
+    const m={};
+    for(const s of (PRECIOS[tienda]&&PRECIOS[tienda].skus)||[])(m[s.ing]=m[s.ing]||[]).push(s);
+    indiceSkus[tienda]=m;
+  }
+  return indiceSkus[tienda][ing]||[];
+}
+function tieneDatos(t){return !!(PRECIOS[t]&&PRECIOS[t].skus&&PRECIOS[t].skus.length);}
+function tiendasConDatos(){return Object.keys(TIENDAS).filter(tieneDatos);}
+/* Una receta se puede comprar en una tienda si todos sus ingredientes
+   tienen al menos una presentación con precio ahí. */
+function conPrecio(r,tienda){return Object.keys(r.ing).every(i=>skusDe(tienda,i).length>0);}
 
-const CARNES=["pollo_surt","pollo_muslo","atun","salchicha","carne_res"];
+
+const CARNES=["pollo_surt","pollo_muslo","pollo_pechuga","atun","sardina","tilapia","salchicha","carne_res","carne_molida","cerdo"];
 
 /* Proteínas que la casa come o no come. Una receta queda fuera si lleva
    algún ingrediente de un grupo que no se come. Los grupos marcados como
    `carne` son los que cuentan para «almuerzo siempre con carne». */
 const PROTEINAS={
-  pollo:    {n:"Pollo",               ing:["pollo_surt","pollo_muslo"], carne:true},
-  res:      {n:"Carne de res",        ing:["carne_res"],               carne:true},
+  pollo:    {n:"Pollo",               ing:["pollo_surt","pollo_muslo","pollo_pechuga"], carne:true},
+  res:      {n:"Carne de res",        ing:["carne_res","carne_molida"], carne:true},
+  cerdo:    {n:"Cerdo",               ing:["cerdo"],                   carne:true},
   embutidos:{n:"Salchicha",           ing:["salchicha"],               carne:true},
-  pescado:  {n:"Pescado y atún",      ing:["atun"],                    carne:true},
+  pescado:  {n:"Pescado y atún",      ing:["atun","sardina","tilapia"], carne:true},
   huevo:    {n:"Huevo",               ing:["huevo"]},
   granos:   {n:"Granos",              ing:["lenteja","frijol","garbanzo","arveja_seca"]},
 };
@@ -215,14 +134,15 @@ function sirveEnFranja(r,f,o){
   if(f==="almuerzo"&&o.almuerzoConCarne&&!llevaCarne(r,o.proteinas||TODAS_PROTEINAS))return false;
   return true;
 }
-const LACTEOS=["leche","queso","avena_beb"];
-const GLUTEN=["espagueti"];
+const LACTEOS=["leche","queso","avena_beb","queso_campesino","yogur"];
+const GLUTEN=["espagueti","pan"];
 
 /* Ingredientes que se escalan cuando la persona necesita más (o menos)
    proteína. El resto de la receta —arroz, papa, verduras, aliños— se queda
    igual: nadie duplica la cebolla porque va al gimnasio. */
-const ESCALABLES=["huevo","pollo_surt","pollo_muslo","atun","salchicha","carne_res",
-                  "lenteja","frijol","garbanzo","arveja_seca","queso"];
+const ESCALABLES=["huevo","pollo_surt","pollo_muslo","pollo_pechuga","atun","sardina","tilapia",
+                  "salchicha","carne_res","carne_molida","cerdo",
+                  "lenteja","frijol","garbanzo","arveja_seca","queso","queso_campesino"];
 const F_MIN=0.7, F_MAX=2.5;
 
 /* Factores de proteína por kg de peso corporal y día. */
@@ -274,9 +194,10 @@ function aparatosUsados(r,aparatos){
   return usa;
 }
 function recetaPosible(r,o){
-  const{aparatos=["estufa"],restricciones=[],maxMinutos=90,proteinas=TODAS_PROTEINAS}=o;
+  const{aparatos=["estufa"],restricciones=[],maxMinutos=90,proteinas=TODAS_PROTEINAS,
+        tienda=TIENDA_DEF,ignorarPrecio=false}=o;
   return !!aparatosUsados(r,aparatos)&&cumpleRestricciones(r,restricciones)&&
-    comeTodo(r,proteinas)&&r.min<=maxMinutos;
+    comeTodo(r,proteinas)&&r.min<=maxMinutos&&(ignorarPrecio||conPrecio(r,tienda));
 }
 
 function cumpleRestricciones(r,restr){
@@ -289,9 +210,17 @@ function cumpleRestricciones(r,restr){
 }
 
 /* Se compran EMPAQUES, no gramos. Busca la mejor COMBINACIÓN de presentaciones. */
-function costoIngrediente(ingId,cantidad){
-  const op=SKUS.filter(s=>s.ing===ingId);
+const cacheCosto=new Map();
+function costoIngrediente(ingId,cantidad,tienda=TIENDA_DEF){
+  const op=skusDe(tienda,ingId);
   if(!op.length||cantidad<=0)return null;
+  const clave=tienda+"|"+ingId+"|"+cantidad.toFixed(3);
+  if(cacheCosto.has(clave))return cacheCosto.get(clave);
+  const res=costoIngredienteSinCache(op,cantidad);
+  cacheCosto.set(clave,res);
+  return res;
+}
+function costoIngredienteSinCache(op,cantidad){
   const need=cantidad-1e-9;
   let mejor=null;
   const rec=(i,counts,cant,costo)=>{
@@ -311,11 +240,11 @@ function costoIngrediente(ingId,cantidad){
           sobranteValor:mejor.cantidad>0?(sobrante/mejor.cantidad)*mejor.costo:0,
           etiqueta:packs.map(p=>`${p.unidades} × ${p.sku.nom}`).join(" + ")};
 }
-function costoCanasta(c){let t=0;for(const[i,q]of Object.entries(c)){const x=costoIngrediente(i,q);if(x)t+=x.costo;}return t;}
-function detalleCanasta(c){
+function costoCanasta(c,tienda){let t=0;for(const[i,q]of Object.entries(c)){const x=costoIngrediente(i,q,tienda);if(x)t+=x.costo;}return t;}
+function detalleCanasta(c,tienda){
   const f=[];
   for(const[i,q]of Object.entries(c)){
-    const x=costoIngrediente(i,q); if(!x)continue;
+    const x=costoIngrediente(i,q,tienda); if(!x)continue;
     f.push({ing:i,nombre:ING[i].n,cat:ING[i].cat,unidad:ING[i].u,
       necesita:Math.round(q*10)/10,sku:x.etiqueta,costo:x.costo,
       sobrante:Math.round(x.sobrante*10)/10,sobranteValor:x.sobranteValor,desp:!!ING[i].desp});
@@ -394,14 +323,14 @@ function planear(o){
           if((usos[r.id]||0)>=maxRepeticiones)continue;
           if(evitarRepetir&&r.id===ultima)continue;
           const nuevo=sumar(carrito,r,personas);
-          const delta=costoCanasta(nuevo)-costoCanasta(carrito);
+          const delta=costoCanasta(nuevo,o.tienda)-costoCanasta(carrito,o.tienda);
           const score=delta/personas;
           if(!mejor||score<mejor.score)mejor={r,score,delta,nuevo};
         }
         if(mejor)break;
       }
       if(!mejor){d=dias;break;}
-      if(modo==="presupuesto"&&costoCanasta(mejor.nuevo)>presupuesto){d=dias;break;}
+      if(modo==="presupuesto"&&costoCanasta(mejor.nuevo,o.tienda)>presupuesto){d=dias;break;}
       carrito=mejor.nuevo;
       elegidas.push({receta:mejor.r,franja,costoMarginal:mejor.delta});
       usos[mejor.r.id]=(usos[mejor.r.id]||0)+1; ultima=mejor.r.id;
@@ -415,7 +344,7 @@ function empaquetar(o,st){
   const{presupuesto=200000,personas=2,dias=5,comidasDia=2,modo="dias",
         pisoComida=20,objetivoDia=0,peso=70,actividad="activo"}=o;
   const{carrito,elegidas,porFranja,franjas,diasMax}=st;
-  const costoTotal=costoCanasta(carrito), canasta=detalleCanasta(carrito);
+  const costoTotal=costoCanasta(carrito,o.tienda), canasta=detalleCanasta(carrito,o.tienda);
   const diasCubiertos=Math.floor(elegidas.length/comidasDia);
   const porciones=elegidas.length*personas;
 
@@ -501,7 +430,7 @@ function planearMealPrep(o){
           for(const r of g.pool){
             if(elegidos.some(e=>e.receta.id===r.id&&(evitarTodo||e.grupo===g.tipo)))continue;
             const nuevo=sumar(carrito,r,porc);
-            const delta=costoCanasta(nuevo)-costoCanasta(carrito);
+            const delta=costoCanasta(nuevo,o.tienda)-costoCanasta(carrito,o.tienda);
             const score=delta/porc;
             if(!mejor||score<mejor.score)mejor={r,score,delta,nuevo,comidas,porc};
           }
@@ -521,7 +450,7 @@ function planearMealPrep(o){
   let st=armar(dias);
   if(modo==="presupuesto"){
     let d=dias;
-    while(d>1&&costoCanasta(st.carrito)>presupuesto){ d--; st=armar(d); }
+    while(d>1&&costoCanasta(st.carrito,o.tienda)>presupuesto){ d--; st=armar(d); }
   }
 
   // Rotación: cada día toma su desayuno de la tanda de desayuno y sus
@@ -584,8 +513,30 @@ function impactoProteinas(o){
   return out;
 }
 
+/* ==========================================================
+   TIENDAS — cuánto cuesta el plan en cada una
+   ========================================================== */
+/* Recetas que la cocina permite pero que no tienen precio en la tienda. */
+function recetasSinPrecio(o){
+  return RECETAS.filter(r=>recetaPosible(r,{...o,ignorarPrecio:true})&&!conPrecio(r,o.tienda||TIENDA_DEF));
+}
+/* Arma el plan en cada tienda con datos: cada una con su propio menú
+   más barato, no el mismo menú con otros precios. */
+function compararTiendas(o){
+  return Object.keys(TIENDAS).map(t=>{
+    const info={tienda:t,n:TIENDAS[t].n,datos:tieneDatos(t),
+      fecha:PRECIOS[t]&&PRECIOS[t].fecha,nota:PRECIOS[t]&&PRECIOS[t].nota};
+    if(!info.datos)return info;
+    const oo={...o,tienda:t};
+    const r=oo.mealPrep?planearMealPrep(oo):planear(oo);
+    return{...info,ok:r.ok,costoTotal:r.ok?r.costoTotal:null,diasCubiertos:r.ok?r.diasCubiertos:0,
+      diasPedidos:oo.dias,objetivoCumplido:r.ok&&r.objetivoCumplido,
+      recetas:recetasPosibles(oo).length};
+  });
+}
+
 if(typeof module!=="undefined"&&module.exports){
-  module.exports={APARATOS,PROTEINAS,ING,SKUS,RECETAS,ACTIVIDAD,FRANJAS,PRINCIPALES,
+  module.exports={APARATOS,PROTEINAS,ING,RECETAS,PRECIOS,TIENDAS,TIENDA_DEF,tieneDatos,tiendasConDatos,conPrecio,recetasSinPrecio,compararTiendas,ACTIVIDAD,FRANJAS,PRINCIPALES,
     llevaCarne,comeTodo,impactoProteinas,
     variante,cumpleRestricciones,aparatosUsados,recetaPosible,recetasPosibles,
     impactoAparatos,costoIngrediente,costoCanasta,proteinaReceta,

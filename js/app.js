@@ -14,6 +14,10 @@ let aparatos = new Set(APARATOS_INICIALES);
 let enfocado = null;
 let proteinas = new Set(Object.keys(PROTEINAS));
 let firmaPlan = "", ultimoTotal = null, ultimo = null;
+let tienda = tieneDatos(TIENDA_DEF) ? TIENDA_DEF : (tiendasConDatos()[0] || TIENDA_DEF);
+const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+const fechaCorta = f => { if (!f) return ""; const [a, m, d] = f.split("-").map(Number); return `${d} ${MESES[m - 1]} ${a}`; };
+const nombreTienda = t => TIENDAS[t] ? TIENDAS[t].n : t;
 const hayCarne = () => [...proteinas].some(g => PROTEINAS[g].carne);
 const pressed = el => el.getAttribute("aria-pressed") === "true";
 const icono = (id, extra = "") => `<svg class="ico" ${extra}><use href="#${id}"/></svg>`;
@@ -40,6 +44,7 @@ function restaurar() {
   if (c.mealPrep) $("#mealprep").setAttribute("aria-pressed", "true");
   if (Array.isArray(c.proteinas)) proteinas = new Set(c.proteinas.filter(g => PROTEINAS[g]));
   if (c.almuerzoCarnePedido != null) $("#alm-carne").setAttribute("aria-pressed", String(!!c.almuerzoCarnePedido));
+  if (c.tienda && tieneDatos(c.tienda)) tienda = c.tienda;
 }
 
 /* ---------- lectura de controles ---------- */
@@ -51,6 +56,7 @@ function leerCrudo() {
     dias: ent("#dias", 1, 30),
     comidasDia: ent("#comidas", 1, 3),
     aparatos: [...aparatos],
+    tienda,
     restricciones: $$('#restricciones .pill[aria-pressed="true"]').map(b => b.dataset.v),
     proteinas: [...proteinas],
     almuerzoCarnePedido: pressed($("#alm-carne")),
@@ -202,6 +208,57 @@ function arrancar() {
 }
 
 /* ==========================================================
+   TIENDAS
+   ========================================================== */
+function construirTiendas() {
+  $("#tiendas").innerHTML = Object.keys(TIENDAS).map(t => `
+    <button type="button" class="store" role="radio" data-t="${t}" aria-checked="false">
+      <span class="flag" hidden></span>
+      <span class="sn">${nombreTienda(t)}</span>
+      <span class="sv num">—</span>
+      <span class="ss"></span>
+    </button>`).join("");
+  $$("#tiendas .store").forEach(b => b.addEventListener("click", () => {
+    if (b.disabled) return;
+    tienda = b.dataset.t; render();
+  }));
+}
+let reloj = null;
+function programarTiendas(o) {
+  clearTimeout(reloj);
+  reloj = setTimeout(() => pintarTiendas(o), 150);
+}
+function pintarTiendas(o) {
+  const comp = compararTiendas(o);
+  const completas = comp.filter(c => c.ok && c.diasCubiertos >= c.diasPedidos);
+  const barata = completas.length ? completas.reduce((a, b) => b.costoTotal < a.costoTotal ? b : a).tienda : null;
+  for (const c of comp) {
+    const b = $(`.store[data-t="${c.tienda}"]`);
+    b.disabled = !c.datos;
+    b.setAttribute("aria-checked", String(c.tienda === tienda));
+    const sv = b.querySelector(".sv"), ss = b.querySelector(".ss"), flag = b.querySelector(".flag");
+    if (!c.datos) {
+      sv._cur = 0; sv.textContent = "sin precios";
+      ss.textContent = c.nota || "Todavía no hay precios descargados.";
+      flag.hidden = true; continue;
+    }
+    if (c.ok) correr(sv, c.costoTotal, money); else { sv._cur = 0; sv.textContent = "no alcanza"; }
+    ss.innerHTML = `${c.ok ? `<b>${c.diasCubiertos}/${c.diasPedidos} días</b> · ` : ""}${c.recetas} recetas<br>precios del ${fechaCorta(c.fecha)}`;
+    flag.hidden = !(c.tienda === tienda || c.tienda === barata);
+    flag.className = "flag" + (c.tienda === tienda ? " pick" : "");
+    flag.textContent = c.tienda === tienda ? (c.tienda === barata ? "aquí · la más barata" : "aquí compras") : "la más barata";
+  }
+  const sin = recetasSinPrecio(o);
+  const faltan = new Map();
+  for (const r of sin) for (const i of Object.keys(r.ing)) if (!skusDeIng(tienda, i)) faltan.set(i, (faltan.get(i) || 0) + 1);
+  const top = [...faltan.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([i]) => ING[i].n.toLowerCase());
+  $("#tiendas-nota").innerHTML = sin.length
+    ? `En <b>${nombreTienda(tienda)}</b> quedan por fuera <b>${sin.length} recetas</b> que tu cocina sí permite, porque la tienda no tiene precio para algún ingrediente: ${top.join(", ")}${faltan.size > 5 ? " y otros" : ""}.`
+    : `En <b>${nombreTienda(tienda)}</b> todas las recetas que tu cocina permite tienen precio.`;
+}
+const skusDeIng = (t, i) => ((PRECIOS[t] && PRECIOS[t].skus) || []).some(s => s.ing === i);
+
+/* ==========================================================
    SUGERENCIAS
    ========================================================== */
 function sugerencias(r, o) {
@@ -274,6 +331,7 @@ function render() {
 
   pintarMarcador(r, o);
   pintarCuenta(r);
+  programarTiendas(o);
   if (!r.ok) { renderError(r, o); return; }
   renderStats(r, o);
   renderPlan(r);
@@ -294,6 +352,7 @@ function pintarMarcador(r, o) {
 
 function pintarCuenta(r) {
   const tot = $("#c-total");
+  $("#c-lab").textContent = `mercado en ${nombreTienda(tienda)}`;
   if (!r.ok) {
     tot._cur = 0; tot.textContent = "—";
     $("#c-dias").textContent = "sin plan"; $("#c-dias-dot").className = "dot bad";
@@ -452,7 +511,7 @@ function renderLista(r) {
   const nProd = r.canasta.length;
   $("#pane-lista").innerHTML = `<div class="lista-wrap">
     <div class="receipt-shadow"><div class="receipt">
-      <div class="r-head"><strong>MERCAO</strong><span>lista de mercado</span><span>${r.personas} ${r.personas === 1 ? "persona" : "personas"} · ${r.diasCubiertos} días · ${r.comidasAsignadas} comidas</span><span>precios D1 de referencia · 8-sep-2026</span></div>
+      <div class="r-head"><strong>MERCAO</strong><span>lista de mercado</span><span>${r.personas} ${r.personas === 1 ? "persona" : "personas"} · ${r.diasCubiertos} días · ${r.comidasAsignadas} comidas</span><span>precios ${nombreTienda(tienda)} de referencia · ${PRECIOS[tienda] ? PRECIOS[tienda].fecha : ""}</span></div>
       <div class="r-sep"></div>${cuerpo}<div class="r-sep"></div>
       <div class="r-line"><span>${nProd} productos</span><span class="r-dots"></span><span></span></div>
       <div class="r-line"><span>Sobrante para la otra semana</span><span class="r-dots"></span><span>${money(r.sobranteValor)}</span></div>
@@ -472,7 +531,7 @@ function renderLista(r) {
 }
 
 function textoLista(r) {
-  const lineas = [`Mercao · lista de mercado`, `${r.personas} ${r.personas === 1 ? "persona" : "personas"} · ${r.diasCubiertos} días`, ""];
+  const lineas = [`Mercao · lista de mercado en ${nombreTienda(tienda)}`, `${r.personas} ${r.personas === 1 ? "persona" : "personas"} · ${r.diasCubiertos} días`, ""];
   const grupos = [...CATS.map(c => [c, r.canasta.filter(f => !f.desp && f.cat === c)]), ["Despensa", r.canasta.filter(f => f.desp)]];
   for (const [cat, g] of grupos) {
     if (!g.length) continue;
@@ -480,7 +539,7 @@ function textoLista(r) {
     g.forEach(f => lineas.push(`- ${f.nombre}: ${f.sku} (${money(f.costo)})`));
     lineas.push("");
   }
-  lineas.push(`Total: ${money(r.costoTotal)} (precios D1 de referencia, 8-sep-2026)`);
+  lineas.push(`Total: ${money(r.costoTotal)} (precios ${nombreTienda(tienda)} de referencia, ${fechaCorta(PRECIOS[tienda] && PRECIOS[tienda].fecha)})`);
   return lineas.join("\n");
 }
 function copiarLista(r) {
@@ -517,6 +576,7 @@ construirLlamas();
 construirChips();
 construirProteinas();
 construirStats();
+construirTiendas();
 restaurar();
 
 $$(".ap").forEach(g => {
@@ -565,7 +625,8 @@ $("#c-ver").addEventListener("click", () => {
   $("#resultado").scrollIntoView({ behavior: QUIETO ? "auto" : "smooth", block: "start" });
 });
 
-$("#stat-cat").textContent = `precios D1 · 8 sep 2026 · ${RECETAS.length} recetas · ${SKUS.length} presentaciones`;
+$("#stat-cat").textContent = `${RECETAS.length} recetas · ${tiendasConDatos().map(nombreTienda).join(", ")}`;
+$("#fuentes").textContent = Object.keys(TIENDAS).map(t => `${nombreTienda(t)}: ${tieneDatos(t) ? `${PRECIOS[t].skus.length} presentaciones, ${fechaCorta(PRECIOS[t].fecha)}` : ((PRECIOS[t] && PRECIOS[t].nota) || "sin precios").replace(/\.$/, "")}`).join(" · ") + ".";
 pistaModo();
 render();
 arrancar();

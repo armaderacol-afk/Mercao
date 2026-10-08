@@ -21,12 +21,36 @@ test("cada receta usa aparatos conocidos", () => {
         assert.ok(M.APARATOS[a], `${r.id} usa ${a}`);
 });
 
-test("cada ingrediente de receta existe y tiene empaque", () => {
+test("cada ingrediente de receta existe", () => {
   for (const r of M.RECETAS)
-    for (const i of Object.keys(r.ing)) {
-      assert.ok(M.ING[i], `${r.id}: ${i}`);
-      assert.ok(M.SKUS.some(s => s.ing === i), `sin empaque: ${i}`);
+    for (const i of Object.keys(r.ing)) assert.ok(M.ING[i], `${r.id}: ${i}`);
+});
+
+test("hay al menos 90 recetas y los ids no se repiten", () => {
+  assert.ok(M.RECETAS.length >= 90, `solo ${M.RECETAS.length}`);
+  assert.strictEqual(new Set(M.RECETAS.map(r => r.id)).size, M.RECETAS.length);
+});
+
+test("los precios de cada tienda apuntan a ingredientes conocidos y son positivos", () => {
+  for (const t of Object.keys(M.PRECIOS))
+    for (const s of M.PRECIOS[t].skus) {
+      assert.ok(M.ING[s.ing], `${t}: ${s.ing}`);
+      assert.ok(s.size > 0 && s.precio > 0, `${t}: ${s.nom}`);
     }
+});
+
+test("una receta sin precio en la tienda no entra al plan", () => {
+  for (const t of M.tiendasConDatos()) {
+    const r = M.planear({ ...base, tienda: t, aparatos: Object.keys(M.APARATOS) });
+    if (!r.ok) continue;
+    for (const e of r.elegidas) assert.ok(M.conPrecio(e.receta, t), `${t}: ${e.receta.id}`);
+  }
+});
+
+test("comparar tiendas devuelve las cuatro, con o sin datos", () => {
+  const c = M.compararTiendas({ ...base, aparatos: ["estufa", "olla_presion", "nevera"] });
+  assert.deepStrictEqual(c.map(x => x.tienda), Object.keys(M.TIENDAS));
+  for (const x of c.filter(x => x.datos && x.ok)) assert.ok(x.costoTotal > 0);
 });
 
 test("solo con airfryer y microondas también se arma un plan", () => {
