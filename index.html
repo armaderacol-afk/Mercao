@@ -333,7 +333,7 @@
   .dia { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 1rem 1.1rem 0.4rem; }
   .dia.enter { animation: subir 0.5s var(--ease) both; animation-delay: calc(var(--i, 0) * 55ms); }
   @keyframes subir { from { opacity: 0.2; transform: translateY(12px); } }
-  .dia header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; }
+  .dia header { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 0.5rem; }
   .dia h4 { margin: 0; font-family: var(--f-display); font-weight: 800; font-size: 1.7rem; text-transform: uppercase; line-height: 1; }
   .dia header span { font-family: var(--f-mono); font-size: 0.68rem; color: var(--ink-3); }
   .dia header span.ok { color: var(--ok); }
