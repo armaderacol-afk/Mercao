@@ -187,6 +187,10 @@
                  border-radius: 999px; background: var(--ok-dim); color: var(--ok); }
   .store .flag.pick { background: var(--amber); color: #1a1206; }
   .stores-note { margin-top: 0.9rem; max-width: 52rem; }
+  @media (max-width: 60rem) {
+    .store .flag { position: static; order: -1; margin-bottom: 0.2rem; }
+    .store .sn { font-size: clamp(1.45rem, 6.5vw, 2rem); }
+  }
   .token { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0.7rem; padding: 1rem 1rem 0.9rem;
            border-radius: 20px; border: 1px dashed var(--line-2); background: transparent; cursor: pointer; text-align: left;
            transition: background 0.25s, border-color 0.25s, transform 0.15s; }
