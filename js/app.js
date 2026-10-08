@@ -119,8 +119,10 @@ function construirLlamas() {
       const a = i / n * Math.PI * 2;
       const x = cx + rx * 0.8 * Math.cos(a), y = cy + ry * 0.8 * Math.sin(a);
       const h = (6 + ((i * 7 + b * 3) % 5)) * (rx / 28);
-      const d = `M0 0C-2.4 -1.4 -1.9 -${(h * 0.6).toFixed(1)} 0 -${h.toFixed(1)}C1.9 -${(h * 0.6).toFixed(1)} 2.4 -1.4 0 0Z`;
-      html += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><path class="fl" style="animation-delay:-${((i * 0.13 + b * 0.07) % 0.5).toFixed(2)}s" d="${d}" fill="url(#g-flame)"/></g>`;
+      // Llama en gota con núcleo blanco, como las de animación dibujada.
+      const gota = k => `M0 0C-${(3 * k).toFixed(1)} -${(1.2 * k).toFixed(1)} -${(2.2 * k).toFixed(1)} -${(h * 0.55 * k).toFixed(1)} 0 -${(h * k).toFixed(1)}C${(2.2 * k).toFixed(1)} -${(h * 0.55 * k).toFixed(1)} ${(3 * k).toFixed(1)} -${(1.2 * k).toFixed(1)} 0 0Z`;
+      html += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><g class="fl" style="animation-delay:-${((i * 0.13 + b * 0.07) % 0.42).toFixed(2)}s">` +
+        `<path d="${gota(1)}" fill="url(#g-flame)" stroke="#2c4f8f" stroke-width=".6"/><path d="${gota(0.5)}" fill="#f4fbff"/></g></g>`;
     }
   });
   $("#llamas").innerHTML = html;
@@ -193,7 +195,8 @@ function alternar(k) {
   prende ? aparatos.add(k) : aparatos.delete(k);
   enfocado = k;
   render();
-  if (prende) encender($(`.ap[data-v="${k}"]`));
+  const g = $(`.ap[data-v="${k}"]`);
+  if (prende) encender(g); else if (!QUIETO && window.Escena) Escena.apagar(g);
 }
 function encender(g) {
   if (!g || QUIETO) return;
@@ -624,6 +627,7 @@ function seleccionarTab(t) {
    EVENTOS
    ========================================================== */
 construirLlamas();
+if (window.Escena) Escena.preparar();
 construirChips();
 construirProteinas();
 construirStats();
@@ -647,7 +651,11 @@ $("#k-todo").addEventListener("click", () => {
   aparatos = new Set(Object.keys(APARATOS)); enfocado = null; render();
   nuevos.forEach((a, i) => setTimeout(() => encender($(`.ap[data-v="${a}"]`)), i * 120));
 });
-$("#k-basico").addEventListener("click", () => { aparatos = new Set(["estufa", "nevera"]); enfocado = null; render(); });
+$("#k-basico").addEventListener("click", () => {
+  const apagados = [...aparatos].filter(a => a !== "estufa" && a !== "nevera");
+  aparatos = new Set(["estufa", "nevera"]); enfocado = null; render();
+  if (!QUIETO && window.Escena) apagados.forEach((a, i) => setTimeout(() => Escena.apagar($(`.ap[data-v="${a}"]`)), i * 90));
+});
 
 ["#presu", "#peso", "#platos", "#reps", "#maxmin", "#personas", "#dias", "#comidas"].forEach(s => $(s).addEventListener("input", render));
 $$(".stepper button").forEach(b => b.addEventListener("click", () => {

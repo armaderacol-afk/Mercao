@@ -9,6 +9,7 @@ Dile cuánta plata tienes, cuánto pesas, qué hay en tu cocina y dónde compras
 | `index.html` | La app: estilos, controles y la ilustración de la cocina (SVG). |
 | `js/engine.js` | El motor: ingredientes, proteína, costo por empaques y planeación. Corre en el navegador y en Node. |
 | `js/app.js` | La interfaz: lee los controles, pinta la cocina, las tiendas y el plan. |
+| `js/escena.js` | Efectos de la cocina: vapor en bocanadas, destellos y la nubecita de polvo al apagar. |
 | `data/recetas.js` | Las recetas (105) y los acompañantes (11). Cantidades por porción. |
 | `data/precios-<tienda>.js` | Presentaciones y precios de cada tienda. Los genera el descargador; no se editan a mano. |
 | `data/reporte-precios.md` | Qué producto escogió el descargador para cada ingrediente, para revisarlo. |
@@ -40,6 +41,7 @@ node scripts/descargar-precios.mjs --tiendas exito,carulla,d1   # necesita salid
 
 ## Novedades
 
+- **v0.8 · animación dibujada.** Los aparatos se estiran y rebotan al prenderse, sueltan vapor en bocanadas y estrellitas, y desaparecen en una nubecita de polvo al apagarse. Llamas, tapas y temblores van a saltos, cuadro a cuadro.
 - **v0.7 · acuarela.** La app pasa a una cocina de día pintada en acuarela sobre papel: tinta sepia, luz de ventana, nubes y matas que se mueven. Las recetas repetidas quedan con días de por medio y el botón «Otro menú» baraja el plan.
 - **v0.6 · platos balanceados.** Acompañantes de verdura y fruta, nutrientes por plato y por día, y 8 ingredientes nuevos (repollo, lechuga, pepino, brócoli, espinaca, mandarina, manzana, papaya). Se quita Ara, que no publica precios en línea.
 
