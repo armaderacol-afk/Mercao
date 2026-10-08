@@ -40,6 +40,7 @@ node scripts/descargar-precios.mjs --tiendas exito,carulla,d1   # necesita salid
 
 ## Novedades
 
+- **v0.7 · acuarela.** La app pasa a una cocina de día pintada en acuarela sobre papel: tinta sepia, luz de ventana, nubes y matas que se mueven. Las recetas repetidas quedan con días de por medio y el botón «Otro menú» baraja el plan.
 - **v0.6 · platos balanceados.** Acompañantes de verdura y fruta, nutrientes por plato y por día, y 8 ingredientes nuevos (repollo, lechuga, pepino, brócoli, espinaca, mandarina, manzana, papaya). Se quita Ara, que no publica precios en línea.
 
 - **v0.5 · tiendas y recetas.** Eliges entre Éxito, Carulla y D1; Mercao arma el plan en cada una y marca la más barata. 105 recetas (antes 30) y el cerdo como proteína.
