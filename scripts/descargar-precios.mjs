@@ -13,7 +13,6 @@ const TIENDAS = {
   exito:   { n: "Éxito",   host: "www.exito.com" },
   carulla: { n: "Carulla", host: "www.carulla.com" },
   d1:      { n: "D1",      host: "www.d1.com.co" },
-  ara:     { n: "Ara",     host: null, nota: "aratiendas.com no publica un catálogo con precios en línea." },
 };
 
 // u: unidad del ingrediente en Mercao (g, ml, und). rango: COP por kg, L o unidad.
@@ -67,6 +66,14 @@ const BUSQUEDAS = {
   panela:       { u: "g",   q: ["panela"], inc: /^panela/, exc: /(liquid|bebida|limonada|instant|aromat|jengibre|con |limon|sabor)/, rango: [3000, 16000], max: 3000 },
   azucar:       { u: "g",   q: ["azucar blanca", "azucar"], inc: /^azucar/, exc: /(morena|light|stevia|glass|pulveriz|impalpable|organica|endulzante|sustituto|vainilla|canela|sachet|sobres)/, rango: [2500, 11000], max: 3000 },
   pasta_tomate: { u: "g",   q: ["pasta de tomate"], inc: /(pasta de tomate|pure de tomate|tomate triturado)/, exc: /(ketchup|salsa para|con )/, rango: [5000, 50000], max: 1500 },
+  repollo:      { u: "g",   q: ["repollo blanco", "repollo"], inc: /^repollo/, exc: /(ensalada|encurt|curtido|chucrut|semilla)/, rango: [1000, 14000], max: 3000, pu: 1500 },
+  lechuga:      { u: "g",   q: ["lechuga crespa", "lechuga batavia", "lechuga"], inc: /^lechuga/, exc: /(semilla|ensalada lista)/, rango: [2000, 45000], max: 1000, pu: 400 },
+  pepino:       { u: "g",   q: ["pepino cohombro", "pepino"], inc: /^pepino/, exc: /(encurt|dulce|pickle|agridulce|en vinagre|semilla)/, rango: [1500, 16000], max: 2000, pu: 300 },
+  brocoli:      { u: "g",   q: ["brocoli"], inc: /^brocoli/, exc: /(crema|sopa|semilla|bites|apanad)/, rango: [3000, 35000], max: 2000, pu: 400 },
+  espinaca:     { u: "g",   q: ["espinaca"], inc: /^espinaca/, exc: /(crema|pasta|tortilla|deshidr|semilla|polvo)/, rango: [3000, 45000], max: 1000, pu: 250 },
+  mandarina:    { u: "und", q: ["mandarina"], inc: /^mandarina/, exc: /(jugo|bebida|sabor|lata|gaseosa|esencia|te\b)/, rango: [150, 2500], pu: 120 },
+  manzana:      { u: "und", q: ["manzana roja", "manzana"], inc: /^manzana/, exc: /(jugo|compota|bebida|sabor|deshidr|chips|vinagre|\bte\b|postobon|gaseosa|pure|snack|aromatica)/, rango: [300, 4500], pu: 180 },
+  papaya:       { u: "g",   q: ["papaya"], inc: /^papaya/, exc: /(jugo|deshidr|bebida|semilla|aromatica)/, rango: [1500, 16000], max: 3000, pu: 1500 },
   chocolate:    { u: "g",   q: ["chocolate de mesa", "chocolate en pastilla"], inc: /^chocolate/, exc: /(bebida|leche|barra|confite|galleta|chocolatina|polvo|instant|cobertura|helado|relleno|blanco|mani|almendra|caja|bomb|wafer)/, rango: [10000, 80000], max: 1500 },
 };
 
@@ -188,7 +195,7 @@ async function descargarTienda(clave) {
 }
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
-const pedidas = arg("--tiendas", "exito,carulla,d1,ara").split(",").map(s => s.trim()).filter(Boolean);
+const pedidas = arg("--tiendas", "exito,carulla,d1").split(",").map(s => s.trim()).filter(Boolean);
 const fecha = new Date().toISOString().slice(0, 10);
 let md = `# Reporte de precios · ${fecha}\n\nGenerado por \`scripts/descargar-precios.mjs\`. Precio por kg, litro o unidad entre paréntesis.\n`;
 const anterior = existsSync("data/reporte-precios.md") ? readFileSync("data/reporte-precios.md", "utf8") : "";

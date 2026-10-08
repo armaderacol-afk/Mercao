@@ -10,7 +10,7 @@ on:
       tiendas:
         description: "Tiendas separadas por coma"
         required: false
-        default: "exito,carulla,d1,ara"
+        default: "exito,carulla,d1"
       ingredientes:
         description: "Para depurar: ingredientes separados por coma"
         required: false
@@ -38,7 +38,7 @@ jobs:
         run: node scripts/descargar-precios.mjs --tiendas "${{ inputs.tiendas }}" --depurar "${{ inputs.ingredientes }}"
       - name: Descargar precios
         if: github.event_name == 'schedule' || inputs.modo == 'descargar'
-        run: node scripts/descargar-precios.mjs --tiendas "${{ inputs.tiendas || 'exito,carulla,d1,ara' }}"
+        run: node scripts/descargar-precios.mjs --tiendas "${{ inputs.tiendas || 'exito,carulla,d1' }}"
       - name: Guardar precios en el repo
         if: github.event_name == 'schedule' || inputs.modo == 'descargar'
         run: |
