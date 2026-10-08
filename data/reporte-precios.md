@@ -4,7 +4,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 
 ## Éxito
 
-148 presentaciones para 49 de 49 ingredientes.
+165 presentaciones para 57 de 57 ingredientes.
 
 | Ingrediente | Presentaciones |
 | --- | --- |
@@ -49,18 +49,26 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | leche | Leche FRESCAMPO entera UHT bolsa maxilitro (1100 ml) · $3.770 (3.427)<br>Leche FRESCAMPO entera UHT paquete (5400 ml) · $18.540 (3.433)<br>Leche FRESCAMPO entera UHT bolsa (900 ml) · $3.090 (3.433)<br>Leche entera ALPINA caja x4und 1l (4000 ml) · $35.450 (8.863) |
 | queso | Queso Mozzarella CENTURION Bloque (600 gr) · $13.800 (23.000)<br>Queso mozzarella FRESCAMPO tajado (250 gr) · $6.560 (26.240)<br>Queso mozzarella FRESCAMPO tajado (800 gr) · $21.000 (26.250)<br>Queso Mozzarella FRESCAMPO Tajado (400 gr) · $10.500 (26.250) |
 | queso_campesino | Queso campesino COLANTA fresco semiduro graso (250 gr) · $7.344 (29.376)<br>Queso campesino EL ZARZAL fresco graso semiduro (450 gr) · $13.920 (30.933)<br>Queso campesino EL ZARZAL fresco graso semiduro (240 gr) · $9.630 (40.125) |
-| avena_beb | Avena ALQUERIA Cubana (1000 gr) · $7.272 (7.272)<br>Avena COLANTA sabor natural maxilitro (1042.911 ml) · $7.880 (7.556)<br>Bebida de avena CELEMA premium sabor canela (900 gr) · $7.192 (7.991)<br>Avena COLANTA sabor a canela x6und (1200 ml) · $9.860 (8.217) |
+| avena_beb | Avena ALQUERIA Cubana (1000 gr) · $6.424 (6.424)<br>Avena COLANTA sabor natural maxilitro (1042.911 ml) · $7.880 (7.556)<br>Bebida de avena CELEMA premium sabor canela (900 gr) · $7.192 (7.991)<br>Avena COLANTA sabor a canela x6und (1200 ml) · $9.860 (8.217) |
 | yogur | Yogurt COLANTA kid surtido x6und (1140 ml) · $7.728 (6.779)<br>Yogurt SLIGHT descremado sin dulce surtido x6und (1200 gr) · $8.320 (6.933)<br>Yogurt COLANTA sabores surtidos x6und (1137.721 ml) · $9.160 (8.051)<br>Yogurt COLANTA sabor a mora entero (900 gr) · $7.568 (8.409) |
 | aceite | Aceite de soya FRESCAMPO multiusos botella familiar (2700 ml) · $20.690 (7.663)<br>Aceite de soya FRESCAMPO multiusos (700 ml) · $5.430 (7.757)<br>Aceite de girasol FRESCAMPO botella (2000 ml) · $16.990 (8.495)<br>Aceite de girasol FRESCAMPO botella (900 ml) · $7.990 (8.878) |
 | sal | Sal REFISAL alta pureza (500 gr) · $1.500 (3.000)<br>Sal REFISAL alta pureza (3000 gr) · $9.150 (3.050)<br>Sal REFISAL alta pureza (1000 gr) · $3.160 (3.160)<br>Sal REFISAL marina (800 gr) · $4.790 (5.988) |
 | panela | PANELA ATADO EL TREBOL 1000 gr · $5.865 (5.865)<br>Panela Redonda x 2 Und PANELA TRADICIÓN DEL CAMPO 830 gr · $5.763 (6.943)<br>Panela REGIONAL EP 835 gr · $5.940 (7.114)<br>PANELA PEQUEÑA EMPA REGIONAL EP 908 gr · $6.460 (7.115) |
 | azucar | Azúcar MAYAGUEZ blanco (2500 gr) · $7.837 (3.135)<br>Azúcar FRESCAMPO blanco (1000 gr) · $3.390 (3.390)<br>Azúcar MANUELITA alta pureza (2000 gr) · $7.630 (3.815)<br>Azúcar FRESCAMPO blanco (500 gr) · $2.100 (4.200) |
 | pasta_tomate | Pasta de tomate FRESCAMPO doy pack (200 gr) · $4.720 (23.600)<br>Pasta de tomate LA CORUNA en frasco (250 gr) · $6.830 (27.320)<br>Pasta de tomate DIVELLA en frasco (680 gr) · $27.250 (40.074) |
+| repollo | Repollo Blanco 1 und · $7.420 (4.947) |
+| lechuga | LECHUGA VERDE GRANEL · $5.160 (5.160)<br>Lechuga Batavia 1 und · $3.500 (8.750)<br>LECHUGA VERDE CRESPA HIDROP 170 gr · $2.064 (12.141)<br>Lechuga verde kosher TAEQ 180 gr · $4.500 (25.000) |
+| pepino | Pepino C/Cin Amarillo 1 und · $1.800 (6.000) |
+| brocoli | Brócoli Vinipelado · $8.840 (8.840) |
+| espinaca | ESPINACA · $7.860 (7.860)<br>Espinaca Bogotana 300 gr · $7.140 (23.800) |
+| mandarina | Mandarina Onecco 1 und · $1.120 (1.120)<br>Mandarina Comun. · $10.080 (1.210) |
+| manzana | Manzana Gala 1 und · $860 (860)<br>Manzana Trasera Shimano FH-TC500-MS-B 12x148 Boost 12V 32H · $169.800 (1.147)<br>Manzana Trasera Shimano TRASERA FH-M6010 DEORE 12x142 MM 32H · $295.300 (2.080)<br>Manzana Bolsa Insuperable TAEQ 800 gr · $9.600 (2.160) |
+| papaya | Papaya Und 1 und · $6.368 (4.245)<br>PAPAYA PORCIONADA TARRINA 300 gr · $2.140 (7.133) |
 | chocolate | Chocolate LA ESPECIAL de mesa tradicional (400 gr) · $8.460 (21.150)<br>Chocolate LA ESPECIAL de mesa tradicional (200 gr) · $4.630 (23.150)<br>Chocolate SOL pastillas de cocoa con azúcar (800 gr) · $21.850 (27.313)<br>Chocolate de Mesa CORONA CHOCOLATE TRADICIONAL (450 gr) · $15.600 (34.667) |
 
 ## Carulla
 
-144 presentaciones para 48 de 49 ingredientes. Sin precio: habichuela.
+161 presentaciones para 56 de 57 ingredientes. Sin precio: habichuela.
 
 | Ingrediente | Presentaciones |
 | --- | --- |
@@ -112,11 +120,19 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | panela | PANELA ATADO EL TREBOL 1000 gr · $6.120 (6.120)<br>Panela Redonda x 2 Und PANELA TRADICIÓN DEL CAMPO 830 gr · $5.763 (6.943)<br>Panela REGIONAL EP 835 gr · $6.100 (7.305)<br>Panela Redonda LA PUREZA 800 gr · $6.100 (7.625) |
 | azucar | Azúcar MAYAGUEZ blanca (1000 gr) · $3.784 (3.784)<br>Azúcar MAYAGUEZ blanco (2500 gr) · $9.825 (3.930)<br>Azúcar MAYAGUEZ blanca (500 gr) · $2.400 (4.800)<br>Azúcar MAYAGUEZ blanca (330 gr) · $2.200 (6.667) |
 | pasta_tomate | Pasta de tomate FRESCAMPO doy pack (200 gr) · $5.100 (25.500)<br>Pasta de tomate LA CORUNA en frasco (250 gr) · $7.200 (28.800)<br>Pasta de tomate DIVELLA en frasco (680 gr) · $30.100 (44.265) |
+| repollo | Repollo Blanco 1 und · $7.540 (5.027) |
+| lechuga | Lechuga Batavia · $6.900 (6.900)<br>Lechuga Batavia 1 und · $4.820 (12.050)<br>LECHUGA VERDE CRESPA HIDROP 170 gr · $2.128 (12.518)<br>LECHUGA ROMANA BOLSA 200 gr · $6.020 (30.100) |
+| pepino | Pepino Para Rellenar 1 und · $1.080 (3.600) |
+| brocoli | Brocolí 1 und · $2.920 (7.300)<br>Brócoli Vinipelado · $10.900 (10.900)<br>BROCOLI TALLOS 200 gr · $5.740 (28.700) |
+| espinaca | Espinaca Bogotana 300 gr · $5.800 (19.333) |
+| mandarina | Mandarina Onecco 1 und · $1.300 (1.300)<br>Mandarina Importada Malla 1000 gr · $14.200 (1.704) |
+| manzana | Manzana Gala 1 und · $1.060 (1.060)<br>Manzana Pink Lady · $9.720 (1.750)<br>Manzana Nacional Bolsa 800 gr · $10.980 (2.471) |
+| papaya | Papaya Hawaiana 1 und · $9.240 (6.160)<br>PAPAYA PORCIONADA TARRINA 300 gr · $3.060 (10.200) |
 | chocolate | Chocolate LA ESPECIAL de mesa tradicional (400 gr) · $8.600 (21.500)<br>Chocolate LA ESPECIAL de mesa tradicional (200 gr) · $4.900 (24.500)<br>Chocolate SOL pastillas de cocoa con azúcar (800 gr) · $23.000 (28.750)<br>Chocolate SOL de mesa tradicional en pasta (750 gr) · $25.600 (34.133) |
 
 ## D1
 
-74 presentaciones para 44 de 49 ingredientes. Sin precio: sardina, yuca, habichuela, limon, chocolate.
+82 presentaciones para 50 de 57 ingredientes. Sin precio: sardina, yuca, habichuela, limon, repollo, mandarina, chocolate.
 
 | Ingrediente | Presentaciones |
 | --- | --- |
@@ -168,8 +184,12 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | panela | Panela Redonda 1000 Grs · $5.990 (5.990)<br>Panela Pulverizada el Refugio X 500 G · $3.990 (7.980)<br>Panela Tronquitos el Refugio X 900 G · $8.400 (9.333) |
 | azucar | Azúcar Blanca 1000 Grs · $3.390 (3.390) |
 | pasta_tomate | Pasta de Tomate Zev 200 Grs · $2.800 (14.000) |
+| repollo | — |
+| lechuga | Lechuga Verde Crespa X 180 G · $2.700 (15.000) |
+| pepino | Pepino Cohombro Unidad · $2.200 (7.333) |
+| brocoli | Brocoli Congelado Cooltivo 500 G · $6.990 (13.980)<br>Brócoli Unidad · $6.100 (15.250) |
+| espinaca | Espinaca X 200 G · $3.800 (19.000) |
+| mandarina | — |
+| manzana | Manzana Royal Gala 1000 Grs · $10.600 (1.908)<br>Manzana Verde 850 G · $10.100 (2.139) |
+| papaya | Papaya Unidad · $7.990 (5.327) |
 | chocolate | — |
-
-## Ara
-
-aratiendas.com no publica un catálogo con precios en línea.
