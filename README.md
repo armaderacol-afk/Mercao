@@ -1,23 +1,41 @@
 # Mercao
 
-Dile cuánta plata tienes, cuánto pesas y qué hay en tu cocina. Mercao arma el mercado de la semana con precios reales de D1 y se asegura de que el almuerzo y la cena lleven la proteína que necesitas.
+Dile cuánta plata tienes, cuánto pesas, qué hay en tu cocina y dónde compras. Mercao arma el mercado de la semana con precios reales de Éxito, Carulla o D1 y se asegura de que el almuerzo y la cena lleven la proteína que necesitas.
 
 ## Qué hay aquí
 
 | Archivo | Qué hace |
 | --- | --- |
 | `index.html` | La app: estilos, controles y la ilustración de la cocina (SVG). |
-| `js/engine.js` | El motor: ingredientes, empaques D1, recetas, proteína y planeación. Corre en el navegador y en Node. |
-| `js/app.js` | La interfaz: lee los controles, pinta la cocina y el plan. |
+| `js/engine.js` | El motor: ingredientes, proteína, costo por empaques y planeación. Corre en el navegador y en Node. |
+| `js/app.js` | La interfaz: lee los controles, pinta la cocina, las tiendas y el plan. |
+| `data/recetas.js` | Las recetas (105). Cantidades por porción. |
+| `data/precios-<tienda>.js` | Presentaciones y precios de cada tienda. Los genera el descargador; no se editan a mano. |
+| `data/reporte-precios.md` | Qué producto escogió el descargador para cada ingrediente, para revisarlo. |
+| `scripts/descargar-precios.mjs` | Descarga precios de Éxito, Carulla y D1 desde su catálogo público (VTEX). |
+| `scripts/explorar-tiendas.mjs` | Diagnóstico: muestra qué responde el catálogo de cada tienda. |
+| `.github/workflows/precios.yml` | Corre el descargador cada lunes y guarda los precios en el repo. |
 | `test/engine.test.js` | Pruebas del motor. |
 
 Para usarla, abre `index.html` en el navegador. No necesita servidor ni instalación.
 
 ```sh
 npm test
+node scripts/descargar-precios.mjs --tiendas exito,carulla,d1   # necesita salida a internet
 ```
 
-## Novedades de la v0.2
+## Precios
+
+- **Éxito, Carulla y D1** se descargan de su buscador público. Por cada ingrediente el descargador busca, filtra por nombre (por ejemplo, descarta «arroz con leche»), lee el contenido neto, descarta precios por kilo fuera de un rango razonable y guarda hasta 4 presentaciones de tamaños distintos.
+- **Ara** no tiene catálogo con precios en línea (`aratiendas.com` es un sitio informativo), así que aparece sin precios.
+- Una receta solo entra al plan si todos sus ingredientes tienen precio en la tienda elegida.
+- Para actualizar a mano: en GitHub, *Actions → Precios de las tiendas → Run workflow*, con modo `descargar`.
+
+## Novedades
+
+- **v0.5 · tiendas y recetas.** Eliges entre Éxito, Carulla, D1 y Ara; Mercao arma el plan en cada una y marca la más barata. 105 recetas (antes 30) y el cerdo como proteína.
+
+### v0.2
 
 - **Tu cocina ilustrada.** Tocas la estufa, el horno, el microondas, la airfryer, la olla a presión, la arrocera, la licuadora o la nevera. Cada electrodoméstico muestra cuántas recetas abre (`+4`) o cuántas perderías sin él.
 - **Recetas con alternativas.** Una receta puede pedir «estufa o arrocera». Basta con tener una.

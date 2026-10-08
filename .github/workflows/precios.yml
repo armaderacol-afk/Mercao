@@ -4,13 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       modo:
-        description: "explorar (solo diagnostica) o descargar (actualiza data/precios-*.js)"
+        description: "explorar, depurar (muestra por qué se descarta cada producto) o descargar"
         required: true
         default: explorar
       tiendas:
         description: "Tiendas separadas por coma"
         required: false
         default: "exito,carulla,d1,ara"
+      ingredientes:
+        description: "Para depurar: ingredientes separados por coma"
+        required: false
+        default: ""
   schedule:
     - cron: "17 11 * * 1"   # lunes 6:17 a. m. hora Colombia
 
@@ -29,6 +33,9 @@ jobs:
       - name: Explorar catálogos
         if: github.event_name == 'workflow_dispatch' && inputs.modo == 'explorar'
         run: node scripts/explorar-tiendas.mjs
+      - name: Depurar ingredientes
+        if: github.event_name == 'workflow_dispatch' && inputs.modo == 'depurar'
+        run: node scripts/descargar-precios.mjs --tiendas "${{ inputs.tiendas }}" --depurar "${{ inputs.ingredientes }}"
       - name: Descargar precios
         if: github.event_name == 'schedule' || inputs.modo == 'descargar'
         run: node scripts/descargar-precios.mjs --tiendas "${{ inputs.tiendas || 'exito,carulla,d1,ara' }}"

@@ -20,13 +20,13 @@ const TIENDAS = {
 // pu: gramos por unidad, para convertir cuando la tienda vende por peso.
 const BUSQUEDAS = {
   arroz:        { u: "g",   q: ["arroz blanco"], inc: /^arroz\b/, exc: /(leche|integral|chino|precoc|parbo|sushi|mix|con |paella|basmati|jazmin|vitamin|instant|listo|bebida|galleta|pop|tostad|harina|salvaje|cocido|para preparar)/, rango: [2500, 15000], max: 5000 },
-  lenteja:      { u: "g",   q: ["lenteja"], inc: /^lenteja/, exc: /(precoc|lata|lista|sopa|harina|crema|snack|pasta)/, rango: [4000, 25000], max: 3000 },
-  frijol:       { u: "g",   q: ["frijol"], inc: /^frijol/, exc: /(lata|precoc|refrit|listo|enlatad|con |snack|pasta)/, rango: [6000, 35000], max: 3000 },
-  garbanzo:     { u: "g",   q: ["garbanzo"], inc: /^garbanzo/, exc: /(lata|precoc|harina|snack|hummus|pasta|crocante)/, rango: [5000, 30000], max: 3000 },
-  arveja_seca:  { u: "g",   q: ["arveja seca", "arveja verde seca"], inc: /^arveja/, exc: /(congel|lata|conserva|zanahoria|con |desgranad|fresca|snack|pasta)/, rango: [3000, 25000], max: 3000 },
-  espagueti:    { u: "g",   q: ["espagueti", "spaghetti"], inc: /^(pasta )?(espagueti|spaghetti)/, exc: /(integral|salsa|sin gluten|instant|con |lenteja|garbanzo|arroz|quinua)/, rango: [4000, 30000], max: 3000 },
+  lenteja:      { u: "g",   q: ["lenteja"], inc: /^lenteja/, exc: /(precoc|lata|lista|sopa|harina|crema|snack|pasta|con |zanahoria|vidrio|frasco)/, rango: [4000, 25000], max: 3000 },
+  frijol:       { u: "g",   q: ["frijol"], inc: /^frijol/, exc: /(lata|precoc|refrit|listo|enlatad|con |snack|pasta|antioque|zenu|sabor|verde|vidrio|frasco)/, rango: [6000, 35000], max: 3000 },
+  garbanzo:     { u: "g",   q: ["garbanzo"], inc: /^garbanzo/, exc: /(lata|precoc|harina|snack|hummus|pasta|crocante|vidrio|frasco|al fresco)/, rango: [5000, 30000], max: 3000 },
+  arveja_seca:  { u: "g",   q: ["arveja seca", "arveja verde seca"], inc: /^arveja/, exc: /(congel|lata|conserva|zanahoria|con |desgranad|fresca|snack|pasta|to eat|vidrio|frasco)/, rango: [3000, 25000], max: 3000 },
+  espagueti:    { u: "g",   q: ["espagueti", "spaghetti"], inc: /^(pasta )?(espagueti|spaghetti)/, exc: /(integral|salsa|sin gluten|instant|con |lenteja|garbanzo|arroz|quinua|sabor)/, rango: [4000, 30000], max: 3000 },
   harina_maiz:  { u: "g",   q: ["harina de maiz"], inc: /harina.*maiz|^harina pan\b/, exc: /(trigo|pancake|arepa lista|integral? |chocolo|sin gluten|tamal|natilla|mazamorra)/, rango: [3000, 15000], max: 3000 },
-  arepa:        { u: "und", q: ["arepa blanca", "arepa"], inc: /^arepa/, exc: /(harina|rellena|queso|chocolo|choclo|integral|boyacense|huevo|mini|congel)/, rango: [200, 3000], pu: 80 },
+  arepa:        { u: "und", q: ["arepa blanca", "arepa"], inc: /^arepa/, exc: /(harina|rellena|queso|chocolo|choclo|integral|boyacense|huevo|mini|congel|yuca|platano)/, rango: [200, 3000], pu: 80 },
   avena_hojuelas:{ u: "g",  q: ["avena en hojuelas", "avena hojuelas"], inc: /^avena/, exc: /(bebida|liquid|tetra|leche|galleta|barra|polvo|sabor|cereal|ml\b|con )/, rango: [4000, 30000], max: 3000 },
   pan:          { u: "g",   q: ["pan tajado"], inc: /^pan (tajado|blanco|campesino|integral|mantequilla|de molde|artesanal|sandwich)/, exc: /(rallado|perro|hamburgues|tostad|pita|arabe|queso|bono|yuca|sin gluten|mini|pandebono)/, rango: [4000, 35000], max: 1200 },
   huevo:        { u: "und", q: ["huevo rojo", "huevos"], inc: /^huevo/, exc: /(codorniz|pascua|chocolat|kinder|liquid|deshidr|polvo|cocid|sorpresa)/, rango: [300, 1500] },
@@ -58,13 +58,13 @@ const BUSQUEDAS = {
   limon:        { u: "und", q: ["limon tahiti", "limon"], inc: /^limon/, exc: /(jugo|zumo|\bte\b|bebida|galleta|sabor|concentr|sal|salsa|esencia|limonada|aromatica)/, rango: [100, 1500], pu: 60 },
   aguacate:     { u: "g",   q: ["aguacate"], inc: /^aguacate/, exc: /(salsa|guacamole|aceite|pulpa|congel|crema)/, rango: [3000, 30000], pu: 250, max: 3000 },
   leche:        { u: "ml",  q: ["leche entera"], inc: /^leche (entera|uht|larga vida|pasteurizada|fresca)/, exc: /(polvo|condensad|deslact|descremad|semi|almendra|soya|avena|coco|sabor|chocolat|fresa|evaporad|arroz|kumis|lactosa|infantil|crecimiento|light|vainilla|cafe)/, rango: [2500, 9000], max: 6000 },
-  queso:        { u: "g",   q: ["queso mozzarella"], inc: /queso (mozzarella|mozarella|mozarela)/, exc: /(light|vegano|sin lactosa|untable|crema|palitos|snack)/, rango: [15000, 100000], max: 2500 },
+  queso:        { u: "g",   q: ["queso mozzarella"], inc: /queso (mozzarella|mozarella|mozarela)/, exc: /(light|vegano|sin lactosa|untable|crema|palitos?|palo|snack|apanad)/, rango: [15000, 100000], max: 2500 },
   queso_campesino:{ u: "g", q: ["queso campesino"], inc: /queso (campesino|blanco|fresco|costeno|criollo)|^cuajada/, exc: /(crema|rallad|untable|light|vegano|sin lactosa)/, rango: [12000, 70000], max: 2500 },
   avena_beb:    { u: "ml",  q: ["avena bebida", "avena liquida"], inc: /^avena/, exc: /(hojuela|molida|instant|polvo|en grano|galleta|barra|cereal|\bg\b|gr\b)/, soloUnidad: "ml", rango: [3000, 16000], max: 6000 },
   yogur:        { u: "ml",  q: ["yogur"], inc: /^yog(u|h)urt?/, exc: /(cereal|vegano|helado|sin lactosa|bebida de|kumis|griego? congel|snack|galleta)/, gml: true, rango: [4000, 30000], max: 2500 },
   aceite:       { u: "ml",  q: ["aceite vegetal", "aceite de soya", "aceite de girasol"], inc: /^aceite (vegetal|de soya|de girasol|de canola|mezcla|de palma|premium|puro|100%)/, exc: /(oliva|coco|aguacate|spray|aerosol|ajonjoli|bebe|corporal|motor|esencial|cabello|almendra|sesamo|trufa)/, rango: [5000, 28000], max: 5000 },
   sal:          { u: "g",   q: ["sal refinada", "sal"], inc: /^sal (refinada|marina|de mesa|yodada|refisal|blanca)|^sal\b.*refin/, exc: /(rosada|parrill|ajo|condiment|light|baja|himalaya|hierbas|limon|frutas|de nitro|de higuera|gruesa)/, rango: [800, 9000], max: 3000 },
-  panela:       { u: "g",   q: ["panela"], inc: /^panela/, exc: /(liquid|bebida|limonada|instant|aromat|jengibre|con )/, rango: [3000, 16000], max: 3000 },
+  panela:       { u: "g",   q: ["panela"], inc: /^panela/, exc: /(liquid|bebida|limonada|instant|aromat|jengibre|con |limon|sabor)/, rango: [3000, 16000], max: 3000 },
   azucar:       { u: "g",   q: ["azucar blanca", "azucar"], inc: /^azucar/, exc: /(morena|light|stevia|glass|pulveriz|impalpable|organica|endulzante|sustituto|vainilla|canela|sachet|sobres)/, rango: [2500, 11000], max: 3000 },
   pasta_tomate: { u: "g",   q: ["pasta de tomate"], inc: /(pasta de tomate|pure de tomate|tomate triturado)/, exc: /(ketchup|salsa para|con )/, rango: [5000, 50000], max: 1500 },
   chocolate:    { u: "g",   q: ["chocolate de mesa", "chocolate en pastilla"], inc: /^chocolate/, exc: /(bebida|leche|barra|confite|galleta|chocolatina|polvo|instant|cobertura|helado|relleno|blanco|mani|almendra|caja|bomb|wafer)/, rango: [10000, 80000], max: 1500 },
@@ -139,10 +139,15 @@ function enUnidad(c, b) {
   return null;
 }
 
+const arg0 = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
+const DEPURAR = new Set((arg0("--depurar", "") || "").split(",").filter(Boolean));
+const dbg = (ing, ...m) => { if (DEPURAR.has(ing)) console.log("   ", ...m); };
+
 async function descargarTienda(clave) {
   const t = TIENDAS[clave];
   const skus = [], reporte = [];
   for (const [ing, b] of Object.entries(BUSQUEDAS)) {
+    if (DEPURAR.size && !DEPURAR.has(ing)) continue;
     const vistos = new Map();
     for (const q of b.q) {
       for (const p of await buscar(t.host, q)) if (!vistos.has(p.productId)) vistos.set(p.productId, p);
@@ -152,15 +157,16 @@ async function descargarTienda(clave) {
     const candidatos = [];
     for (const p of vistos.values()) {
       const nombre = norm(p.productName || "");
-      if (!b.inc.test(nombre) || (b.inc2 && !b.inc2.test(nombre)) || (b.exc && b.exc.test(nombre))) continue;
-      const precio = precioDe(p); if (!precio) continue;
+      if (!b.inc.test(nombre) || (b.inc2 && !b.inc2.test(nombre))) { dbg(ing, "no coincide:", p.productName); continue; }
+      if (b.exc && b.exc.test(nombre)) { dbg(ing, "excluido:", p.productName); continue; }
+      const precio = precioDe(p); if (!precio) { dbg(ing, "sin precio/agotado:", p.productName); continue; }
       const desdeNombre = contenidoDelNombre(p.productName), desdeFicha = contenidoDeFicha(p);
       if (b.soloUnidad && desdeNombre && desdeNombre.u !== b.soloUnidad) continue;
       const size = enUnidad(desdeNombre, b) ?? enUnidad(desdeFicha, b);
-      if (!size || size <= 0) continue;
-      if (b.max && b.u !== "und" && size > b.max) continue;
+      if (!size || size <= 0) { dbg(ing, "sin contenido:", p.productName, JSON.stringify(desdeNombre), JSON.stringify(desdeFicha)); continue; }
+      if (b.max && b.u !== "und" && size > b.max) { dbg(ing, "muy grande:", p.productName, size); continue; }
       const porBase = b.u === "und" ? precio / size : precio / size * 1000;
-      if (porBase < b.rango[0] || porBase > b.rango[1]) continue;
+      if (porBase < b.rango[0] || porBase > b.rango[1]) { dbg(ing, "fuera de rango:", p.productName, precio, size, Math.round(porBase)); continue; }
       candidatos.push({ ing, nom: p.productName.replace(/\s+/g, " ").trim(), size: Math.round(size * 100) / 100, precio: Math.round(precio), porBase: Math.round(porBase),
                         url: p.link && p.link.startsWith("http") ? p.link : `https://${t.host}${p.link || ""}` });
     }
@@ -188,6 +194,7 @@ for (const clave of pedidas) {
   md += `\n## ${t.n}\n\n`;
   if (!t.host) { console.log(`${t.n}: ${t.nota}`); md += `${t.nota}\n`; continue; }
   const { skus, reporte } = await descargarTienda(clave);
+  if (DEPURAR.size) continue;
   if (skus.length < 20) {
     console.log(`${t.n}: solo ${skus.length} presentaciones; no reemplazo el archivo existente.`);
     md += `Descarga incompleta (${skus.length} presentaciones). Se conservan los precios anteriores.\n`;
@@ -202,5 +209,5 @@ for (const clave of pedidas) {
         (faltan.length ? ` Sin precio: ${faltan.join(", ")}.` : "") + `\n\n| Ingrediente | Presentaciones |\n| --- | --- |\n`;
   for (const r of reporte) md += `| ${r.ing} | ${r.elegidos.map(e => `${e.nom} · $${e.precio.toLocaleString("es-CO")} (${e.porBase.toLocaleString("es-CO")})`).join("<br>") || "—"} |\n`;
 }
-writeFileSync("data/reporte-precios.md", md);
+if (!DEPURAR.size) writeFileSync("data/reporte-precios.md", md);
 if (!md.trim() && anterior) writeFileSync("data/reporte-precios.md", anterior);
