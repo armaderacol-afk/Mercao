@@ -291,6 +291,13 @@ function sugerencias(r, o) {
   }
   if (r.sobranteValor > r.costoTotal * 0.2)
     s.push(`Quedan <b>${money(r.sobranteValor)}</b> en sobrantes: producto que pagas ahora y te sirve la otra semana. Pasa con los empaques grandes.`);
+  const b = r.balance;
+  if (b && b.verd < b.metaVerdura - 5)
+    s.push(`El plan llega a <b>${b.verd} g de frutas y verduras</b> al día de los ${b.metaVerdura} g recomendados. ${r.comidasDia < 3 ? "Una fruta a media mañana o en el algo completa lo que falta." : "Sube a más acompañantes o agrega una fruta en el algo."}`);
+  if (b && b.fib < b.metaFibra - 0.5)
+    s.push(`La fibra queda en <b>${b.fib} g</b> al día y la meta es ${b.metaFibra} g. Los fríjoles, las lentejas y la avena son lo que más aporta.`);
+  if (b && b.sinAcomp)
+    s.push(`<b>${b.sinAcomp} comida${b.sinAcomp === 1 ? "" : "s"}</b> quedaron con poca verdura porque esta tienda no tiene precio para los acompañantes que tu cocina permite.`);
   if (r.personas === 1)
     s.push(`Cocinar para una persona sale más caro por porción porque los empaques no se parten. Cocinar doble y congelar la mitad es lo que más baja este número.`);
   return s;
@@ -334,6 +341,7 @@ function render() {
   programarTiendas(o);
   if (!r.ok) { renderError(r, o); return; }
   renderStats(r, o);
+  renderBalance(r);
   renderPlan(r);
   renderTandas(r, o);
   renderLista(r);
@@ -377,6 +385,7 @@ function notas(titulo, items, bien) {
 
 function renderError(r, o) {
   $("#kpis").hidden = true;
+  $("#balance").hidden = true;
   ["plan", "tandas", "lista", "recetas"].forEach(t => $("#pane-" + t).innerHTML = "");
   firmaPlan = "";
   const sinCocina = r.diag && Object.values(r.diag).every(d => d.sinPiso === 0);
@@ -433,22 +442,57 @@ function iconosUsa(R) {
   return `<span class="usa" title="${nombres}" aria-label="Se hace con ${nombres}">${usa.map(a => icono("i-" + a, 'aria-hidden="true"')).join("")}</span>`;
 }
 
+/* Así queda tu plato: tres medidores contra su meta y el reparto de calorías. */
+function renderBalance(r) {
+  const b = r.balance, el = $("#balance");
+  el.hidden = false;
+  const medidor = (nombre, valor, meta, unidad, nota) => {
+    const tope = Math.max(valor, meta) * 1.15;
+    const ok = valor >= meta - 0.5;
+    return `<div class="meter-row">
+      <span class="mk"><span class="dot ${ok ? "ok" : "bad"}"></span>${nombre}</span>
+      <span class="mv num">${Math.round(valor)} ${unidad}<small>meta ${Math.round(meta)} ${unidad}</small></span>
+      <div class="meter" role="meter" aria-label="${nombre}" aria-valuemin="0" aria-valuemax="${Math.round(tope)}" aria-valuenow="${Math.round(valor)}">
+        <i style="width:${(valor / tope * 100).toFixed(1)}%"></i><b style="left:${(meta / tope * 100).toFixed(1)}%" title="meta"></b></div>
+      <span class="ms">${ok ? "cumple" : `faltan ${Math.round(meta - valor)} ${unidad}`}${nota ? ` · ${nota}` : ""}</span></div>`;
+  };
+  const enRango = (k, v) => v >= b.rangos[k][0] && v <= b.rangos[k][1];
+  const fila = (k, nombre, g) => `<li><span class="sw" style="background:var(--m-${k})"></span>${nombre} <b>${b.pct[k]} %</b> · ${g} g<span class="rg">${enRango(k, b.pct[k]) ? "dentro de" : "fuera de"} ${b.rangos[k][0]}–${b.rangos[k][1]} %</span></li>`;
+  const seg = (k, cls, nombre, g) => `<span class="${cls}" tabindex="0" style="flex:${Math.max(b.pct[k], 1)} 1 0" data-tip="${nombre}: ${b.pct[k]} % de las calorías · ${g} g" aria-label="${nombre} ${b.pct[k]} por ciento">${b.pct[k] >= 12 ? b.pct[k] + " %" : ""}</span>`;
+  el.innerHTML = `
+    <div class="bal-head"><h3>Así queda tu plato</h3><p>promedio por persona al día · cerca de ${b.kcal.toLocaleString("es-CO")} kcal</p></div>
+    <div class="meters">
+      ${medidor("Proteína", b.prot, r.objetivoDia, "g", `${r.peso} kg, ${ACTIVIDAD[r.actividad].n.toLowerCase()}`)}
+      ${medidor("Fibra", b.fib, b.metaFibra, "g", "granos, verduras y fruta")}
+      ${medidor("Frutas y verduras", b.verd, b.metaVerdura, "g", "sin contar papa, yuca ni plátano")}
+    </div>
+    <div class="macro">
+      <span class="lbl">De dónde salen las calorías</span>
+      <div class="stack" role="img" aria-label="Proteína ${b.pct.prot} %, carbohidratos ${b.pct.carb} %, grasa ${b.pct.gra} %">
+        ${seg("prot", "p", "Proteína", b.prot)}${seg("carb", "c", "Carbohidratos", b.carb)}${seg("gra", "g", "Grasa", b.gra)}
+      </div>
+      <ul class="legend">${fila("prot", "Proteína", b.prot)}${fila("carb", "Carbohidratos", b.carb)}${fila("gra", "Grasa", b.gra)}</ul>
+    </div>`;
+}
+
 function renderPlan(r) {
-  const firma = r.elegidas.map(e => e.receta.id).join("|");
+  const firma = r.elegidas.map(e => e.receta.id + (e.acomp ? "+" + e.acomp.id : "")).join("|");
   const animar = firma !== firmaPlan && !QUIETO;
   firmaPlan = firma;
   let html = "", k = 0;
   for (let d = 0; d < r.diasCubiertos; d++) {
-    let cs = "", protDia = 0;
+    let cs = "", protDia = 0, fibDia = 0;
     for (let c = 0; c < r.comidasDia; c++, k++) {
       const e = r.elegidas[k]; if (!e) break;
-      const pr = Math.round(proteinaReceta(e.receta)); protDia += pr;
-      const cumple = !PRINCIPALES.includes(e.franja) || pr >= r.pisoComida - 0.5;
+      const n = nutrientesPlato(e);
+      const pr = Math.round(n.prot); protDia += pr; fibDia += n.fib;
+      const cumple = !PRINCIPALES.includes(e.franja) || proteinaReceta(e.receta) >= r.pisoComida - 0.5;
       cs += `<div class="comida"><div class="slot">${FRANJA_NOM[e.franja] || "Comida"}</div>
         <div class="nom">${e.receta.n}</div>
-        <div class="meta">${iconosUsa(e.receta)}<span>${e.receta.min} min</span><span class="p ${cumple ? "ok" : "bad"}">${pr} g proteína</span></div></div>`;
+        ${e.acomp ? `<div class="acomp">${e.acomp.n}</div>` : ""}
+        <div class="meta">${iconosUsa(e.receta)}<span>${e.receta.min} min</span><span class="p ${cumple ? "ok" : "bad"}">${pr} g proteína</span><span>${Math.round(n.fib)} g fibra</span></div></div>`;
     }
-    html += `<article class="dia${animar ? " enter" : ""}" style="--i:${d}"><header><h4>${nombreDia(d)}</h4><span class="num ${protDia >= r.objetivoDia - 1 ? "ok" : ""}">${protDia} g</span></header>${cs}</article>`;
+    html += `<article class="dia${animar ? " enter" : ""}" style="--i:${d}"><header><h4>${nombreDia(d)}</h4><span class="num ${protDia >= r.objetivoDia - 1 ? "ok" : ""}">${protDia} g prot · ${Math.round(fibDia)} g fibra</span></header>${cs}</article>`;
   }
   const sobra = r.elegidas.length - r.diasCubiertos * r.comidasDia;
   $("#pane-plan").innerHTML = (html ? `<div class="dias">${html}</div>` : "") +
@@ -494,7 +538,7 @@ function renderTandas(r, o) {
     ${Math.max(...diasPorTanda) > 4 ? notas("Conservación", [`Alguna tanda tiene que durar <b>${Math.max(...diasPorTanda)} días</b>. En nevera la comida cocinada aguanta 3 o 4; lo demás <b>congélalo en porciones</b> el mismo día y sácalo la noche anterior. El arroz cocido es lo más delicado: enfríalo rápido.`], false) : ""}`;
 }
 
-const CATS = ["Proteína", "Granos", "Verduras", "Lácteos"];
+const CATS = ["Proteína", "Granos", "Verduras", "Frutas", "Lácteos"];
 const cantidad = (n, u) => `${(Math.round(n * 10) / 10).toLocaleString("es-CO")} ${u}`;
 
 function renderLista(r) {
@@ -552,15 +596,18 @@ function copiarLista(r) {
 
 function renderRecetas(r) {
   const vistos = new Set(); let rec = "";
-  for (const e of r.elegidas) {
-    if (vistos.has(e.receta.id)) continue; vistos.add(e.receta.id);
-    const R = e.receta;
+  const uno = (R, etiqueta) => {
+    if (vistos.has(R.id)) return; vistos.add(R.id);
+    const n = nutrientes(R.ing);
     const ings = Object.entries(R.ing).map(([i, q]) => `<span>${ING[i].n} ${Math.round(q * r.personas * 10) / 10} ${ING[i].u}</span>`).join("");
-    rec += `<details class="rec"><summary><span class="rn">${R.n}</span>${iconosUsa(R)}
-      <span class="rm num">${R.min} min · ${Math.round(proteinaReceta(R))} g proteína${R.f && R.f !== 1 ? ` · porción ×${R.f}` : ""}</span></summary>
-      <div class="recbody"><div class="ing">${ings}</div>
+    rec += `<details class="rec"><summary><span class="rn">${R.n}</span>${etiqueta ? `<span class="tag">${etiqueta}</span>` : ""}${iconosUsa(R)}
+      <span class="rm num">${R.min} min${R.f && R.f !== 1 ? ` · porción de proteína ×${R.f}` : ""}</span></summary>
+      <div class="recbody"><p class="note" style="margin:0 0 0.7rem">Por porción: ${Math.round(n.kcal)} kcal · ${Math.round(n.prot)} g proteína · ${Math.round(n.carb)} g carbohidratos · ${Math.round(n.gra)} g grasa · ${Math.round(n.fib)} g fibra · ${Math.round(n.verd)} g de fruta y verdura</p>
+      <div class="ing">${ings}</div>
       <ol>${R.pasos.map(p => `<li>${p}</li>`).join("")}</ol></div></details>`;
-  }
+  };
+  for (const e of r.elegidas) uno(e.receta);
+  for (const e of r.elegidas) if (e.acomp) uno(e.acomp, "acompañante");
   $("#pane-recetas").innerHTML = rec ? `<p class="note" style="margin:0 0 1rem">Cantidades para ${r.personas} ${r.personas === 1 ? "porción" : "porciones"}.</p>${rec}` : `<p class="note">No hay recetas en el plan.</p>`;
 }
 

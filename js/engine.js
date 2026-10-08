@@ -67,16 +67,58 @@ const ING = {
   cilantro:{n:"Cilantro",u:"g",prot:2.0,cat:"Verduras"},
   limon:{n:"Limón",u:"und",prot:0.3,cat:"Verduras"},
   aguacate:{n:"Aguacate",u:"g",prot:2.0,cat:"Verduras"},
+  repollo:{n:"Repollo",u:"g",prot:1.3,cat:"Verduras"},
+  lechuga:{n:"Lechuga",u:"g",prot:1.4,cat:"Verduras"},
+  pepino:{n:"Pepino cohombro",u:"g",prot:0.7,cat:"Verduras"},
+  brocoli:{n:"Brócoli",u:"g",prot:2.8,cat:"Verduras"},
+  espinaca:{n:"Espinaca",u:"g",prot:2.9,cat:"Verduras"},
+  mandarina:{n:"Mandarina",u:"und",prot:0.8,cat:"Frutas"},
+  manzana:{n:"Manzana",u:"und",prot:0.4,cat:"Frutas"},
+  papaya:{n:"Papaya",u:"g",prot:0.5,cat:"Frutas"},
 };
+
+/* Composición aproximada por 100 g (o 100 ml; por unidad si u es "und"):
+   [kcal, carbohidratos g, grasa g, fibra g]. Valores de referencia de
+   tablas de composición (USDA FoodData Central y la Tabla de Composición
+   de Alimentos Colombianos del ICBF), redondeados. Granos y pasta en seco. */
+const NUTRI={
+  arroz:[360,79,0.6,1.3], lenteja:[352,63,1.1,10.7], frijol:[333,60,1.2,15.2], garbanzo:[364,61,6,17],
+  arveja_seca:[341,60,1.2,25], espagueti:[371,75,1.5,3.2], harina_maiz:[360,77,1.5,5], arepa:[150,31,1.5,2.5],
+  huevo:[72,0.4,4.8,0], pollo_surt:[215,0,15,0], pollo_muslo:[210,0,15,0], pollo_pechuga:[120,0,2.6,0],
+  atun:[116,0,1,0], sardina:[186,1,10.5,0], salchicha:[280,3,25,0], carne_res:[170,0,9,0],
+  carne_molida:[215,0,15,0], cerdo:[200,0,12,0], tilapia:[96,0,1.7,0],
+  papa:[77,17,0.1,2.2], papa_criolla:[95,21,0.1,2], platano:[122,32,0.4,2.3], yuca:[160,38,0.3,1.8],
+  cebolla:[40,9,0.1,1.7], cebolla_larga:[32,7,0.2,2.6], tomate:[18,3.9,0.2,1.2], zanahoria:[41,10,0.2,2.8],
+  arveja_cong:[81,14,0.4,5.1], ajo:[60,13,0.2,0.8], banano:[107,27,0.4,3.1], ahuyama:[26,6.5,0.1,1.5],
+  habichuela:[31,7,0.2,2.7], pimenton:[26,6,0.3,2.1], cilantro:[23,3.7,0.5,2.8], limon:[10,3,0,0.2],
+  aguacate:[160,8.5,14.7,6.7], repollo:[25,5.8,0.1,2.5], lechuga:[15,2.9,0.2,1.3], pepino:[15,3.6,0.1,0.5],
+  brocoli:[34,6.6,0.4,2.6], espinaca:[23,3.6,0.4,2.2], mandarina:[53,13,0.3,1.8], manzana:[78,21,0.3,3.6],
+  papaya:[43,11,0.3,1.7],
+  leche:[61,4.8,3.3,0], queso:[300,2.2,22,0], queso_campesino:[260,3,20,0], avena_beb:[70,11,1.5,0.5],
+  yogur:[70,9,2.5,0], avena_hojuelas:[380,66,7,10], pan:[265,49,3.5,2.7],
+  aceite:[828,0,92,0], sal:[0,0,0,0], panela:[380,95,0,0], azucar:[387,100,0,0], pasta_tomate:[82,19,0.5,4.1],
+  chocolate:[450,65,20,6],
+};
+/* Gramos de fruta o verdura que aporta cada unidad de medida. Papa, yuca y
+   plátano no cuentan: son almidones, van con los carbohidratos. */
+const VERDURA={cebolla:1,cebolla_larga:1,tomate:1,zanahoria:1,arveja_cong:1,ahuyama:1,habichuela:1,
+  pimenton:1,cilantro:1,aguacate:1,repollo:1,lechuga:1,pepino:1,brocoli:1,espinaca:1,papaya:1,
+  banano:120,mandarina:100,manzana:150};
+/* Metas diarias por persona: 400 g de frutas y verduras (OMS) y 25 g de
+   fibra (OMS/EFSA). Rangos de calorías: proteína 10–35 %, carbohidratos
+   45–65 %, grasa 20–35 % (rangos AMDR de referencia). */
+const META_VERDURA=400, META_FIBRA=25;
+const RANGOS_MACRO={prot:[10,35],carb:[45,65],gra:[20,35]};
 
 /* Precios y recetas viven en data/. En el navegador los carga index.html;
    en Node se cargan aquí. */
 if(typeof require==="function"&&typeof module!=="undefined"){
   require("../data/recetas.js");
-  for(const t of ["exito","carulla","d1","ara"])
+  for(const t of ["exito","carulla","d1"])
     try{require(`../data/precios-${t}.js`);}catch(e){/* tienda sin archivo */}
 }
 const RECETAS=globalThis.RECETAS_DATA||[];
+const ACOMPANANTES=globalThis.ACOMPANANTES_DATA||[];
 const PRECIOS=globalThis.PRECIOS_DATA||{};
 
 /* Tiendas. Una tienda sin presentaciones descargadas aparece en la
@@ -85,7 +127,6 @@ const TIENDAS={
   exito:  {n:"Éxito"},
   carulla:{n:"Carulla"},
   d1:     {n:"D1"},
-  ara:    {n:"Ara"},
 };
 const TIENDA_DEF="d1";
 const indiceSkus={};
@@ -257,6 +298,59 @@ function proteinaReceta(r){
     p+=(m.u==="und")?m.prot*q:m.prot*q/100;}
   return p;
 }
+/* Nutrientes de una lista de ingredientes (una porción). */
+function nutrientes(ing){
+  const n={kcal:0,prot:0,carb:0,gra:0,fib:0,verd:0};
+  for(const[i,q]of Object.entries(ing||{})){
+    const t=ING[i]; if(!t)continue;
+    const f=t.u==="und"?q:q/100, v=NUTRI[i];
+    n.prot+=t.prot*f;
+    if(v){n.kcal+=v[0]*f;n.carb+=v[1]*f;n.gra+=v[2]*f;n.fib+=v[3]*f;}
+    n.verd+=(VERDURA[i]||0)*q;
+  }
+  return n;
+}
+function sumarNut(a,b){const n={...a};for(const k in b)n[k]=(n[k]||0)+b[k];return n;}
+/* Plato completo: la receta más su acompañante. */
+function nutrientesPlato(e){
+  return e.acomp?sumarNut(nutrientes(e.receta.ing),nutrientes(e.acomp.ing)):nutrientes(e.receta.ing);
+}
+/* Cuánta fruta y verdura le toca a cada comida para llegar a 400 g al día. */
+function metaVerduraFranja(franja,franjas){
+  const hayDes=franjas.includes("desayuno");
+  if(franja==="desayuno")return 100;
+  const nPrin=franjas.filter(f=>PRINCIPALES.includes(f)).length||1;
+  return Math.min(250,(META_VERDURA-(hayDes?100:0))/nPrin);
+}
+/* Acompañantes que se pueden hacer en esta cocina y comprar en esta tienda. */
+function acompanantesPosibles(o,franja){
+  const tipo=franja==="desayuno"?"desayuno":"principal";
+  return ACOMPANANTES.filter(a=>a.tipo.includes(tipo)&&recetaPosible(a,o))
+    .map(a=>({...a,usa:aparatosUsados(a,o.aparatos||["estufa"])}));
+}
+/* Elige el acompañante que completa la fruta y verdura del plato al menor
+   costo, sin repetir el de las dos comidas anteriores si hay otro. */
+function elegirAcomp(r,franja,carrito,o,pool,recientes,franjas){
+  if(!pool.length)return null;
+  const falta=metaVerduraFranja(franja,franjas)-nutrientes(r.ing).verd;
+  if(falta<=15)return null;
+  const personas=o.personas||2;
+  const base=sumar(carrito,r,personas), costoBase=costoCanasta(base,o.tienda);
+  let mejor=null;
+  for(const evitar of [true,false]){
+    for(const a of pool){
+      if(evitar&&recientes.includes(a.id))continue;
+      const cubre=nutrientes(a.ing).verd>=falta-10;
+      const delta=costoCanasta(sumar(base,a,personas),o.tienda)-costoBase;
+      // Primero los que cubren lo que falta; entre ellos, el más barato.
+      const score=(cubre?0:1e7)+delta;
+      if(!mejor||score<mejor.score)mejor={a,score};
+    }
+    if(mejor)break;
+  }
+  return mejor?mejor.a:null;
+}
+
 function sumar(c,r,por){const n={...c};for(const[i,q]of Object.entries(r.ing))n[i]=(n[i]||0)+q*por;return n;}
 
 /* Filtra el catálogo y lo parte por franja. El piso por comida es DURO en
@@ -313,27 +407,32 @@ function planear(o){
   const diasMax=Math.min(...Object.entries(conteo)
     .map(([f,k])=>Math.floor(porFranja[f].length*maxRepeticiones/k)));
 
-  let carrito={},elegidas=[],usos={},ultima=null;
+  const pools={}; for(const f of franjas)pools[f]=acompanantesPosibles(o,f);
+  let carrito={},elegidas=[],usos={},ultima=null,recientes=[];
   for(let d=0;d<dias;d++){
     for(const franja of franjas){
       let mejor=null;
       // Primera pasada con la regla de variedad; si nadie pasa, se relaja.
+      // El costo de cada opción incluye el acompañante que la completa.
       for(const evitarRepetir of [true,false]){
         for(const r of porFranja[franja]){
           if((usos[r.id]||0)>=maxRepeticiones)continue;
           if(evitarRepetir&&r.id===ultima)continue;
-          const nuevo=sumar(carrito,r,personas);
+          const acomp=elegirAcomp(r,franja,carrito,o,pools[franja],recientes,franjas);
+          let nuevo=sumar(carrito,r,personas);
+          if(acomp)nuevo=sumar(nuevo,acomp,personas);
           const delta=costoCanasta(nuevo,o.tienda)-costoCanasta(carrito,o.tienda);
           const score=delta/personas;
-          if(!mejor||score<mejor.score)mejor={r,score,delta,nuevo};
+          if(!mejor||score<mejor.score)mejor={r,acomp,score,delta,nuevo};
         }
         if(mejor)break;
       }
       if(!mejor){d=dias;break;}
       if(modo==="presupuesto"&&costoCanasta(mejor.nuevo,o.tienda)>presupuesto){d=dias;break;}
       carrito=mejor.nuevo;
-      elegidas.push({receta:mejor.r,franja,costoMarginal:mejor.delta});
+      elegidas.push({receta:mejor.r,acomp:mejor.acomp,franja,costoMarginal:mejor.delta});
       usos[mejor.r.id]=(usos[mejor.r.id]||0)+1; ultima=mejor.r.id;
+      if(mejor.acomp)recientes=[mejor.acomp.id,...recientes].slice(0,2);
     }
   }
   return empaquetar(o,{carrito,elegidas,porFranja,franjas,diasMax,maxRepeticiones});
@@ -351,8 +450,18 @@ function empaquetar(o,st){
   const principalesPlan=elegidas.filter(e=>PRINCIPALES.includes(e.franja));
   const protPrincipales=principalesPlan.map(e=>proteinaReceta(e.receta));
   const proteinaMinComida=protPrincipales.length?Math.round(Math.min(...protPrincipales)):0;
-  const proteinaDia=elegidas.length
-    ? elegidas.reduce((a,e)=>a+proteinaReceta(e.receta),0)/Math.max(1,elegidas.length/comidasDia) : 0;
+  // Balance del día: promedio por persona de los días del plan.
+  const nDias=Math.max(1,elegidas.length/comidasDia);
+  const total=elegidas.reduce((a,e)=>sumarNut(a,nutrientesPlato(e)),{kcal:0,prot:0,carb:0,gra:0,fib:0,verd:0});
+  const dia={};for(const k in total)dia[k]=total[k]/nDias;
+  const proteinaDia=dia.prot;
+  const kcalMacro=dia.prot*4+dia.carb*4+dia.gra*9||1;
+  const balance={kcal:Math.round(dia.kcal),prot:Math.round(dia.prot),carb:Math.round(dia.carb),
+    gra:Math.round(dia.gra),fib:Math.round(dia.fib),verd:Math.round(dia.verd),
+    pct:{prot:Math.round(dia.prot*4/kcalMacro*100),carb:Math.round(dia.carb*4/kcalMacro*100),
+         gra:Math.round(dia.gra*9/kcalMacro*100)},
+    metaFibra:META_FIBRA,metaVerdura:META_VERDURA,rangos:RANGOS_MACRO,
+    sinAcomp:elegidas.filter(e=>!e.acomp&&nutrientes(e.receta.ing).verd<metaVerduraFranja(e.franja,franjas)-15).length};
 
   const disponibles=new Set();
   franjas.forEach(f=>porFranja[f].forEach(r=>disponibles.add(r.id)));
@@ -366,7 +475,7 @@ function empaquetar(o,st){
     objetivoCumplido:proteinaDia>=objetivoDia-1,
     pisoComidaCumplido:!principalesPlan.length||
       Math.min(...protPrincipales)>=pisoComida-1e-6,
-    elegidas,canasta,carrito,
+    balance,elegidas,canasta,carrito,
     sobranteValor:canasta.reduce((a,f)=>a+(f.sobranteValor||0),0),
     costoDespensa:canasta.filter(f=>f.desp).reduce((a,f)=>a+f.costo,0),
     candidatas:disponibles.size,
@@ -407,6 +516,7 @@ function planearMealPrep(o){
   const kDes=hayDesayuno?Math.min(1,porFranja.desayuno.length):0;
   const kPrin=Math.max(1,Math.min(platos-kDes,principales.length));
 
+  const pools={}; for(const f of franjas)pools[f]=acompanantesPosibles(o,f);
   const armar=(d)=>{
     let carrito={},elegidos=[];
     const grupos=[];
@@ -442,7 +552,23 @@ function planearMealPrep(o){
                        grupo:g.tipo,costoMarginal:mejor.delta});
       }
     }
-    return{carrito,elegidos,dias:d};
+    // Rotación: cada día toma su desayuno de la tanda de desayuno y sus
+    // principales de las tandas principales, intercaladas. Los acompañantes
+    // se preparan frescos para cada comida.
+    const cola=g=>elegidos.filter(e=>e.grupo===g).map(e=>({r:e.receta,quedan:e.comidas}));
+    const colas={desayuno:cola("desayuno"),principal:cola("principal"),
+                 almuerzo:cola("almuerzo"),comida:cola("comida")};
+    const tomar=(q)=>{ for(let i=0;i<q.length;i++){ const c=q.shift(); if(c.quedan>0){c.quedan--; q.push(c); return c.r;} }
+                       return null; };
+    const secuencia=[]; let recientes=[];
+    for(let dd=0;dd<d;dd++)for(const f of franjas){
+      const r=tomar(f==="desayuno"?colas.desayuno:separar?colas[f]:colas.principal);
+      if(!r)continue;
+      const acomp=elegirAcomp(r,f,carrito,o,pools[f],recientes,franjas);
+      if(acomp){carrito=sumar(carrito,acomp,personas);recientes=[acomp.id,...recientes].slice(0,2);}
+      secuencia.push({receta:r,acomp,franja:f});
+    }
+    return{carrito,elegidos,secuencia,dias:d};
   };
 
   // En modo presupuesto se recortan DÍAS, no platos: el sentido del meal prep
@@ -453,20 +579,7 @@ function planearMealPrep(o){
     while(d>1&&costoCanasta(st.carrito,o.tienda)>presupuesto){ d--; st=armar(d); }
   }
 
-  // Rotación: cada día toma su desayuno de la tanda de desayuno y sus
-  // principales de las tandas principales, intercaladas.
-  const cola=g=>st.elegidos.filter(e=>e.grupo===g).map(e=>({r:e.receta,quedan:e.comidas}));
-  const colas={desayuno:cola("desayuno"),principal:cola("principal"),
-               almuerzo:cola("almuerzo"),comida:cola("comida")};
-  const tomar=(q)=>{ for(let i=0;i<q.length;i++){ const c=q.shift(); if(c.quedan>0){c.quedan--; q.push(c); return c.r;} }
-                     return null; };
-  const secuencia=[];
-  for(let d=0;d<st.dias;d++)for(const f of franjas){
-    const r=tomar(f==="desayuno"?colas.desayuno:separar?colas[f]:colas.principal);
-    if(r)secuencia.push({receta:r,franja:f});
-  }
-
-  const res=empaquetar(o,{carrito:st.carrito,elegidas:secuencia,porFranja,franjas,
+  const res=empaquetar(o,{carrito:st.carrito,elegidas:st.secuencia,porFranja,franjas,
     diasMax:null,maxRepeticiones:null,
     extra:{mealPrep:true,tandas:st.elegidos,platos:st.elegidos.length,
            minutosCocina:st.elegidos.reduce((a,e)=>a+e.receta.min,0)}});
@@ -536,7 +649,8 @@ function compararTiendas(o){
 }
 
 if(typeof module!=="undefined"&&module.exports){
-  module.exports={APARATOS,PROTEINAS,ING,RECETAS,PRECIOS,TIENDAS,TIENDA_DEF,tieneDatos,tiendasConDatos,conPrecio,recetasSinPrecio,compararTiendas,ACTIVIDAD,FRANJAS,PRINCIPALES,
+  module.exports={APARATOS,PROTEINAS,ING,RECETAS,ACOMPANANTES,NUTRI,nutrientes,nutrientesPlato,
+    META_VERDURA,META_FIBRA,metaVerduraFranja,PRECIOS,TIENDAS,TIENDA_DEF,tieneDatos,tiendasConDatos,conPrecio,recetasSinPrecio,compararTiendas,ACTIVIDAD,FRANJAS,PRINCIPALES,
     llevaCarne,comeTodo,impactoProteinas,
     variante,cumpleRestricciones,aparatosUsados,recetaPosible,recetasPosibles,
     impactoAparatos,costoIngrediente,costoCanasta,proteinaReceta,

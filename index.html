@@ -167,8 +167,8 @@
   @media (max-width: 30rem) { .tokens { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
   /* tiendas */
-  .stores { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; }
-  @media (max-width: 60rem) { .stores { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .stores { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; }
+  @media (max-width: 40rem) { .stores { grid-template-columns: minmax(0, 1fr); } }
   .store { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; text-align: left;
            padding: 1.1rem 1.15rem 1.15rem; border-radius: 22px; border: 1px solid var(--line); background: var(--panel); cursor: pointer;
            transition: border-color 0.25s, background 0.25s, transform 0.15s; min-width: 0; }
@@ -282,6 +282,41 @@
   .stat.total .v { font-size: clamp(3.2rem, 7vw, 5rem); color: var(--amber); text-shadow: 0 0 30px rgba(255, 180, 67, 0.25); }
   .stat .s { font-family: var(--f-mono); font-size: 0.66rem; color: var(--ink-3); }
 
+  /* balance del plato */
+  .balance { --m-prot: #3987e5; --m-carb: #d95926; --m-gra: #199e70;
+             border: 1px solid var(--line); border-radius: 22px; background: var(--panel); padding: 1.3rem 1.4rem 1.4rem;
+             margin-bottom: 1.6rem; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 1.6rem 2.4rem; }
+  @media (max-width: 56rem) { .balance { grid-template-columns: minmax(0, 1fr); } }
+  .bal-head { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .bal-head h3 { font-family: var(--f-display); font-weight: 800; font-size: 1.7rem; text-transform: uppercase; line-height: 1; }
+  .bal-head p { font-family: var(--f-mono); font-size: 0.68rem; color: var(--ink-3); }
+  .meters { display: flex; flex-direction: column; gap: 1.05rem; }
+  .meter-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.3rem 1rem; align-items: baseline; }
+  .meter-row .mk { font-size: 0.88rem; color: var(--ink-2); display: flex; align-items: center; gap: 0.45rem; }
+  .meter-row .mv { font-family: var(--f-display); font-weight: 800; font-size: 1.55rem; line-height: 1; text-align: right; }
+  .meter-row .mv small { font-family: var(--f-mono); font-size: 0.62rem; font-weight: 400; color: var(--ink-3); margin-left: 0.3rem; }
+  .meter { grid-column: 1 / -1; position: relative; height: 8px; border-radius: 99px; background: var(--amber-dim); }
+  .meter i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--amber); transition: width 0.6s var(--ease); }
+  .meter b { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: var(--ink); border-radius: 2px; }
+  .meter-row .ms { grid-column: 1 / -1; font-family: var(--f-mono); font-size: 0.64rem; color: var(--ink-3); }
+  .macro { display: flex; flex-direction: column; gap: 0.8rem; }
+  .macro .lbl { color: var(--ink-2); font-size: 0.88rem; }
+  .stack { display: flex; gap: 2px; height: 34px; }
+  .stack span { position: relative; display: flex; align-items: center; justify-content: center; min-width: 4px; font-family: var(--f-mono);
+                font-size: 0.68rem; font-weight: 500; color: #0f0e0c; transition: flex-basis 0.6s var(--ease); cursor: default; }
+  .stack span:first-child { border-radius: 6px 0 0 6px; }
+  .stack span:last-child { border-radius: 0 6px 6px 0; }
+  .stack span:hover::after, .stack span:focus::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+                white-space: nowrap; background: var(--raised); color: var(--ink); border: 1px solid var(--line-2); border-radius: 8px;
+                padding: 0.35rem 0.55rem; font-size: 0.66rem; z-index: 5; pointer-events: none; }
+  .stack .p { background: var(--m-prot); } .stack .c { background: var(--m-carb); } .stack .g { background: var(--m-gra); }
+  .legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.84rem; color: var(--ink-2); }
+  .legend li { display: flex; align-items: center; gap: 0.55rem; }
+  .legend .sw { width: 0.8rem; height: 0.8rem; border-radius: 3px; flex: none; }
+  .legend b { font-variant-numeric: tabular-nums; }
+  .legend .rg { margin-left: auto; font-family: var(--f-mono); font-size: 0.62rem; color: var(--ink-3); white-space: nowrap; }
+  .comida .acomp { font-size: 0.84rem; color: var(--ink-2); margin: -0.2rem 0 0.35rem; }
+  .comida .acomp::before { content: "+ "; color: var(--ok); font-weight: 700; }
   .notes { border: 1px solid var(--line); border-radius: 20px; padding: 1.1rem 1.3rem 1.2rem; background: var(--panel); margin-bottom: 2rem; }
   .notes.bad { border-color: rgba(255, 122, 87, 0.4); background: linear-gradient(var(--bad-dim), var(--bad-dim)), var(--panel); }
   .notes .head { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; margin-bottom: 0.6rem; }
@@ -833,6 +868,7 @@
         </div>
       </div>
       <div class="stats" id="kpis"></div>
+      <div class="balance" id="balance" hidden></div>
       <div id="alerta"></div>
       <div class="tabs" role="tablist">
         <button type="button" role="tab" data-t="plan" aria-selected="true">Plan de la semana</button>
@@ -866,6 +902,5 @@
 <script src="data/precios-exito.js"></script>
 <script src="data/precios-carulla.js"></script>
 <script src="data/precios-d1.js"></script>
-<script src="data/precios-ara.js"></script>
 <script src="js/engine.js"></script>
 <script src="js/app.js"></script>

@@ -47,7 +47,7 @@ test("una receta sin precio en la tienda no entra al plan", () => {
   }
 });
 
-test("comparar tiendas devuelve las cuatro, con o sin datos", () => {
+test("comparar tiendas devuelve todas las tiendas, con o sin datos", () => {
   const c = M.compararTiendas({ ...base, aparatos: ["estufa", "olla_presion", "nevera"] });
   assert.deepStrictEqual(c.map(x => x.tienda), Object.keys(M.TIENDAS));
   for (const x of c.filter(x => x.datos && x.ok)) assert.ok(x.costoTotal > 0);
@@ -107,4 +107,34 @@ test("si no comen ninguna carne, el almuerzo con carne no se puede armar", () =>
   const r = M.planear({ ...conPiso, proteinas: ["huevo", "granos"], almuerzoConCarne: true });
   assert.ok(!r.ok);
   assert.deepStrictEqual(r.vacias, ["almuerzo"]);
+});
+
+test("cada ingrediente tiene datos de nutrición", () => {
+  for (const i of Object.keys(M.ING)) assert.ok(M.NUTRI[i], `sin nutrición: ${i}`);
+});
+
+test("los acompañantes usan ingredientes conocidos y aportan verdura", () => {
+  for (const a of M.ACOMPANANTES) {
+    for (const i of Object.keys(a.ing)) assert.ok(M.ING[i], `${a.id}: ${i}`);
+    assert.ok(M.nutrientes(a.ing).verd >= 90, `${a.id} aporta poca verdura`);
+  }
+});
+
+test("cada comida principal llega a su meta de verdura o lleva acompañante", () => {
+  for (const t of M.tiendasConDatos()) {
+    const r = M.planear({ ...base, tienda: t, aparatos: Object.keys(M.APARATOS) });
+    if (!r.ok) continue;
+    for (const e of r.elegidas) {
+      const meta = M.metaVerduraFranja(e.franja, r.franjas);
+      const verd = M.nutrientesPlato(e).verd;
+      assert.ok(verd >= meta - 25 || r.balance.sinAcomp > 0, `${t}: ${e.receta.id} queda en ${Math.round(verd)} g`);
+    }
+  }
+});
+
+test("el balance del día suma 100 % entre proteína, carbohidratos y grasa", () => {
+  const r = M.planear({ ...base, aparatos: ["estufa", "olla_presion", "nevera"] });
+  const p = r.balance.pct;
+  assert.ok(Math.abs(p.prot + p.carb + p.gra - 100) <= 2);
+  assert.ok(r.balance.kcal > 800 && r.balance.kcal < 4000);
 });

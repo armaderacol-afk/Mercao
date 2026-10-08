@@ -337,4 +337,34 @@
   ing:{pan:70,salchicha:90,cebolla:20,queso:25},
   pasos:["Calienta la salchicha en agua, sartén, microondas o airfryer.","Ponla en el pan con cebolla picada.","Agrega el queso y calienta 30 s para derretirlo."]},
   ];
+
+  // Acompañantes: el motor agrega uno cuando el plato no trae suficiente
+  // fruta o verdura. tipo: "principal" (almuerzo y cena) o "desayuno".
+  g.ACOMPANANTES_DATA = [
+    {id:"ens_repollo",n:"Ensalada de repollo y zanahoria",min:10,ap:[],tipo:["principal"],
+     ing:{repollo:90,zanahoria:50,aceite:3,sal:0.5},
+     pasos:["Pica el repollo bien delgado y ralla la zanahoria.","Aliña con aceite y sal."]},
+    {id:"ens_tomate_pepino",n:"Ensalada de tomate, pepino y cebolla",min:8,ap:[],tipo:["principal"],
+     ing:{tomate:80,pepino:80,cebolla:15,aceite:3,sal:0.5},
+     pasos:["Corta tomate y pepino en rodajas y la cebolla en plumas.","Aliña con aceite y sal."]},
+    {id:"ens_verde",n:"Ensalada verde con aguacate",min:8,ap:[],tipo:["principal"],
+     ing:{lechuga:60,tomate:60,pepino:40,aguacate:40,sal:0.5},
+     pasos:["Lava y corta la lechuga.","Agrega tomate, pepino y aguacate en cubos, y sal."]},
+    {id:"brocoli_vapor",n:"Brócoli y zanahoria al vapor",min:10,ap:[["estufa","microondas","arrocera"]],tipo:["principal"],
+     ing:{brocoli:110,zanahoria:60,sal:0.5},
+     pasos:["Corta el brócoli en arbolitos y la zanahoria en rodajas.","Cocínalos al vapor 7 min, o 4 min tapados en microondas con 2 cucharadas de agua."]},
+    {id:"habichuela_salteada",n:"Habichuela y zanahoria salteadas",min:12,ap:[["estufa","microondas"]],tipo:["principal"],
+     ing:{habichuela:100,zanahoria:60,aceite:3,sal:0.5},
+     pasos:["Corta la habichuela y la zanahoria en bastones.","Saltéalas 8 min a fuego medio, o 5 min tapadas en microondas."]},
+    {id:"espinaca_salteada",n:"Espinaca salteada con tomate",min:8,ap:["estufa"],tipo:["principal"],
+     ing:{espinaca:110,tomate:60,ajo:0.2,aceite:3,sal:0.5},
+     pasos:["Sofríe el ajo y el tomate picado.","Agrega la espinaca y revuelve 2 min hasta que baje."]},
+    {id:"verduras_asadas",n:"Verduras asadas",min:20,ap:[["airfryer","horno"]],tipo:["principal"],
+     ing:{ahuyama:110,pimenton:60,cebolla:40,aceite:4,sal:0.5},
+     pasos:["Corta todo en trozos medianos con aceite y sal.","Airfryer 15 min a 190 °C, o horno 25 min."]},
+    {id:"fruta_mandarina",n:"Mandarina",min:1,ap:[],tipo:["desayuno"],ing:{mandarina:1},pasos:["Pélala y sírvela."]},
+    {id:"fruta_manzana",n:"Manzana",min:1,ap:[],tipo:["desayuno"],ing:{manzana:1},pasos:["Lávala y pártela."]},
+    {id:"fruta_papaya",n:"Papaya picada",min:3,ap:[],tipo:["desayuno"],ing:{papaya:150},pasos:["Pela, quita las semillas y pica en cubos."]},
+    {id:"fruta_banano",n:"Banano",min:1,ap:[],tipo:["desayuno"],ing:{banano:1},pasos:["Sírvelo entero o en rodajas."]},
+  ];
 })(typeof globalThis !== "undefined" ? globalThis : this);
