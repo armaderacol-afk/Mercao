@@ -1,0 +1,43 @@
+name: Precios de las tiendas
+
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "explorar (solo diagnostica) o descargar (actualiza data/precios-*.js)"
+        required: true
+        default: explorar
+      tiendas:
+        description: "Tiendas separadas por coma"
+        required: false
+        default: "exito,carulla,d1,ara"
+  schedule:
+    - cron: "17 11 * * 1"   # lunes 6:17 a. m. hora Colombia
+
+permissions:
+  contents: write
+
+jobs:
+  precios:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Explorar catálogos
+        if: github.event_name == 'workflow_dispatch' && inputs.modo == 'explorar'
+        run: node scripts/explorar-tiendas.mjs
+      - name: Descargar precios
+        if: github.event_name == 'schedule' || inputs.modo == 'descargar'
+        run: node scripts/descargar-precios.mjs --tiendas "${{ inputs.tiendas || 'exito,carulla,d1,ara' }}"
+      - name: Guardar precios en el repo
+        if: github.event_name == 'schedule' || inputs.modo == 'descargar'
+        run: |
+          git config user.name "mercao-precios[bot]"
+          git config user.email "mercao-precios@users.noreply.github.com"
+          git add data/precios-*.js data/reporte-precios.md || true
+          if git diff --cached --quiet; then echo "Sin cambios de precios"; exit 0; fi
+          git commit -m "Precios actualizados $(date -u +%F)"
+          git push
