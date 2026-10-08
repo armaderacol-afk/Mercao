@@ -4,7 +4,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 
 ## Éxito
 
-165 presentaciones para 57 de 57 ingredientes.
+163 presentaciones para 57 de 57 ingredientes.
 
 | Ingrediente | Presentaciones |
 | --- | --- |
@@ -45,7 +45,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | pimenton | PIMENTON VERDE · $8.940 (8.940)<br>Pimentón 1 und · $2.160 (13.500) |
 | cilantro | CILANTRO 100 gr · $1.180 (11.800) |
 | limon | Limon Comun 1 und · $440 (440)<br>Limón Tahití Malla TAEQ 1000 gr · $7.500 (450) |
-| aguacate | Aguacate Hass 1 und · $1.920 (7.680)<br>Aguacate Orgánico.. TAEQ 500 gr · $9.140 (18.280)<br>Aguacates x 3 unidades · $19.899 (26.532) |
+| aguacate | Aguacate Hass 1 und · $1.920 (7.680)<br>Aguacate Orgánico.. TAEQ 500 gr · $9.140 (18.280) |
 | leche | Leche FRESCAMPO entera UHT bolsa maxilitro (1100 ml) · $3.770 (3.427)<br>Leche FRESCAMPO entera UHT paquete (5400 ml) · $18.540 (3.433)<br>Leche FRESCAMPO entera UHT bolsa (900 ml) · $3.090 (3.433)<br>Leche entera ALPINA caja x4und 1l (4000 ml) · $35.450 (8.863) |
 | queso | Queso Mozzarella CENTURION Bloque (600 gr) · $13.800 (23.000)<br>Queso mozzarella FRESCAMPO tajado (250 gr) · $6.560 (26.240)<br>Queso mozzarella FRESCAMPO tajado (800 gr) · $21.000 (26.250)<br>Queso Mozzarella FRESCAMPO Tajado (400 gr) · $10.500 (26.250) |
 | queso_campesino | Queso campesino COLANTA fresco semiduro graso (250 gr) · $7.344 (29.376)<br>Queso campesino EL ZARZAL fresco graso semiduro (450 gr) · $13.920 (30.933)<br>Queso campesino EL ZARZAL fresco graso semiduro (240 gr) · $9.630 (40.125) |
@@ -62,7 +62,7 @@ Generado por `scripts/descargar-precios.mjs`. Precio por kg, litro o unidad entr
 | brocoli | Brócoli Vinipelado · $8.840 (8.840) |
 | espinaca | ESPINACA · $7.860 (7.860)<br>Espinaca Bogotana 300 gr · $7.140 (23.800) |
 | mandarina | Mandarina Onecco 1 und · $1.120 (1.120)<br>Mandarina Comun. · $10.080 (1.210) |
-| manzana | Manzana Gala 1 und · $860 (860)<br>Manzana Trasera Shimano FH-TC500-MS-B 12x148 Boost 12V 32H · $169.800 (1.147)<br>Manzana Trasera Shimano TRASERA FH-M6010 DEORE 12x142 MM 32H · $295.300 (2.080)<br>Manzana Bolsa Insuperable TAEQ 800 gr · $9.600 (2.160) |
+| manzana | Manzana Gala 1 und · $860 (860)<br>Manzana Bolsa Insuperable TAEQ 800 gr · $9.600 (2.160)<br>MANZANA PINK LADY BOLSA 1000 gr · $12.420 (2.236) |
 | papaya | Papaya Und 1 und · $6.368 (4.245)<br>PAPAYA PORCIONADA TARRINA 300 gr · $2.140 (7.133) |
 | chocolate | Chocolate LA ESPECIAL de mesa tradicional (400 gr) · $8.460 (21.150)<br>Chocolate LA ESPECIAL de mesa tradicional (200 gr) · $4.630 (23.150)<br>Chocolate SOL pastillas de cocoa con azúcar (800 gr) · $21.850 (27.313)<br>Chocolate de Mesa CORONA CHOCOLATE TRADICIONAL (450 gr) · $15.600 (34.667) |
 
