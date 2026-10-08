@@ -511,7 +511,7 @@ function renderLista(r) {
   const nProd = r.canasta.length;
   $("#pane-lista").innerHTML = `<div class="lista-wrap">
     <div class="receipt-shadow"><div class="receipt">
-      <div class="r-head"><strong>MERCAO</strong><span>lista de mercado</span><span>${r.personas} ${r.personas === 1 ? "persona" : "personas"} · ${r.diasCubiertos} días · ${r.comidasAsignadas} comidas</span><span>precios ${nombreTienda(tienda)} de referencia · ${PRECIOS[tienda] ? PRECIOS[tienda].fecha : ""}</span></div>
+      <div class="r-head"><strong>MERCAO</strong><span>lista de mercado</span><span>${r.personas} ${r.personas === 1 ? "persona" : "personas"} · ${r.diasCubiertos} días · ${r.comidasAsignadas} comidas</span><span>precios ${nombreTienda(tienda)} de referencia · ${fechaCorta(PRECIOS[tienda] && PRECIOS[tienda].fecha)}</span></div>
       <div class="r-sep"></div>${cuerpo}<div class="r-sep"></div>
       <div class="r-line"><span>${nProd} productos</span><span class="r-dots"></span><span></span></div>
       <div class="r-line"><span>Sobrante para la otra semana</span><span class="r-dots"></span><span>${money(r.sobranteValor)}</span></div>
