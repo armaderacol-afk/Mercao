@@ -41,6 +41,7 @@ node scripts/descargar-precios.mjs --tiendas exito,carulla,d1   # necesita salid
 
 ## Novedades
 
+- **v0.9.1 · ninguna receta por fuera por la tienda.** Si una tienda no publica en línea algún ingrediente (D1 no tiene limón, habichuela, sardinas, yuca ni chocolate de mesa), se usa el precio de la tienda más barata que sí lo tenga y queda marcado en la lista. Con todo prendido salen las 105 recetas en las tres tiendas.
 - **v0.9 · cocina de fondo pintado.** Nueva escena: azulejo celadón, gabinetes oliva, piso de ladrillo, repisas con frascos y teteras, campana, ventana con luz y follaje, y un gato sobre la nevera. Los aparatos pierden el contorno de caricatura (licuadora de vidrio con base cromada, arrocera crema con franjas verdes) y la interfaz toma los mismos tonos.
 - **v0.8 · animación dibujada.** Los aparatos se estiran y rebotan al prenderse, sueltan vapor en bocanadas y estrellitas, y desaparecen en una nubecita de polvo al apagarse. Llamas, tapas y temblores van a saltos, cuadro a cuadro.
 - **v0.7 · acuarela.** La app pasa a una cocina de día pintada en acuarela sobre papel: tinta sepia, luz de ventana, nubes y matas que se mueven. Las recetas repetidas quedan con días de por medio y el botón «Otro menú» baraja el plan.

@@ -47,6 +47,20 @@ test("una receta sin precio en la tienda no entra al plan", () => {
   }
 });
 
+test("con todo prendido, ninguna receta queda por fuera por la tienda", () => {
+  const todo = { ...base, aparatos: Object.keys(M.APARATOS), maxMinutos: 999, restricciones: [] };
+  for (const t of M.tiendasConDatos()) {
+    assert.equal(M.recetasPosibles({ ...todo, tienda: t }).length, M.RECETAS.length, t);
+    // Lo que la tienda no publica va con precio de otra y queda marcado.
+    const r = M.planear({ ...todo, tienda: t });
+    for (const f of r.canasta) if (f.ref) {
+      assert.notEqual(f.ref, t);
+      assert.ok(!M.PRECIOS[t].skus.some(s => s.ing === f.ing), `${t}: ${f.ing}`);
+    }
+  }
+  assert.ok(M.tiendaRef("d1", "limon"), "D1 no publica limón: debe tomar el precio de otra tienda");
+});
+
 test("comparar tiendas devuelve todas las tiendas, con o sin datos", () => {
   const c = M.compararTiendas({ ...base, aparatos: ["estufa", "olla_presion", "nevera"] });
   assert.deepStrictEqual(c.map(x => x.tienda), Object.keys(M.TIENDAS));

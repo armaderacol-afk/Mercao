@@ -256,13 +256,15 @@ function pintarTiendas(o) {
     flag.textContent = c.tienda === tienda ? (c.tienda === barata ? "aquí · la más barata" : "aquí compras") : "la más barata";
   }
   const sin = recetasSinPrecio(o);
-  const faltan = new Map();
-  for (const r of sin) for (const i of Object.keys(r.ing)) if (!skusDeIng(tienda, i)) faltan.set(i, (faltan.get(i) || 0) + 1);
-  const top = [...faltan.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([i]) => ING[i].n.toLowerCase());
+  const prestados = [...new Set(recetasPosibles({ ...o, tienda }).flatMap(r => ingredientesRef(r, tienda)))]
+    .map(i => ING[i].n.toLowerCase());
   $("#tiendas-nota").innerHTML = sin.length
-    ? `En <b>${nombreTienda(tienda)}</b> quedan por fuera <b>${sin.length} recetas</b> que tu cocina sí permite, porque la tienda no tiene precio para algún ingrediente: ${top.join(", ")}${faltan.size > 5 ? " y otros" : ""}.`
-    : `En <b>${nombreTienda(tienda)}</b> todas las recetas que tu cocina permite tienen precio.`;
+    ? `En <b>${nombreTienda(tienda)}</b> quedan por fuera <b>${sin.length} recetas</b> porque ninguna tienda tiene precio para algún ingrediente.`
+    : prestados.length
+      ? `${nombreTienda(tienda)} no publica en línea ${lista(prestados)}. Para no dejar recetas por fuera, esos van con el precio de otra tienda y quedan marcados en la lista.`
+      : `En <b>${nombreTienda(tienda)}</b> todas las recetas que tu cocina permite tienen precio.`;
 }
+const lista = a => a.length > 1 ? a.slice(0, -1).join(", ") + " y " + a[a.length - 1] : a[0];
 const skusDeIng = (t, i) => ((PRECIOS[t] && PRECIOS[t].skus) || []).some(s => s.ing === i);
 
 /* ==========================================================
@@ -551,7 +553,8 @@ const cantidad = (n, u) => `${(Math.round(n * 10) / 10).toLocaleString("es-CO")}
 function renderLista(r) {
   const semana = r.canasta.filter(f => !f.desp), desp = r.canasta.filter(f => f.desp);
   const item = f => `<div class="r-item"><div class="r-line"><span class="r-name">${f.nombre}</span><span class="r-dots"></span><span class="r-price">${money(f.costo)}</span></div>
-    <div class="r-sub">${f.sku}</div>
+    <div class="r-sub">${f.sku}</div>${f.ref ? `
+    <div class="r-sub"><span class="ref">no está en ${nombreTienda(tienda)} en línea · precio de ${nombreTienda(f.ref)}</span></div>` : ""}
     <div class="r-sub">usas ${cantidad(f.necesita, f.unidad)}${f.sobrante > 0 ? ` · <span class="left">sobran ${cantidad(f.sobrante, f.unidad)}</span>` : ""}</div></div>`;
   let cuerpo = "";
   for (const cat of CATS) {
@@ -587,7 +590,7 @@ function textoLista(r) {
   for (const [cat, g] of grupos) {
     if (!g.length) continue;
     lineas.push(cat.toUpperCase());
-    g.forEach(f => lineas.push(`- ${f.nombre}: ${f.sku} (${money(f.costo)})`));
+    g.forEach(f => lineas.push(`- ${f.nombre}: ${f.sku} (${money(f.costo)}${f.ref ? `, precio de ${nombreTienda(f.ref)}` : ""})`));
     lineas.push("");
   }
   lineas.push(`Total: ${money(r.costoTotal)} (precios ${nombreTienda(tienda)} de referencia, ${fechaCorta(PRECIOS[tienda] && PRECIOS[tienda].fecha)})`);

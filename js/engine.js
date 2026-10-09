@@ -130,7 +130,7 @@ const TIENDAS={
 };
 const TIENDA_DEF="d1";
 const indiceSkus={};
-function skusDe(tienda,ing){
+function skusPropios(tienda,ing){
   if(!indiceSkus[tienda]){
     const m={};
     for(const s of (PRECIOS[tienda]&&PRECIOS[tienda].skus)||[])(m[s.ing]=m[s.ing]||[]).push(s);
@@ -138,11 +138,41 @@ function skusDe(tienda,ing){
   }
   return indiceSkus[tienda][ing]||[];
 }
+/* Si la tienda no publica precio de un ingrediente (D1 no vende limón en
+   línea, por ejemplo), se usa el de la tienda más barata que sí lo tenga,
+   marcado con `ref` para avisarlo en la lista. Así ninguna receta queda
+   por fuera solo porque falta un ingrediente menor en el catálogo web. */
+const indiceRef={};
+function tiendaRef(tienda,ing){
+  const k=tienda+"|"+ing;
+  if(!(k in indiceRef)){
+    let mejor=null,pu=Infinity;
+    if(tieneDatos(tienda))for(const t of Object.keys(TIENDAS)){
+      if(t===tienda)continue;
+      const op=skusPropios(t,ing); if(!op.length)continue;
+      const m=Math.min(...op.map(s=>s.precio/s.size));
+      if(m<pu){pu=m;mejor=t;}
+    }
+    indiceRef[k]=mejor;
+  }
+  return indiceRef[k];
+}
+function skusDe(tienda,ing){
+  const propios=skusPropios(tienda,ing);
+  if(propios.length)return propios;
+  const t=tiendaRef(tienda,ing);
+  if(!t)return [];
+  const k="ref|"+tienda;
+  indiceSkus[k]=indiceSkus[k]||{};
+  return indiceSkus[k][ing]=indiceSkus[k][ing]||skusPropios(t,ing).map(s=>({...s,ref:t}));
+}
 function tieneDatos(t){return !!(PRECIOS[t]&&PRECIOS[t].skus&&PRECIOS[t].skus.length);}
 function tiendasConDatos(){return Object.keys(TIENDAS).filter(tieneDatos);}
 /* Una receta se puede comprar en una tienda si todos sus ingredientes
    tienen al menos una presentación con precio ahí. */
 function conPrecio(r,tienda){return Object.keys(r.ing).every(i=>skusDe(tienda,i).length>0);}
+/* Ingredientes de la receta que en esta tienda van con precio de otra. */
+function ingredientesRef(r,tienda){return Object.keys(r.ing).filter(i=>!skusPropios(tienda,i).length&&tiendaRef(tienda,i));}
 
 
 const CARNES=["pollo_surt","pollo_muslo","pollo_pechuga","atun","sardina","tilapia","salchicha","carne_res","carne_molida","cerdo"];
@@ -288,7 +318,7 @@ function detalleCanasta(c,tienda){
     const x=costoIngrediente(i,q,tienda); if(!x)continue;
     f.push({ing:i,nombre:ING[i].n,cat:ING[i].cat,unidad:ING[i].u,
       necesita:Math.round(q*10)/10,sku:x.etiqueta,costo:x.costo,
-      sobrante:Math.round(x.sobrante*10)/10,sobranteValor:x.sobranteValor,desp:!!ING[i].desp});
+      sobrante:Math.round(x.sobrante*10)/10,sobranteValor:x.sobranteValor,desp:!!ING[i].desp,ref:x.sku.ref||null});
   }
   return f.sort((a,b)=>b.costo-a.costo);
 }
@@ -669,7 +699,7 @@ function compararTiendas(o){
 
 if(typeof module!=="undefined"&&module.exports){
   module.exports={APARATOS,PROTEINAS,ING,RECETAS,ACOMPANANTES,NUTRI,nutrientes,nutrientesPlato,
-    META_VERDURA,META_FIBRA,metaVerduraFranja,PRECIOS,TIENDAS,TIENDA_DEF,tieneDatos,tiendasConDatos,conPrecio,recetasSinPrecio,compararTiendas,ACTIVIDAD,FRANJAS,PRINCIPALES,
+    META_VERDURA,META_FIBRA,metaVerduraFranja,PRECIOS,TIENDAS,TIENDA_DEF,tieneDatos,tiendasConDatos,conPrecio,ingredientesRef,tiendaRef,recetasSinPrecio,compararTiendas,ACTIVIDAD,FRANJAS,PRINCIPALES,
     llevaCarne,comeTodo,impactoProteinas,
     variante,cumpleRestricciones,aparatosUsados,recetaPosible,recetasPosibles,
     impactoAparatos,costoIngrediente,costoCanasta,proteinaReceta,
