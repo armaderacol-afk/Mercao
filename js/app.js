@@ -306,7 +306,7 @@ function sugerencias(r, o) {
   if (b && b.fib < b.metaFibra - 0.5)
     s.push(`La fibra queda en <b>${b.fib} g</b> al día y la meta es ${b.metaFibra} g. Los fríjoles, las lentejas y la avena son lo que más aporta.`);
   if (b && b.sinAcomp)
-    s.push(`<b>${b.sinAcomp} comida${b.sinAcomp === 1 ? "" : "s"}</b> quedaron con poca verdura porque esta tienda no tiene precio para los acompañantes que tu cocina permite.`);
+    s.push(`<b>${b.sinAcomp} comida${b.sinAcomp === 1 ? "" : "s"}</b> quedaron sin acompañante porque ninguna tienda tiene precio para los acompañantes que tu cocina permite.`);
   if (r.personas === 1)
     s.push(`Cocinar para una persona sale más caro por porción porque los empaques no se parten. Cocinar doble y congelar la mitad es lo que más baja este número.`);
   return s;

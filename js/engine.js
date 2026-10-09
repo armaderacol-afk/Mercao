@@ -365,12 +365,15 @@ function acompanantesPosibles(o,franja){
   return ACOMPANANTES.filter(a=>a.tipo.includes(tipo)&&recetaPosible(a,o))
     .map(a=>({...a,usa:aparatosUsados(a,o.aparatos||["estufa"])}));
 }
-/* Elige el acompañante que completa la fruta y verdura del plato al menor
-   costo, sin repetir el de las dos comidas anteriores si hay otro. */
+/* Todo plato lleva acompañante: ensalada o verdura en almuerzo y cena,
+   fruta en el desayuno. Aunque el plato ya traiga su verdura (cerdo con
+   ahuyama), el acompañante suma fibra y variedad. Se elige el que completa
+   la fruta y verdura que falta al menor costo, que no repita la verdura del
+   plato y sin repetir el de la misma comida del día anterior si hay otro. */
+const SAZON={aceite:1,sal:1,ajo:1,cebolla:1,cebolla_larga:1};
 function elegirAcomp(r,franja,carrito,o,pool,recientes,franjas){
   if(!pool.length)return null;
   const falta=metaVerduraFranja(franja,franjas)-nutrientes(r.ing).verd;
-  if(falta<=15)return null;
   const personas=o.personas||2;
   const base=sumar(carrito,r,personas), costoBase=costoCanasta(base,o.tienda);
   let mejor=null;
@@ -378,9 +381,11 @@ function elegirAcomp(r,franja,carrito,o,pool,recientes,franjas){
     for(const a of pool){
       if(evitar&&recientes.includes(a.id))continue;
       const cubre=nutrientes(a.ing).verd>=falta-10;
+      const repite=Object.keys(a.ing).some(i=>!SAZON[i]&&r.ing[i]>0);
       const delta=costoCanasta(sumar(base,a,personas),o.tienda)-costoBase;
-      // Primero los que cubren lo que falta; entre ellos, el más barato.
-      const score=(cubre?0:1e7)+delta;
+      // Primero los que cubren lo que falta y no repiten la fruta o verdura
+      // del plato; entre ellos, el más barato.
+      const score=(repite?2e7:0)+(cubre?0:1e7)+delta;
       if(!mejor||score<mejor.score)mejor={a,score};
     }
     if(mejor)break;
@@ -472,7 +477,7 @@ function planear(o){
       carrito=mejor.nuevo;
       elegidas.push({receta:mejor.r,acomp:mejor.acomp,franja,costoMarginal:mejor.delta});
       usos[mejor.r.id]=(usos[mejor.r.id]||0)+1; ultimoDia[mejor.r.id]=d;
-      if(mejor.acomp)recientes=[mejor.acomp.id,...recientes].slice(0,2);
+      if(mejor.acomp)recientes=[mejor.acomp.id,...recientes].slice(0,franjas.length+1);
     }
   }
   return empaquetar(o,{carrito,elegidas,porFranja,franjas,diasMax,maxRepeticiones});
@@ -501,7 +506,7 @@ function empaquetar(o,st){
     pct:{prot:Math.round(dia.prot*4/kcalMacro*100),carb:Math.round(dia.carb*4/kcalMacro*100),
          gra:Math.round(dia.gra*9/kcalMacro*100)},
     metaFibra:META_FIBRA,metaVerdura:META_VERDURA,rangos:RANGOS_MACRO,
-    sinAcomp:elegidas.filter(e=>!e.acomp&&nutrientes(e.receta.ing).verd<metaVerduraFranja(e.franja,franjas)-15).length};
+    sinAcomp:elegidas.filter(e=>!e.acomp).length};
 
   const disponibles=new Set();
   franjas.forEach(f=>porFranja[f].forEach(r=>disponibles.add(r.id)));
@@ -614,7 +619,7 @@ function planearMealPrep(o){
       const r=tomar(f==="desayuno"?colas.desayuno:separar?colas[f]:colas.principal);
       if(!r)continue;
       const acomp=elegirAcomp(r,f,carrito,o,pools[f],recientes,franjas);
-      if(acomp){carrito=sumar(carrito,acomp,personas);recientes=[acomp.id,...recientes].slice(0,2);}
+      if(acomp){carrito=sumar(carrito,acomp,personas);recientes=[acomp.id,...recientes].slice(0,franjas.length+1);}
       secuencia.push({receta:r,acomp,franja:f});
     }
     return{carrito,elegidos,secuencia,dias:d};

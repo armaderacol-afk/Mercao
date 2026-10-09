@@ -146,6 +146,27 @@ test("cada comida principal llega a su meta de verdura o lleva acompañante", ()
   }
 });
 
+test("todo plato lleva acompañante, también con desayuno y en meal prep", () => {
+  for (const t of M.tiendasConDatos())
+    for (const mealPrep of [false, true])
+      for (const semilla of [1, 2, 3]) {
+        const o = { ...base, comidasDia: 3, presupuesto: 300000, tienda: t, aparatos: Object.keys(M.APARATOS), mealPrep, platos: 3, semilla };
+        const r = mealPrep ? M.planearMealPrep(o) : M.planear(o);
+        assert.ok(r.ok, `${t}`);
+        for (const e of r.elegidas) {
+          assert.ok(e.acomp, `${t}${mealPrep ? " meal prep" : ""}: ${e.franja} ${e.receta.id} sin acompañante`);
+          if (e.franja === "desayuno") assert.match(e.acomp.id, /^fruta_/);
+        }
+        assert.equal(r.balance.sinAcomp, 0);
+      }
+});
+
+test("el acompañante no repite la fruta del desayuno", () => {
+  const r = M.planear({ ...base, comidasDia: 3, presupuesto: 300000, aparatos: Object.keys(M.APARATOS) });
+  for (const e of r.elegidas) if (e.franja === "desayuno")
+    for (const i of Object.keys(e.acomp.ing)) assert.ok(!e.receta.ing[i], `${e.receta.id} + ${e.acomp.id}`);
+});
+
 test("el balance del día suma 100 % entre proteína, carbohidratos y grasa", () => {
   const r = M.planear({ ...base, aparatos: ["estufa", "olla_presion", "nevera"] });
   const p = r.balance.pct;
