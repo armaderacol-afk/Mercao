@@ -9,6 +9,7 @@ Dile cuánta plata tienes, cuánto pesas, qué hay en tu cocina y dónde compras
 | `index.html` | La app: estilos, controles y la ilustración de la cocina (SVG). |
 | `js/engine.js` | El motor: ingredientes, proteína, costo por empaques y planeación. Corre en el navegador y en Node. |
 | `js/app.js` | La interfaz: lee los controles, pinta la cocina, las tiendas y el plan. |
+| `js/ilustraciones.js` | Dibuja cada plato a partir de sus ingredientes, y las proteínas, fachadas de tienda y decoración. |
 | `js/escena.js` | Efectos de la cocina: vapor en bocanadas, destellos y la nubecita de polvo al apagar. |
 | `data/recetas.js` | Las recetas (105) y los acompañantes (11). Cantidades por porción. |
 | `data/precios-<tienda>.js` | Presentaciones y precios de cada tienda. Los genera el descargador; no se editan a mano. |
@@ -41,6 +42,7 @@ node scripts/descargar-precios.mjs --tiendas exito,carulla,d1   # necesita salid
 
 ## Novedades
 
+- **v1.0 · cara nueva.** Barra de navegación fija (Inicio, Plan, Lista, Recetas). Cada plato del plan y del recetario tiene su dibujo, compuesto según sus ingredientes. Proteínas con ilustración, tiendas con su fachada, días con ramitas, y una cocina con mesón de madera, enredaderas, matas y toallas de cuadros.
 - **v0.9.2 · todo plato con acompañante.** Almuerzo y cena siempre llevan ensalada o verdura, y el desayuno una fruta, aunque el plato ya traiga su verdura. El acompañante no repite la fruta o verdura principal del plato ni el de la misma comida del día anterior.
 - **v0.9.1 · ninguna receta por fuera por la tienda.** Si una tienda no publica en línea algún ingrediente (D1 no tiene limón, habichuela, sardinas, yuca ni chocolate de mesa), se usa el precio de la tienda más barata que sí lo tenga y queda marcado en la lista. Con todo prendido salen las 105 recetas en las tres tiendas.
 - **v0.9 · cocina de fondo pintado.** Nueva escena: azulejo celadón, gabinetes oliva, piso de ladrillo, repisas con frascos y teteras, campana, ventana con luz y follaje, y un gato sobre la nevera. Los aparatos pierden el contorno de caricatura (licuadora de vidrio con base cromada, arrocera crema con franjas verdes) y la interfaz toma los mismos tonos.

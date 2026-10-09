@@ -194,3 +194,15 @@ test("la misma semilla da el mismo menú y otra semilla puede cambiarlo", () => 
   assert.strictEqual(ids(5), ids(5));
   assert.ok([6, 7, 8, 9, 10].some(s => ids(s) !== ids(5)));
 });
+
+test("cada receta y acompañante tiene su dibujo, sin valores rotos", () => {
+  require("../js/ilustraciones.js");
+  const I = globalThis.Ilus;
+  for (const r of [...M.RECETAS, ...M.ACOMPANANTES]) {
+    const svg = I.plato(r, M.ACOMPANANTES[0]);
+    assert.match(svg, /^<svg /, r.id);
+    assert.ok(!/NaN|undefined/.test(svg), `${r.id}: ${svg.match(/.{40}(NaN|undefined).{20}/)}`);
+  }
+  for (const k of Object.keys(M.PROTEINAS)) assert.match(I.proteina(k), /^<svg /, k);
+  for (const t of Object.keys(M.TIENDAS)) assert.match(I.tienda(t), /^<svg /, t);
+});

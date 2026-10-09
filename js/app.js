@@ -134,7 +134,7 @@ function construirChips() {
 }
 function construirProteinas() {
   $("#proteinas").innerHTML = Object.entries(PROTEINAS).map(([k, p]) =>
-    `<button type="button" class="token" data-p="${k}" aria-pressed="true"><span class="st"></span>${icono("p-" + k, 'aria-hidden="true"')}<span class="tn">${p.n}</span><span class="tc"></span></button>`).join("");
+    `<button type="button" class="token" data-p="${k}" aria-pressed="true"><span class="st"></span><span class="img">${Ilus.proteina(k)}</span><span class="tn">${p.n}</span><span class="tc"></span></button>`).join("");
 }
 
 function pintarProteinas(o) {
@@ -218,13 +218,16 @@ function arrancar() {
    TIENDAS
    ========================================================== */
 function construirTiendas() {
-  $("#tiendas").innerHTML = Object.keys(TIENDAS).map(t => `
-    <button type="button" class="store" role="radio" data-t="${t}" aria-checked="false">
+  $("#tiendas").innerHTML = Object.keys(TIENDAS).map(t => {
+    const e = Ilus.TIENDA_ESTILO[t] || { banda: "#8c8856", texto: "#fff" };
+    return `<button type="button" class="store" role="radio" data-t="${t}" aria-checked="false" style="--marca:${e.banda};--marca-t:${e.texto}">
       <span class="flag" hidden></span>
       <span class="sn">${nombreTienda(t)}</span>
+      <span class="fachada" aria-hidden="true">${Ilus.tienda(t)}</span>
       <span class="sv num">—</span>
       <span class="ss"></span>
-    </button>`).join("");
+    </button>`;
+  }).join("");
   $$("#tiendas .store").forEach(b => b.addEventListener("click", () => {
     if (b.disabled) return;
     tienda = b.dataset.t; render();
@@ -444,11 +447,11 @@ function renderStats(r, o) {
     : notas("Plan viable", [`Cubre los ${r.diasPedidos} días dentro del presupuesto y con la proteína completa.`], true);
 }
 
-function iconosUsa(R) {
+function iconosUsa(R, conNombre) {
   const usa = R.usa || [];
-  if (!usa.length) return `<span class="usa" title="Sin cocción">sin cocción</span>`;
-  const nombres = usa.map(a => APARATOS[a].n.toLowerCase()).join(", ");
-  return `<span class="usa" title="${nombres}" aria-label="Se hace con ${nombres}">${usa.map(a => icono("i-" + a, 'aria-hidden="true"')).join("")}</span>`;
+  if (!usa.length) return `<span class="usa" title="Sin cocción">${conNombre ? icono("i-sin", 'aria-hidden="true"') : ""}Sin cocción</span>`;
+  const nombres = usa.map(a => APARATOS[a].n).join(", ");
+  return `<span class="usa" title="${nombres}" aria-label="Se hace con ${nombres.toLowerCase()}">${usa.map(a => icono("i-" + a, 'aria-hidden="true"')).join("")}${conNombre ? nombres : ""}</span>`;
 }
 
 /* Así queda tu plato: tres medidores contra su meta y el reparto de calorías. */
@@ -496,12 +499,13 @@ function renderPlan(r) {
       const n = nutrientesPlato(e);
       const pr = Math.round(n.prot); protDia += pr; fibDia += n.fib;
       const cumple = !PRINCIPALES.includes(e.franja) || proteinaReceta(e.receta) >= r.pisoComida - 0.5;
-      cs += `<div class="comida"><div class="slot">${FRANJA_NOM[e.franja] || "Comida"}</div>
+      cs += `<div class="comida"><span class="foto">${Ilus.plato(e.receta, e.acomp)}</span>
+        <div><div class="slot">${FRANJA_NOM[e.franja] || "Comida"}</div>
         <div class="nom">${e.receta.n}</div>
-        ${e.acomp ? `<div class="acomp">${e.acomp.n}</div>` : ""}
-        <div class="meta">${iconosUsa(e.receta)}<span>${e.receta.min} min</span><span class="p ${cumple ? "ok" : "bad"}">${pr} g proteína</span><span>${Math.round(n.fib)} g fibra</span></div></div>`;
+        ${e.acomp ? `<div class="acomp">${e.acomp.n}</div>` : ""}</div>
+        <div class="meta">${iconosUsa(e.receta)}<span>${e.receta.min} min</span><span class="p ${cumple ? "ok" : "bad"}">${pr} g prot</span><span>${Math.round(n.fib)} g fibra</span></div></div>`;
     }
-    html += `<article class="dia${animar ? " enter" : ""}" style="--i:${d}"><header><h4>${nombreDia(d)}</h4><span class="num ${protDia >= r.objetivoDia - 1 ? "ok" : ""}">${protDia} g prot · ${Math.round(fibDia)} g fibra</span></header>${cs}</article>`;
+    html += `<article class="dia${animar ? " enter" : ""}" style="--i:${d}"><span class="rama">${Ilus.rama(d)}</span><header><h4>${nombreDia(d)}</h4><span class="num ${protDia >= r.objetivoDia - 1 ? "ok" : ""}">${protDia} g prot · ${Math.round(fibDia)} g fibra</span></header>${cs}</article>`;
   }
   const sobra = r.elegidas.length - r.diasCubiertos * r.comidasDia;
   $("#pane-plan").innerHTML = (html ? `<div class="dias">${html}</div>` : "") +
@@ -610,21 +614,41 @@ function renderRecetas(r) {
     if (vistos.has(R.id)) return; vistos.add(R.id);
     const n = nutrientes(R.ing);
     const ings = Object.entries(R.ing).map(([i, q]) => `<span>${ING[i].n} ${Math.round(q * r.personas * 10) / 10} ${ING[i].u}</span>`).join("");
-    rec += `<details class="rec"><summary><span class="rn">${R.n}</span>${etiqueta ? `<span class="tag">${etiqueta}</span>` : ""}${iconosUsa(R)}
-      <span class="rm num">${R.min} min${R.f && R.f !== 1 ? ` · porción de proteína ×${R.f}` : ""}</span></summary>
+    rec += `<details class="rec"><summary><span class="mas" aria-hidden="true">+</span><span class="foto">${Ilus.plato(R)}</span>
+      <span class="rt"><span class="rn">${R.n}</span>${etiqueta ? `<span class="tag">${etiqueta}</span>` : iconosUsa(R, true)}</span>
+      <span class="rm num">${icono("i-min", 'aria-hidden="true"')}${R.min} min${R.f && R.f !== 1 ? ` <span aria-hidden="true">·</span> porción de proteína ×${R.f.toFixed(2)}` : ""}</span><svg class="ico chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
       <div class="recbody"><p class="note" style="margin:0 0 0.7rem">Por porción: ${Math.round(n.kcal)} kcal · ${Math.round(n.prot)} g proteína · ${Math.round(n.carb)} g carbohidratos · ${Math.round(n.gra)} g grasa · ${Math.round(n.fib)} g fibra · ${Math.round(n.verd)} g de fruta y verdura</p>
       <div class="ing">${ings}</div>
       <ol>${R.pasos.map(p => `<li>${p}</li>`).join("")}</ol></div></details>`;
   };
   for (const e of r.elegidas) uno(e.receta);
   for (const e of r.elegidas) if (e.acomp) uno(e.acomp, "acompañante");
-  $("#pane-recetas").innerHTML = rec ? `<p class="note" style="margin:0 0 1rem">Cantidades para ${r.personas} ${r.personas === 1 ? "porción" : "porciones"}.</p>${rec}` : `<p class="note">No hay recetas en el plan.</p>`;
+  ledeRecetas = `Cantidades para ${r.personas} ${r.personas === 1 ? "porción" : "porciones"}.`;
+  if ($('.tabs button[data-t="recetas"]').getAttribute("aria-selected") === "true") $("#res-lede").textContent = ledeRecetas;
+  $("#pane-recetas").innerHTML = rec || `<p class="note">No hay recetas en el plan.</p>`;
 }
 
+const TITULOS = {
+  plan: ["Plan de la semana", "Comidas balanceadas, fáciles de preparar y con ingredientes que encuentras en tu mercado."],
+  lista: ["Lista de mercado", "La combinación de empaques más barata para tu plan, ordenada por pasillo."],
+  tandas: ["Tandas de cocina", "Qué cocinar cada día de meal prep y cuántas porciones salen."],
+  recetas: ["Recetas", ""],
+};
+let ledeRecetas = "";
 function seleccionarTab(t) {
-  $$(".tabs button").forEach(x => x.setAttribute("aria-selected", String(x.dataset.t === t)));
+  $$(".tabs button[data-t]").forEach(x => x.setAttribute("aria-selected", String(x.dataset.t === t)));
   ["plan", "tandas", "lista", "recetas"].forEach(p => $("#pane-" + p).hidden = p !== t);
+  $("#t-res").innerHTML = TITULOS[t][0];
+  $("#res-lede").textContent = t === "recetas" ? ledeRecetas : TITULOS[t][1];
+  marcarNav();
 }
+// Inicio queda marcado mientras no se haya bajado al resultado.
+function marcarNav() {
+  const enRes = $("#resultado").getBoundingClientRect().top < innerHeight * 0.4;
+  $("#nav-inicio").classList.toggle("on", !enRes);
+  $$(".tabs button[data-t]").forEach(x => x.classList.toggle("on", enRes && x.getAttribute("aria-selected") === "true"));
+}
+const irA = el => el.scrollIntoView({ behavior: QUIETO ? "auto" : "smooth", block: "start" });
 
 /* ==========================================================
    EVENTOS
@@ -635,6 +659,9 @@ construirChips();
 construirProteinas();
 construirStats();
 construirTiendas();
+$$(".deco").forEach(d => { d.innerHTML = Ilus[d.dataset.deco](); });
+$(".hojas.izq").innerHTML = Ilus.hojasEsquina("izq");
+$(".hojas.der").innerHTML = Ilus.hojasEsquina("der");
 restaurar();
 
 $$(".ap").forEach(g => {
@@ -681,14 +708,19 @@ const pistaModo = () => { $("#modo-hint").textContent = $('#modo button[aria-pre
   ? "Calcula cuánto cuesta cubrir los días que pides."
   : "Llena hasta donde alcance la plata y te dice hasta qué día llegas."; };
 $$("#modo button").forEach(b => b.addEventListener("click", () => { elegirSeg("#modo", b.dataset.v); pistaModo(); render(); }));
-$$(".tabs button").forEach(b => b.addEventListener("click", () => seleccionarTab(b.dataset.t)));
+$$(".tabs button[data-t]").forEach(b => b.addEventListener("click", () => { seleccionarTab(b.dataset.t); irA($("#resultado")); }));
+$("#nav-inicio").addEventListener("click", () => window.scrollTo({ top: 0, behavior: QUIETO ? "auto" : "smooth" }));
+$("#nav-yo").addEventListener("click", () => irA($("#t-semana").closest("section")));
+let navPend = false;
+addEventListener("scroll", () => { if (navPend) return; navPend = true; requestAnimationFrame(() => { navPend = false; marcarNav(); }); }, { passive: true });
 $("#barajar").addEventListener("click", () => { semilla = nuevaSemilla(); seleccionarTab("plan"); render(); });
 $("#c-ver").addEventListener("click", () => {
   if (ultimo && ultimo.ok) seleccionarTab("lista");
-  $("#resultado").scrollIntoView({ behavior: QUIETO ? "auto" : "smooth", block: "start" });
+  irA($("#resultado"));
 });
 
 $("#stat-cat").textContent = `${RECETAS.length} recetas · ${tiendasConDatos().map(nombreTienda).join(", ")}`;
+seleccionarTab("plan");
 $("#fuentes").textContent = Object.keys(TIENDAS).map(t => `${nombreTienda(t)}: ${tieneDatos(t) ? `${PRECIOS[t].skus.length} presentaciones, ${fechaCorta(PRECIOS[t].fecha)}` : ((PRECIOS[t] && PRECIOS[t].nota) || "sin precios").replace(/\.$/, "")}`).join(" · ") + ".";
 pistaModo();
 render();
